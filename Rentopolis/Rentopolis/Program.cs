@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Rentopolis.Models.Data;
+using Rentopolis.Repositories.Implementations;
+using Rentopolis.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,8 +16,13 @@ builder.Services.AddDbContext<RentContext>(
     )
 );
 
-// for identity
+//for interfaces
+builder.Services.AddScoped<IUserAuthenticationServices, UserAuthenticationServices>();
+
+// for identity and role
 builder.Services.AddIdentity<AppUser, IdentityRole>()
+    //.AddRoleManager<RoleManager<IdentityRole>>()
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<RentContext>()
     .AddDefaultTokenProviders();
 
@@ -43,5 +50,16 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var roles = new[] { "Admin", "Manager", "Landlord", "Tenant" };
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+            await roleManager.CreateAsync(new IdentityRole(role));
+    }
+}
 
 app.Run();

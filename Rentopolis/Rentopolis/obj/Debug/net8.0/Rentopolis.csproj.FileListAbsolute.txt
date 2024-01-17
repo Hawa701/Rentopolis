@@ -140,3 +140,4 @@ C:\Users\paulo\Documents\GitHub\Rentopolis\Rentopolis\Rentopolis\obj\Debug\net8.
 C:\Users\paulo\Documents\GitHub\Rentopolis\Rentopolis\Rentopolis\obj\Debug\net8.0\Rentopolis.pdb
 C:\Users\paulo\Documents\GitHub\Rentopolis\Rentopolis\Rentopolis\obj\Debug\net8.0\Rentopolis.genruntimeconfig.cache
 C:\Users\paulo\Documents\GitHub\Rentopolis\Rentopolis\Rentopolis\obj\Debug\net8.0\ref\Rentopolis.dll
+C:\Users\paulo\Documents\GitHub\Rentopolis\Rentopolis\Rentopolis\obj\Debug\net8.0\Rentopolis.sourcelink.json

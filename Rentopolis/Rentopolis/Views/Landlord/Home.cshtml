@@ -1,0 +1,9 @@
+﻿@{
+    string username = User.Identity.Name;
+}
+
+<h1>Landlord Page</h1>
+
+<p>Hello @username! You are a landlord!</p>
+
+<a class="btn btn-primary" asp-action="Logout" asp-controller="Account">Sign Out</a>
