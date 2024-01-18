@@ -14,57 +14,27 @@
     <title>Login</title>
 </head>
 <body>
-    @* <h1 class="bg-dark text-white">Login</h1>
-
-    <div asp-validation-summary="All" class="text-danger">
-        @if (TempData["msg"] != null)
-        {
-            <p>@TempData["msg"]</p>
-        }
-    </div>
-
-    <form method="post" asp-action="Login">
-
-        <div class="form-group">
-            <label asp-for="UserName"></label>
-            <input asp-for="UserName" class="form-control" type="text" />
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Password"></label>
-            <input asp-for="Password" class="form-control" type="text" />
-        </div>
-
-        <div class="form-group">
-            Remember Me?<input asp-for="RememberMe" type="checkbox" />
-        </div>
-
-        <br />
-
-        <div class="form-group">
-            <button class="btn btn-primary" type="submit">Login</button>
-        </div>
-
-        <span>
-            Don't have an account?'
-            <a asp-action="Register">Click here to register</a>
-        </span>
-
-    </form> *@
-
     <div class="wrapper">
         <div class="containr">
             <!-- Image -->
             <div class="image-box">
                 <div class="text">
                     <p>Rediscover Your Urban Rental Experience!</p>
-                    <p class="italic">Rentopia</p>
+                    <p class="italic">
+                        <a asp-controller="Home" asp-action="Index">Rentopolis</a>
+                    </p>
                 </div>
             </div>
 
             <!-- Form -->
             <div class="form-box">
                 <h1 class="header">Login Account</h1>
+                <div asp-validation-summary="All" class="error-container">
+                    @if (TempData["msg"] != null)
+                    {
+                        <p class="error">@TempData["msg"]</p>
+                    }
+                </div>
                 <form method="post" asp-action="Login">
 
                     <div class="input-field">
