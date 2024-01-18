@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Rentopolis.Models.Data;
 using Rentopolis.Models.Entitiy;
 using Rentopolis.Repositories.Interfaces;
+using System.Security.Claims;
 
 namespace Rentopolis.Controllers
 {
@@ -29,7 +32,8 @@ namespace Rentopolis.Controllers
             Status returnedStatus = await _services.LoginAsync(model);
             if (returnedStatus.StatusCode == 1)
             {
-                string role = await _services.GetUserRoleAsync(model.UserName);
+                //string role = await _services.GetUserRoleAsync(model.UserName);
+                string role = User.FindFirstValue(ClaimTypes.Role);
 
                 if (role == "Admin") return RedirectToAction("Home", "Admin");
                 else if (role == "Manager") return RedirectToAction("Home", "Manager");
@@ -72,6 +76,40 @@ namespace Rentopolis.Controllers
             return RedirectToAction("Login");
         }
 
+        // Edit Profile
+        [HttpGet]
+        public async Task<IActionResult> EditProfile(string id)
+        {
+            Update user = await _services.GetUserById(id);
+            //user.Role = await _services.GetUserRoleAsync(user.UserName);
+            if (user == null)
+            {
+                TempData["errorMessage"] = "Couldn't find the username!";
+                return View(user);
+            }
+
+            return View(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProfile(Update model)
+        {
+            if(!ModelState.IsValid) 
+                return View(model);
+
+            Status returnedStatus = await _services.EditUserProfile(model);
+            TempData[""] = returnedStatus.StatusMessage;
+            return RedirectToAction("ViewProfile", "Account", new { Id = User.FindFirstValue(ClaimTypes.NameIdentifier) });
+        }
+
+        // Login Profile
+        [HttpGet]
+        public async Task<IActionResult> ViewProfile(string id)
+        {
+            Update user = await _services.GetUserById(id);
+            return View(user);
+        }
+
         //public async Task<IActionResult> regAdmin()
         //{
         //    Registeration model= new Registeration
@@ -84,5 +122,12 @@ namespace Rentopolis.Controllers
         //    Status returnedStatus = await _services.RegisterAsync(model);
         //    return Ok(returnedStatus);
         //}
+
+        // Login
+        [HttpGet]
+        public IActionResult LG()
+        {
+            return View();
+        }
     }
 }

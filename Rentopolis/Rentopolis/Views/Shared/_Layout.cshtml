@@ -1,4 +1,5 @@
-﻿@{
+﻿@using System.Security.Claims
+@{
     bool isAuthenticated = User.Identity.IsAuthenticated;
 }
 
@@ -13,49 +14,6 @@
     <link rel="stylesheet" href="~/Rentopolis.styles.css" asp-append-version="true" />
 </head>
 <body>
-
-    @* <header class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <!-- Logo -->
-            <h1>
-                <a class="navbar-brand" asp-controller="Home" asp-action="Index">Rentopolis</a>
-            </h1>
-
-            @if (isAuthenticated)
-            {
-                <!-- Links -->
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </li>
-
-                </ul>
-
-                <!-- User Avatar -->
-                <div class="dropdown ml-auto">
-                    <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                        User
-                    </a>
-
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <li><a class="dropdown-item" href="#">Edit Profile</a></li>
-                        <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout">Log Out</a></li>
-                    </ul>
-                </div>
-            }
-            @if (!isAuthenticated)
-            {  
-                <!-- Login Button -->
-                <div class="ml-auto">
-                    <a class="btn btn-primary" asp-controller="Account" asp-action="Login">Login</a>
-                </div>
-            }
-        </div>
-    </header> *@
-
     <!-- HEADER -->
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
@@ -85,11 +43,11 @@
                     <!-- User Avatar -->
                     <div class="dropdown ml-auto">
                         <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                            User
+                            @User.FindFirstValue(ClaimTypes.Name)
                         </a>
 
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Edit Profile</a></li>
+                            <li><a class="dropdown-item" asp-controller="Account" asp-action="ViewProfile" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">View Profile</a></li>
                             <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout">Log Out</a></li>
                         </ul>
                     </div>

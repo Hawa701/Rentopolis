@@ -24,7 +24,6 @@ namespace Rentopolis.Models.Entitiy
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
         public string Role { get; set; }
     }
 }

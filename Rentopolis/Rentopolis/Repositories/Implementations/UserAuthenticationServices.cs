@@ -11,12 +11,32 @@ namespace Rentopolis.Repositories.Implementations
         private readonly SignInManager<AppUser> signInManager;
         private readonly UserManager<AppUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IPasswordHasher<AppUser> passwordHasher;
 
-        public UserAuthenticationServices(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
+        public UserAuthenticationServices(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, IPasswordHasher<AppUser> passwordHasher)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.passwordHasher = passwordHasher;
+        }
+
+        // Get user by Id
+        public async Task<Update> GetUserById(string id)
+        {
+            var result = await userManager.FindByIdAsync(id);
+            if (result == null) return null;
+
+            Update user = new Update
+            {
+                Id = result.Id,
+                FirstName = result.FirstName,
+                LastName = result.LastName,
+                UserName = result.UserName,
+                Email = result.Email,
+            };
+
+            return user;
         }
 
         // For Login
@@ -47,6 +67,7 @@ namespace Rentopolis.Repositories.Implementations
                 var userRoles = await userManager.GetRolesAsync(user);
                 var authClaims = new List<Claim>
                 {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id),
                     new Claim(ClaimTypes.Name, model.UserName),
                 };
 
@@ -113,20 +134,54 @@ namespace Rentopolis.Repositories.Implementations
             status.StatusMessage = "User is registered successfully!";
             return status;
         }
-
-        // For Getting Role of a user
-        public async Task<string> GetUserRoleAsync(string username)
+        
+        // For Editing profile
+        public async Task<Status> EditUserProfile(Update model)
         {
-            var user = await userManager.FindByNameAsync(username);
-
-            if (user != null)
-            {
-                var roles = await userManager.GetRolesAsync(user);
-
-                if (roles.Any()) return roles.FirstOrDefault();
+            Status status = new Status();
+            var user = await userManager.FindByIdAsync(model.Id);
+            
+            // if user doesn't exist
+            if (user == null) { 
+                status.StatusCode = 0;
+                status.StatusMessage = "A user with this Id doesn't exist!";
+                return status;
             }
 
-            return null; // or any default role if needed
+            // are any fields empty?
+            if (
+                string.IsNullOrEmpty(model.FirstName) || string.IsNullOrEmpty(model.LastName) ||
+                string.IsNullOrEmpty(model.UserName) || string.IsNullOrEmpty(model.Email) ||
+                string.IsNullOrEmpty(model.NewPassword) || string.IsNullOrEmpty(model.ConfirmPassword)
+            )
+            {
+                status.StatusCode= 0;
+                status.StatusMessage = "All fields are required!";
+                return status;
+            }
+
+            // transfer data
+            user.Id = model.Id;
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.UserName = model.UserName;
+            user.Email = model.Email;
+            user.PasswordHash = passwordHasher.HashPassword(user, model.NewPassword);
+
+            // update the profile
+            IdentityResult result = await userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                status.StatusCode = 1;
+                status.StatusMessage = "User updated successfully!";
+            }
+            else
+            {
+                status.StatusCode = 0;
+                status.StatusMessage = "Failed to update the profile information!";
+            }
+
+            return status;
         }
     }
 }

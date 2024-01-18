@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Rentopolis;
 using Rentopolis.Models.Data;
 using Rentopolis.Repositories.Implementations;
 using Rentopolis.Repositories.Interfaces;
@@ -42,10 +43,13 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseMiddleware<RoleBasedDefaultRouteMiddleware>();
+
 app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",
