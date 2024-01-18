@@ -72,7 +72,7 @@ namespace Rentopolis.Controllers
                 return View(model);
 
             Status returnedStatus = await _services.RegisterAsync(model);
-            TempData["msg"] = returnedStatus.StatusMessage;
+            TempData["registrationMsg"] = returnedStatus.StatusMessage;
             return RedirectToAction("Login");
         }
 
@@ -98,7 +98,7 @@ namespace Rentopolis.Controllers
                 return View(model);
 
             Status returnedStatus = await _services.EditUserProfile(model);
-            TempData[""] = returnedStatus.StatusMessage;
+            TempData["errorMessage"] = returnedStatus.StatusMessage;
             return RedirectToAction("ViewProfile", "Account", new { Id = User.FindFirstValue(ClaimTypes.NameIdentifier) });
         }
 

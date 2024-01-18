@@ -1,9 +1,9 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
 
 * {
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     font-family: "Plus Jakarta Sans", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
@@ -27,7 +27,6 @@ html {
 }
 
 body {
-    /*margin-bottom: 60px;*/
     background-color: var(--body);
 }
 
@@ -37,20 +36,21 @@ body {
     padding: 0;
     background-color: var(--body);
 }
-.wrapper .containr{
+
+.wrapper .containr {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
 }
 
-.containr .image-box, 
-.containr .form-box{
+.containr .image-box,
+.containr .form-box {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height:100%;
+    height: 100%;
 }
 .containr .image-box {
     background-image: url('/Images/Assets/login.jpg');
@@ -58,6 +58,7 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
 }
+
 .image-box .text {
     display: flex;
     flex-direction: column;
@@ -66,12 +67,14 @@ body {
     margin-top: 130px;
     width: 100%;
 }
+
 .text p {
     color: var(--white);
     font-size: 18px;
     margin-bottom: 10px;
 }
-.text .italic a{
+
+.text .italic a {
     color: var(--white);
     text-decoration: none;
     font-style: italic;
@@ -82,58 +85,48 @@ body {
 .containr .form-box {
     flex-direction: column;
 }
-.form-box .header{
+
+.form-box .header {
+    margin-top:50px;
 }
 
-.form-box .error-container{
+.form-box ul {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: start;
     width: 400px;
 }
-.error-container .error{
+.form-box ul li {
     color: var(--error);
-    margin-bottom:0;
+    margin-bottom: 0;
 }
 
-.form-box form{
+.form-box form {
     margin: 0 0 30px 0;
     width: 400px;
 }
-form .input-field{
+
+form .input-field {
     display: flex;
+    width: 100%;
     flex-direction: column;
 }
-.input-field .input{
+
+.input-field .input {
     height: 35px;
+    width: 100%;
     margin-bottom: 10px;
 }
 
-form .chk-input-field {
+form .input-field-container{
     display: flex;
-    margin-top: 5px;
+    gap: 10px;
 }
-.chk-input-field .chkBox {
-    margin-right: 7px;
+.input-field .btn {
+    margin-bottom: 20px;
 }
-.input-field .btn{
-    margin-bottom: 30px;
-}
-
-form .sign-up{
+form .sign-up {
     display: flex;
     justify-content: center;
 }
-/*
-
-.right .input-box,
-.right form{
-    width: 330px;
-    box-sizing: border-box;
-}
-.input-box header{
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 45px;
-}*/

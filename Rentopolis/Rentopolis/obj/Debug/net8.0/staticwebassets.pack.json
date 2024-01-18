@@ -13,8 +13,12 @@
       "PackagePath": "staticwebassets\\Images\\Assets\\suitcase.png"
     },
     {
-      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\css\\razorStyles.css",
-      "PackagePath": "staticwebassets\\css\\razorStyles.css"
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\css\\loginStyles.css",
+      "PackagePath": "staticwebassets\\css\\loginStyles.css"
+    },
+    {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\css\\registerStyles.css",
+      "PackagePath": "staticwebassets\\css\\registerStyles.css"
     },
     {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\css\\site.css",
