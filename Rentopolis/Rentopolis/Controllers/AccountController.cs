@@ -10,8 +10,8 @@ namespace Rentopolis.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IUserAuthenticationServices _services;
-        public AccountController(IUserAuthenticationServices userAuthenticationServices)
+        private readonly IAccountServices _services;
+        public AccountController(IAccountServices userAuthenticationServices)
         {
             this._services = userAuthenticationServices;
         }
@@ -123,11 +123,5 @@ namespace Rentopolis.Controllers
         //    return Ok(returnedStatus);
         //}
 
-        // Login
-        [HttpGet]
-        public IActionResult LG()
-        {
-            return View();
-        }
     }
 }

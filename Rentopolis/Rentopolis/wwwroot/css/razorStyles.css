@@ -1,0 +1,126 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+:root {
+    --primary: #258cfb;
+    --primary-dark: #4168C9;
+    --black: #000000;
+    --white: #ffffff;
+    --gray-1: #788190;
+    --gray-2: #d3d4db;
+    --body: #fefefe;
+}
+
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /*margin-bottom: 60px;*/
+    background-color: var(--body);
+}
+
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    background-color: var(--body);
+}
+.wrapper .containr{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.containr .image-box, 
+.containr .form-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height:100%;
+}
+.containr .image-box {
+    background-image: url('/Images/Assets/login6.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.image-box .text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 130px;
+    width: 100%;
+}
+.text p {
+    color: var(--white);
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.text .italic {
+    color: var(--white);
+    font-size: 16px;
+    font-style: italic;
+    font-weight: 200;
+}
+
+.containr .form-box {
+    flex-direction: column;
+}
+.form-box .header{
+    
+}
+.form-box form{
+    margin: 30px 0;
+    width: 400px;
+    /*border: 1px dashed var(--primary);*/
+}
+form .input-field{
+    display: flex;
+    flex-direction: column;
+}
+.input-field .input{
+    height: 35px;
+    margin-bottom: 10px;
+}
+
+form .chk-input-field {
+    display: flex;
+    margin-top: 5px;
+}
+.chk-input-field .chkBox {
+    margin-right: 7px;
+}
+.input-field .btn{
+    margin-bottom: 30px;
+}
+
+form .sign-up{
+    display: flex;
+    justify-content: center;
+}
+/*
+
+.right .input-box,
+.right form{
+    width: 330px;
+    box-sizing: border-box;
+}
+.input-box header{
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 45px;
+}*/

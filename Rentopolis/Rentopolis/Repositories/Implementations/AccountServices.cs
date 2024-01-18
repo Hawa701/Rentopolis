@@ -6,14 +6,14 @@ using System.Security.Claims;
 
 namespace Rentopolis.Repositories.Implementations
 {
-    public class UserAuthenticationServices : IUserAuthenticationServices
+    public class AccountServices : IAccountServices
     {
         private readonly SignInManager<AppUser> signInManager;
         private readonly UserManager<AppUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IPasswordHasher<AppUser> passwordHasher;
 
-        public UserAuthenticationServices(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, IPasswordHasher<AppUser> passwordHasher)
+        public AccountServices(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, IPasswordHasher<AppUser> passwordHasher)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;

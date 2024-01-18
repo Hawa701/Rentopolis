@@ -18,7 +18,7 @@ builder.Services.AddDbContext<RentContext>(
 );
 
 //for interfaces
-builder.Services.AddScoped<IUserAuthenticationServices, UserAuthenticationServices>();
+builder.Services.AddScoped<IAccountServices, AccountServices>();
 
 // for identity and role
 builder.Services.AddIdentity<AppUser, IdentityRole>()

@@ -2,7 +2,7 @@
 
 namespace Rentopolis.Repositories.Interfaces
 {
-    public interface IUserAuthenticationServices
+    public interface IAccountServices
     {
         Task<Update> GetUserById(string id);
         Task<Status> LoginAsync(Login model);

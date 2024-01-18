@@ -1,39 +1,102 @@
 ﻿@model Rentopolis.Models.Entitiy.Login
 
-<h1 class="bg-dark text-white">Login</h1>
+@{
+    Layout = null;
+}
 
-<div asp-validation-summary="All" class="text-danger">
-    @if (TempData["msg"] != null)
-    {
-        <p>@TempData["msg"]</p>
-    }
-</div>
+<!DOCTYPE html>
 
-<form method="post" asp-action="Login">
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/razorStyles.css" asp-append-version="true" />
+    <title>Login</title>
+</head>
+<body>
+    @* <h1 class="bg-dark text-white">Login</h1>
 
-    <div class="form-group">
-        <label asp-for="UserName"></label>
-        <input asp-for="UserName" class="form-control" type="text" />
+    <div asp-validation-summary="All" class="text-danger">
+        @if (TempData["msg"] != null)
+        {
+            <p>@TempData["msg"]</p>
+        }
     </div>
 
-    <div class="form-group">
-        <label asp-for="Password"></label>
-        <input asp-for="Password" class="form-control" type="text" />
+    <form method="post" asp-action="Login">
+
+        <div class="form-group">
+            <label asp-for="UserName"></label>
+            <input asp-for="UserName" class="form-control" type="text" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" type="text" />
+        </div>
+
+        <div class="form-group">
+            Remember Me?<input asp-for="RememberMe" type="checkbox" />
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Login</button>
+        </div>
+
+        <span>
+            Don't have an account?'
+            <a asp-action="Register">Click here to register</a>
+        </span>
+
+    </form> *@
+
+    <div class="wrapper">
+        <div class="containr">
+            <!-- Image -->
+            <div class="image-box">
+                <div class="text">
+                    <p>Rediscover Your Urban Rental Experience!</p>
+                    <p class="italic">Rentopia</p>
+                </div>
+            </div>
+
+            <!-- Form -->
+            <div class="form-box">
+                <h1 class="header">Login Account</h1>
+                <form method="post" asp-action="Login">
+
+                    <div class="input-field">
+                        <label asp-for="UserName"></label>
+                        <input asp-for="UserName" class="input" type="text" />
+                    </div>
+
+                    <div class="input-field">
+                        <label asp-for="Password"></label>
+                        <input asp-for="Password" class="input" type="text" />
+                    </div>
+
+                    <div class="chk-input-field">
+                        <input asp-for="RememberMe" type="checkbox" class="chkBox"/>Remember Me?
+                    </div>
+
+                    <br />
+
+                    <div class="input-field">
+                        <button class="btn btn-primary input" type="submit">Login</button>
+                    </div>
+
+                    <div class="sign-up">
+                        <span>
+                            Don't have an account?
+                            <a asp-action="Register">Click here to register</a>
+                        </span>
+                    </div>
+
+                </form>
+            </div>
+        </div>
     </div>
-
-    <div class="form-group">
-        Remember Me?<input asp-for="RememberMe" type="checkbox" />
-    </div>
-
-    <br />
-
-    <div class="form-group">
-        <button class="btn btn-primary" type="submit">Login</button>
-    </div>
-
-    <span>
-        Don't have an account?'
-        <a asp-action="Register">Click here to register</a>
-    </span>
-
-</form>
+</body>
+</html>

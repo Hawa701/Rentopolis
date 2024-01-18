@@ -1,70 +1,85 @@
 ﻿@model Rentopolis.Models.Entitiy.Registeration
 
-<h1 class="bg-dark text-white">Register</h1>
+@{
+    Layout = null;
+}
 
-<div asp-validation-summary="All" class="text-danger">
-    @if (TempData["msg"] != null)
-    {
-        <p>@TempData["msg"]</p>
-    }
-</div>
+<!DOCTYPE html>
 
-<form method="post" asp-action="Register">
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Registration</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /></head>
+<body>
+    <h1 class="bg-dark text-white">Register</h1>
 
-    @* first name *@
-    <div class="form-group">
-        <label asp-for="FirstName"></label>
-        <input asp-for="FirstName" class="form-control" type="text" />
+    <div asp-validation-summary="All" class="text-danger">
+        @if (TempData["msg"] != null)
+        {
+            <p>@TempData["msg"]</p>
+        }
     </div>
 
-    @* last name *@
-    <div class="form-group">
-        <label asp-for="LastName"></label>
-        <input asp-for="LastName" class="form-control" type="text" />
-    </div>
+    <form method="post" asp-action="Register">
 
-    @* email *@
-    <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" type="email" />
-    </div>
+        @* first name *@
+        <div class="form-group">
+            <label asp-for="FirstName"></label>
+            <input asp-for="FirstName" class="form-control" type="text" />
+        </div>
 
-    @* user name *@
-    <div class="form-group">
-        <label asp-for="UserName"></label>
-        <input asp-for="UserName" class="form-control" type="text" />
-    </div>
+        @* last name *@
+        <div class="form-group">
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" class="form-control" type="text" />
+        </div>
 
-    @* password *@
-    <div class="form-group">
-        <label asp-for="Password"></label>
-        <input asp-for="Password" class="form-control" type="text" />
-    </div>
+        @* email *@
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" type="email" />
+        </div>
 
-    @* confirm password *@
-    <div class="form-group">
-        <label asp-for="ConfirmPassword"></label>
-        <input asp-for="ConfirmPassword" class="form-control" type="text" />
-    </div>
+        @* user name *@
+        <div class="form-group">
+            <label asp-for="UserName"></label>
+            <input asp-for="UserName" class="form-control" type="text" />
+        </div>
 
-    @* role *@
-    <div class="form-group">
-        <label asp-for="Role"></label>
-        <select class="form-control" asp-for="Role">
-            <option value="tenant">Tenant</option>
-            <option value="landlord">Landlord</option>
-        </select>
-    </div>
+        @* password *@
+        <div class="form-group">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" type="text" />
+        </div>
 
-    <br />
+        @* confirm password *@
+        <div class="form-group">
+            <label asp-for="ConfirmPassword"></label>
+            <input asp-for="ConfirmPassword" class="form-control" type="text" />
+        </div>
 
-    <div class="form-group">
-        <button class="btn btn-primary" type="submit">Register</button>
-    </div>
+        @* role *@
+        <div class="form-group">
+            <label asp-for="Role"></label>
+            <select class="form-control" asp-for="Role">
+                <option value="tenant">Tenant</option>
+                <option value="landlord">Landlord</option>
+            </select>
+        </div>
 
-    <span>
-        Already have an account?'
-        <a asp-action="Login">Click here to login</a>
-    </span>
+        <br />
 
-</form>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Register</button>
+        </div>
+
+        <span>
+            Already have an account?'
+            <a asp-action="Login">Click here to login</a>
+        </span>
+
+    </form>
+</body>
+</html>
