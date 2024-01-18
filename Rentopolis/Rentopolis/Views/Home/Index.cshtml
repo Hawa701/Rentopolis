@@ -2,7 +2,51 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@* <div class="d-flex align-items-center justify-content-center vh-100">
+    <div class="text-center mt-5">
+        <h1 class="display-4">Welcome to Rentopolis</h1>
+        <p>
+            Rentopolis is a cutting-edge house rental platform that brings together the dynamic
+            spirit of a metropolis and the convenience of finding your perfect rental property.
+            As the name implies, Rentopolis serves as a thriving hub where renters can effortlessly
+            explore and secure their ideal homes in bustling urban centers. Whether you're seeking a
+            trendy apartment in the heart of the city or a cozy house nestled in a vibrant neighborhood,
+            Rentopolis offers a seamless experience, connecting you with a wide range of rental options.
+            With its user-friendly interface and extensive property listings, Rentopolis simplifies
+            the rental process, making it a go-to destination for those seeking a home in the fast-paced
+            world of metropolitan living. Experience the urban rental revolution with Rentopolis and
+            discover the perfect place to call your own.
+        </p>
+    </div>
+</div> *@
+
+
+<section class="hero">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <!-- text-->
+            <div class="col-md-6">
+                <div class="text">
+                    <span class="title">
+                        Discover Your Perfect Rental with Rentopolis
+                    </span>
+                    <span class="description">
+                        Rentopolis is a cutting-edge house rental platform that brings together the dynamic
+                        spirit of a metropolis and the convenience of finding your perfect rental property. Experience the urban rental revolution with Rentopolis and
+                        discover the perfect place to call your own.
+                    </span>
+                </div>
+                <div class="buttons d-flex justify-content-center mt-3">
+                    <a class="btn btn-primary" asp-controller="Account" asp-action="Register">Register Now</a>
+                </div>
+            </div>
+
+            <!-- image-->
+            <div class="col-md-6">
+                <img src="./Images/Assets/suitcase.png" alt="Hero-img" class="w-100" />
+            </div>
+
+        </div>
+    </div>
+</section>

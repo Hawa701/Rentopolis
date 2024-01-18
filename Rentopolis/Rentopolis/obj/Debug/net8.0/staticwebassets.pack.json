@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\Rentopolis.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\suitcase.png",
+      "PackagePath": "staticwebassets\\Images\\Assets\\suitcase.png"
+    },
+    {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },

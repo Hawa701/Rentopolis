@@ -13,6 +13,7 @@ namespace Rentopolis.Controllers
             this._services = userAuthenticationServices;
         }
 
+        // Login
         [HttpGet]
         public IActionResult Login()
         {
@@ -44,6 +45,7 @@ namespace Rentopolis.Controllers
 
         }
 
+        // Logout
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> Logout()
@@ -52,6 +54,7 @@ namespace Rentopolis.Controllers
             return RedirectToAction(nameof(Login));
         }
 
+        // Register
         [HttpGet]
         public IActionResult Register()
         {

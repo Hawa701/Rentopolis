@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "dOibjaAbI60PDu23IoD3BS9yhF8PXQPu3rEoit1NJ5o=",
+  "Hash": "fkQxYAIBhoHTzWJYBvOklIc3M1KcBW0T+KEEzqn9fo4=",
   "Source": "Rentopolis",
   "BasePath": "_content/Rentopolis",
   "Mode": "Default",
@@ -91,6 +91,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\suitcase.png",
+      "SourceId": "Rentopolis",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\",
+      "BasePath": "_content/Rentopolis",
+      "RelativePath": "Images/Assets/suitcase.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\Assets\\suitcase.png"
     },
     {
       "Identity": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\js\\site.js",
