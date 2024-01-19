@@ -5,6 +5,14 @@
       "PackagePath": "staticwebassets\\Rentopolis.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\404.png",
+      "PackagePath": "staticwebassets\\Images\\Assets\\404.png"
+    },
+    {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\denied.png",
+      "PackagePath": "staticwebassets\\Images\\Assets\\denied.png"
+    },
+    {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\login.jpg",
       "PackagePath": "staticwebassets\\Images\\Assets\\login.jpg"
     },

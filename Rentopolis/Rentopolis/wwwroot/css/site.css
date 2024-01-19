@@ -85,6 +85,31 @@ section.hero .text .title{
 }
 
 
+/* Access denied and Error page styles */
+.denial-page .denied-container,
+.page_404 .container_404 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 70vh;
+}
+.container_404 img {
+    width: 550px;
+    height: 400px;
+    margin-top:-50px;
+}
+.container_404 h3 {
+    margin-top: -40px;
+}
+.denied-container img {
+    width: 550px;
+    height: 400px;
+}
+.denied-container h3{
+    margin-top: -10px;
+}
 
 
 /* Responsiveness */
