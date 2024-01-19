@@ -90,6 +90,20 @@ body {
     margin-top:50px;
 }
 
+/* */
+.form-box .error-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    width: 400px;
+}
+.error-container .error {
+    color: var(--error);
+    margin-bottom: 0;
+}
+
+/* */
 .form-box ul {
     display: flex;
     flex-direction: column;

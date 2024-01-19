@@ -1,0 +1,105 @@
+﻿@model Rentopolis.Models.Entitiy.RegisterationViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Register Manager</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/registerStyles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="wrapper">
+        <div class="containr">
+            <!-- Image -->
+            <div class="image-box">
+                <div class="text">
+                    <p>Sign up to Discover Your Dream Rental!</p>
+                    <p class="italic">
+                        <a asp-controller="Home" asp-action="Index">Rentopolis</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Form -->
+            <div class="form-box">
+                <h1 class="header">Create Account</h1>
+                <div class="error-container" asp-validation-summary="All">
+                    @if (TempData["registrationMsg"] != null)
+                    {
+                        <p class="error">@TempData["registrationMsg"]</p>
+                    }
+                </div>
+
+                <form method="post" asp-action="NewManager">
+
+                    @* first name and last name*@
+                    <div class="input-field-container">
+                        <div class="input-field">
+                            <label asp-for="FirstName"></label>
+                            <input asp-for="FirstName" class="input" type="text" />
+                        </div>
+
+                        <div class="input-field">
+                            <label asp-for="LastName"></label>
+                            <input asp-for="LastName" class="input" type="text" />
+                        </div>
+                    </div>
+
+                    @* user name *@
+                    <div class="input-field">
+                        <label asp-for="UserName"></label>
+                        <input asp-for="UserName" class="input" type="text" />
+                    </div>
+
+                    @* email *@
+                    <div class="input-field">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="input" type="email" />
+                    </div>
+
+                    @* password *@
+                    <div class="input-field">
+                        <label asp-for="Password" hidden></label>
+                        <input asp-for="Password" class="input" type="text" value="Manager@123" hidden />
+                    </div>
+
+                    @* confirm password *@
+                    <div class="input-field">
+                        <label asp-for="ConfirmPassword" hidden></label>
+                        <input asp-for="ConfirmPassword" class="input" type="text" value="Manager@123" hidden />
+                    </div>
+
+                    @* role *@
+                    <div class="input-field">
+                        <label asp-for="Role" hidden></label>
+                        <input asp-for="Role" class="input" type="text" value="Manager" hidden/>
+                    </div>
+
+                    <br />
+
+                    @* button *@
+                    <div class="input-field">
+                        <button class="btn btn-primary" type="submit">Register</button>
+                    </div>
+
+                    @* link *@
+                    <div class="sign-up">
+                        <span>
+                            Already have an account?'
+                            <a asp-action="Login">Click here to login</a>
+                        </span>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

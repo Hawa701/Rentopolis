@@ -79,7 +79,7 @@ namespace Rentopolis.Controllers
         }
 
 
-        // View Profile
+        // View own Profile
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> ViewProfile(string id)
@@ -87,6 +87,17 @@ namespace Rentopolis.Controllers
             FullInfoViewModel user = await _services.GetUserById(id);
             return View(user);
         }
+
+
+        //View other users profile
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> UserProfile(string id)
+        {
+            FullInfoViewModel user = await _services.GetUserById(id);
+            return View(user);
+        }
+
 
 
         // Edit Profile

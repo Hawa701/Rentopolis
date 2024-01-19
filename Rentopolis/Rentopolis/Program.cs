@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Rentopolis;
 using Rentopolis.Models.Data;
 using Rentopolis.Repositories.Implementations;
 using Rentopolis.Repositories.Interfaces;
+using Rentopolis.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,6 +49,7 @@ app.UseStatusCodePagesWithRedirects("/Home/NotFound");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+// custom middleware for default routing
 app.UseMiddleware<RoleBasedDefaultRouteMiddleware>();
 
 app.UseRouting();

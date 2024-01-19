@@ -1,7 +1,19 @@
 ﻿@model List<Rentopolis.Models.Data.AppUser>
 
-<h1 class="bg-info text-white">All Users</h1>
-<a class="btn btn-secondary" asp-action="Create">Create User</a>
+<h1>@TempData["role"]s</h1>
+
+<div asp-validation-summary="All" class="text-danger">
+    @if (TempData["deletionErrors"] != null)
+    {
+        <p>@TempData["deletionErrors"]</p>
+    }
+</div>
+
+@if (TempData["role"].ToString() == "Manager")
+{
+    <a class="btn btn-secondary mt-3 mb-3" asp-controller="Admin" asp-action="NewManager">Create Manager Account</a>
+}
+
 
 <br />
 
@@ -19,7 +31,8 @@
             <td>@user.UserName</td>
             <td>@user.Email</td>
             <td>
-                <a class="btn btn-success" asp-action="Update" asp-route-id="@user.Id">Detail</a>
+                <a class="btn btn-success" asp-controller="Account" asp-action="UserProfile" asp-route-id="@user.Id">Detail</a>
+                <a class="btn btn-danger" asp-action="DeleteManager" asp-route-id="@user.Id">Delete</a>
             </td>
         </tr>
     }

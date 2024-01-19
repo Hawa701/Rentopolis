@@ -131,7 +131,6 @@ namespace Rentopolis.Repositories.Implementations
             if (!roleExists) await roleManager.CreateAsync(new IdentityRole(model.Role));
 
             status.StatusCode = 1;
-            status.StatusMessage = "User is registered successfully!";
             return status;
         }
         
