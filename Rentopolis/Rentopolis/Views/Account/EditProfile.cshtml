@@ -1,4 +1,4 @@
-﻿@model Rentopolis.Models.Entitiy.Update
+﻿@model Rentopolis.Models.Entitiy.FullInfoViewModel
 
 <h1 class="bg-dark text-white">Edit Profile</h1>
 
@@ -57,8 +57,13 @@
 
     <br />
 
+    @* update button *@
     <div class="form-group">
         <button class="btn btn-primary" type="submit">Update</button>
+        @if (User.IsInRole("Landlord") || User.IsInRole("Tenant"))
+        {
+            <a class="btn btn-danger" asp-action="DeleteProfile" asp-controller="Account" asp-route-id="@Model.Id">Delete</a>
+        }
     </div>
 
 </form>

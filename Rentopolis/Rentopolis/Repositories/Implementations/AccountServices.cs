@@ -22,12 +22,12 @@ namespace Rentopolis.Repositories.Implementations
         }
 
         // Get user by Id
-        public async Task<Update> GetUserById(string id)
+        public async Task<FullInfoViewModel> GetUserById(string id)
         {
             var result = await userManager.FindByIdAsync(id);
             if (result == null) return null;
 
-            Update user = new Update
+            FullInfoViewModel user = new FullInfoViewModel
             {
                 Id = result.Id,
                 FirstName = result.FirstName,
@@ -40,7 +40,7 @@ namespace Rentopolis.Repositories.Implementations
         }
 
         // For Login
-        public async Task<Status> LoginAsync(Login model)
+        public async Task<Status> LoginAsync(LoginViewModel model)
         {
             Status status = new Status();
             var user = await userManager.FindByNameAsync(model.UserName);
@@ -93,7 +93,7 @@ namespace Rentopolis.Repositories.Implementations
         }
 
         // For Registering
-        public async Task<Status> RegisterAsync(Registeration model)
+        public async Task<Status> RegisterAsync(RegisterationViewModel model)
         {
             Status status = new Status();
             var resut = await userManager.FindByNameAsync(model.UserName);
@@ -136,7 +136,7 @@ namespace Rentopolis.Repositories.Implementations
         }
         
         // For Editing profile
-        public async Task<Status> EditUserProfile(Update model)
+        public async Task<Status> EditUserProfile(FullInfoViewModel model)
         {
             Status status = new Status();
             var user = await userManager.FindByIdAsync(model.Id);
@@ -181,6 +181,42 @@ namespace Rentopolis.Repositories.Implementations
                 status.StatusMessage = "Failed to update the profile information!";
             }
 
+            return status;
+        }
+
+        // For deleting profile
+        public async Task<Status> DeleteUserProfile(string id)
+        {
+            Status status = new Status();
+            // When user id is not passed correctly
+            if (string.IsNullOrEmpty(id))
+            {
+                status.StatusCode = 0;
+                status.StatusMessage = "Id is null!";
+                return status;
+            }
+
+            AppUser user = await userManager.FindByIdAsync(id);
+
+            // When user is not found
+            if (user == null)
+            {
+                status.StatusCode = 0;
+                status.StatusMessage = "A user with this Id doesn't exist!";
+                return status;
+            }
+
+            IdentityResult result = await userManager.DeleteAsync(user);
+
+            if (result.Succeeded)
+            {
+                status.StatusCode = 1;
+                status.StatusMessage = "User profile deleted successfully!";
+            }
+            else {
+                status.StatusCode = 0;
+                status.StatusMessage = "Failed to delete the user profile!";
+            }
             return status;
         }
     }

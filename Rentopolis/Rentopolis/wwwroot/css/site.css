@@ -32,6 +32,8 @@ body {
     border-radius: 8px;
 }
 .btn-primary,
+.btn-secondary,
+.btn-danger,
 .btn-outline-secondary {
     padding: 12px 20px;
 }
@@ -69,6 +71,7 @@ body {
     font-weight: 700;
     color: var(--black);
 }
+
 
 
 /* Section Style */

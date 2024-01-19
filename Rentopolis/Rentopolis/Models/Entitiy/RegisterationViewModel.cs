@@ -2,7 +2,7 @@
 
 namespace Rentopolis.Models.Entitiy
 {
-    public class Registeration
+    public class RegisterationViewModel
     {
         [Required]
         public string FirstName { get; set; }

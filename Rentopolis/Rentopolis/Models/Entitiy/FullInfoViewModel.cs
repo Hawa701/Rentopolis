@@ -2,7 +2,7 @@
 
 namespace Rentopolis.Models.Entitiy
 {
-    public class Update
+    public class FullInfoViewModel
     {
         [Required]
         public string Id { get; set; } 

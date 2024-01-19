@@ -2,7 +2,7 @@
 
 namespace Rentopolis.Models.Entitiy
 {
-    public class Login
+    public class LoginViewModel
     {
         [Required]
         public string UserName { get; set; }

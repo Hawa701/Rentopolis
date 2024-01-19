@@ -1,6 +1,7 @@
 ﻿@using System.Security.Claims
 @{
     bool isAuthenticated = User.Identity.IsAuthenticated;
+    // string selectedPage = "";
 }
 
 <!DOCTYPE html>
@@ -27,19 +28,48 @@
             <!-- Links -->
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ms-auto">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    <a class="nav-link" href="#">Listings</a>
-                    <a class="nav-link" href="#">My Rentals</a>
-                    <a class="nav-link me-5" href="#">Favorites</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="nav-link active" aria-current="page" asp-controller="Admin" asp-action="Home">Dashboard</a>
+                        <a class="nav-link" asp-controller="Admin" asp-action="ListUsers" asp-route-role="Manager">Managers</a>
+                        <a class="nav-link" asp-controller="Admin" asp-action="ListUsers" asp-route-role="Landlord">Landlords</a>
+                        <a class="nav-link me-5" asp-controller="Admin" asp-action="ListUsers" asp-route-role="Tenant">Tenants</a>
+                    }
+                    @if (User.IsInRole("Manager"))
+                    {
+                        <a class="nav-link active" aria-current="page" asp-controller="Manager" asp-action="Home">Dashboard</a>
+                        <a class="nav-link" asp-controller="Manager" asp-action="">Pending Approvals</a>
+                        <a class="nav-link" asp-controller="Manager" asp-action="">Landlords</a>
+                        <a class="nav-link me-5" asp-controller="Manager" asp-action="">Tenants</a>
+                    }
+                    @if (User.IsInRole("Landlord"))
+                    {
+                        <a class="nav-link active" aria-current="page" asp-controller="Landlord" asp-action="Home">Home</a>
+                        <a class="nav-link" asp-controller="Landlord" asp-action="">Properties</a>
+                        @* <a class="nav-link" asp-controller="Landlord" asp-action=""></a> *@
+                        <a class="nav-link me-5" asp-controller="Landlord" asp-action="">Messages</a>
+                    }
+                    @if (User.IsInRole("Tenant"))
+                    {
+                        <a class="nav-link active" aria-current="page" asp-controller="Tenant" asp-action="Home">Home</a>
+                        <a class="nav-link" asp-controller="Tenant" asp-action="">Listings</a>
+                        <a class="nav-link" asp-controller="Tenant" asp-action="">Favorites</a>
+                        <a class="nav-link me-5" asp-controller="Tenant" asp-action="">Messages</a>
+                    }
+                    @if (!isAuthenticated)
+                    {
+                        <!-- Display nothing! -->    
+                    }
                 </div>
+
                 @if (!isAuthenticated)
                 {
                     <!-- Sign in button -->
                     <a class="btn btn-outline-secondary shadow-sm d-sm d-block" asp-controller="Account" asp-action="Login">Sign In</a>
                 }
+
                 @if (isAuthenticated)
                 {
-                    @* <a class="btn btn-outline-secondary shadow-sm d-sm d-block" >Sign In</a> *@
                     <!-- User Avatar -->
                     <div class="dropdown ml-auto">
                         <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">

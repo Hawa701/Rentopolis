@@ -19,16 +19,19 @@ builder.Services.AddDbContext<RentContext>(
 
 //for interfaces
 builder.Services.AddScoped<IAccountServices, AccountServices>();
+builder.Services.AddScoped<IAdminServices, AdminServices>();
 
 // for identity and role
 builder.Services.AddIdentity<AppUser, IdentityRole>()
-    //.AddRoleManager<RoleManager<IdentityRole>>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<RentContext>()
     .AddDefaultTokenProviders();
 
-// for security? idk
+// for unauthenticated user redirection
 builder.Services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/Login");
+
+// for unauthorized user redirection
+builder.Services.ConfigureApplicationCookie(options => options.AccessDeniedPath = "/Account/AccessDenied");
 
 var app = builder.Build();
 
@@ -39,6 +42,9 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+// for 404 errors
+app.UseStatusCodePagesWithRedirects("/Home/NotFound");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

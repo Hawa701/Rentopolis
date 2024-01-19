@@ -1,0 +1,26 @@
+﻿@model List<Rentopolis.Models.Data.AppUser>
+
+<h1 class="bg-info text-white">All Users</h1>
+<a class="btn btn-secondary" asp-action="Create">Create User</a>
+
+<br />
+
+<table class="table table-sm table-bordered">
+    <tr>
+        <td>ID</td>
+        <td>Name</td>
+        <td>Email</td>
+        <td colspan="2">Action</td>
+    </tr>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.Id</td>
+            <td>@user.UserName</td>
+            <td>@user.Email</td>
+            <td>
+                <a class="btn btn-success" asp-action="Update" asp-route-id="@user.Id">Detail</a>
+            </td>
+        </tr>
+    }
+</table>

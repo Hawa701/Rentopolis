@@ -18,7 +18,7 @@ namespace Rentopolis.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult NotFound()
         {
             return View();
         }

@@ -11,10 +11,11 @@ namespace Rentopolis.Controllers
     public class AccountController : Controller
     {
         private readonly IAccountServices _services;
-        public AccountController(IAccountServices userAuthenticationServices)
+        public AccountController(IAccountServices accountServices)
         {
-            this._services = userAuthenticationServices;
+            this._services = accountServices;
         }
+
 
         // Login
         [HttpGet]
@@ -24,7 +25,7 @@ namespace Rentopolis.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(Login model)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
@@ -49,6 +50,7 @@ namespace Rentopolis.Controllers
 
         }
 
+
         // Logout
         [Authorize]
         [HttpGet]
@@ -66,7 +68,7 @@ namespace Rentopolis.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(Registeration model)
+        public async Task<IActionResult> Register(RegisterationViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
@@ -76,11 +78,23 @@ namespace Rentopolis.Controllers
             return RedirectToAction("Login");
         }
 
+
+        // View Profile
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> ViewProfile(string id)
+        {
+            FullInfoViewModel user = await _services.GetUserById(id);
+            return View(user);
+        }
+
+
         // Edit Profile
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> EditProfile(string id)
         {
-            Update user = await _services.GetUserById(id);
+            FullInfoViewModel user = await _services.GetUserById(id);
             //user.Role = await _services.GetUserRoleAsync(user.UserName);
             if (user == null)
             {
@@ -92,7 +106,8 @@ namespace Rentopolis.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditProfile(Update model)
+        [Authorize]
+        public async Task<IActionResult> EditProfile(FullInfoViewModel model)
         {
             if(!ModelState.IsValid) 
                 return View(model);
@@ -102,13 +117,30 @@ namespace Rentopolis.Controllers
             return RedirectToAction("ViewProfile", "Account", new { Id = User.FindFirstValue(ClaimTypes.NameIdentifier) });
         }
 
-        // Login Profile
+
+        // Delete Profile
         [HttpGet]
-        public async Task<IActionResult> ViewProfile(string id)
+        [Authorize(Roles = "Landlord,Tenant")]
+        public async Task<IActionResult> DeleteProfile(string id)
         {
-            Update user = await _services.GetUserById(id);
-            return View(user);
+            Status returnedStatus = await _services.DeleteUserProfile(id);
+            if (returnedStatus.StatusCode == 0)
+            {
+                TempData["errorMessage"] = returnedStatus.StatusMessage;
+                return RedirectToAction("EditProfile", "Account", new { Id = User.FindFirstValue(ClaimTypes.NameIdentifier) });
+            } 
+            return await Logout();
         }
+
+        // When unauthorized
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+
+        //For registering the admin
 
         //public async Task<IActionResult> regAdmin()
         //{
