@@ -17,15 +17,16 @@ builder.Services.AddDbContext<RentContext>(
     )
 );
 
-//for interfaces
-builder.Services.AddScoped<IAccountServices, AccountServices>();
-builder.Services.AddScoped<IAdminServices, AdminServices>();
-
 // for identity and role
 builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<RentContext>()
     .AddDefaultTokenProviders();
+
+// for interfaces
+builder.Services.AddScoped<IAccountServices, AccountServices>();
+builder.Services.AddScoped<IAdminServices, AdminServices>();
+builder.Services.AddScoped<IManagerServices, ManagerServices>();
 
 // for unauthenticated user redirection
 builder.Services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/Login");
@@ -43,7 +44,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-// for 404 errors
+// for 404 error
 app.UseStatusCodePagesWithRedirects("/Home/NotFound");
 
 app.UseHttpsRedirection();
@@ -62,6 +63,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+// Seeding
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();

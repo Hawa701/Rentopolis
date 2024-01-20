@@ -1,0 +1,48 @@
+﻿@model List<Rentopolis.Models.Data.AppUser>
+
+@* For Manager page *@
+
+@if (Model == null)
+{
+    <p class="text-danger">@ViewData["emptyError"]</p>
+}
+
+
+@if (Model != null)
+{
+    <h1>@ViewData["role"]s</h1>
+
+    @if (ViewData["banError"] != null)
+    {
+        <p>@ViewData["banError"]</p>
+    }
+
+    <table class="table table-sm table-bordered">
+        <tr>
+            <td>ID</td>
+            <td>Name</td>
+            <td>Email</td>
+            <td colspan="2">Action</td>
+        </tr>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>
+                    <a class="btn btn-success" asp-controller="Account" asp-action="UserProfile" asp-route-id="@user.Id">Detail</a>
+                    @if (@user.LockoutEnd == null)
+                    {
+                        <a class="btn btn-danger" asp-action="BanUser" asp-route-id="@user.Id" asp-route-role="@ViewData["role"]">Ban</a>
+                    }
+                    @if (@user.LockoutEnd != null)
+                    {
+                        <a class="btn btn-danger" asp-action="UnbanUser" asp-route-id="@user.Id" asp-route-role="@ViewData["role"]">Unban</a>
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}
+

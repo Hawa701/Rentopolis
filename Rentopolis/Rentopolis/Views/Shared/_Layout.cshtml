@@ -39,8 +39,8 @@
                     {
                         <a class="nav-link active" aria-current="page" asp-controller="Manager" asp-action="Home">Dashboard</a>
                         <a class="nav-link" asp-controller="Manager" asp-action="">Pending Approvals</a>
-                        <a class="nav-link" asp-controller="Manager" asp-action="">Landlords</a>
-                        <a class="nav-link me-5" asp-controller="Manager" asp-action="">Tenants</a>
+                        <a class="nav-link" asp-controller="Manager" asp-action="ListUsers" asp-route-role="Landlord">Landlords</a>
+                        <a class="nav-link me-5" asp-controller="Manager" asp-action="ListUsers" asp-route-role="Tenant">Tenants</a>
                     }
                     @if (User.IsInRole("Landlord"))
                     {

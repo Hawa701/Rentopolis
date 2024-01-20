@@ -52,6 +52,14 @@ namespace Rentopolis.Repositories.Implementations
                 return status;
             }
 
+            // if user is locked out
+            if(await userManager.IsLockedOutAsync(user))
+            {
+                status.StatusCode = 0;
+                status.StatusMessage = "User is banned!";
+                return status;
+            }
+
             // if user with the given password doesn't exist
             if (!await userManager.CheckPasswordAsync(user, model.Password))
             {

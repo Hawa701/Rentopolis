@@ -7,17 +7,13 @@ namespace Rentopolis.Repositories.Implementations
 {
     public class AdminServices : IAdminServices
     {
-        private readonly SignInManager<AppUser> signInManager;
         private readonly UserManager<AppUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
-        private readonly IPasswordHasher<AppUser> passwordHasher;
 
-        public AdminServices(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, IPasswordHasher<AppUser> passwordHasher)
+        public AdminServices(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            this.signInManager = signInManager;
             this.userManager = userManager;
             this.roleManager = roleManager;
-            this.passwordHasher = passwordHasher;
         }
 
         // Get users by their role (list)
