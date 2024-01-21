@@ -2,6 +2,7 @@
 using Rentopolis.Models.Data;
 using Rentopolis.Models.Entitiy;
 using Rentopolis.Repositories.Interfaces;
+using System.IO;
 using System.Security.Claims;
 
 namespace Rentopolis.Repositories.Implementations
@@ -11,18 +12,18 @@ namespace Rentopolis.Repositories.Implementations
         private readonly SignInManager<AppUser> signInManager;
         private readonly UserManager<AppUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
-        private readonly IPasswordHasher<AppUser> passwordHasher;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public AccountServices(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, IPasswordHasher<AppUser> passwordHasher)
+        public AccountServices(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, IWebHostEnvironment webHostEnvironment)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
             this.roleManager = roleManager;
-            this.passwordHasher = passwordHasher;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
-        // Get user by Id
-        public async Task<FullInfoViewModel> GetUserById(string id)
+        // Get user by Id for viewing
+        public async Task<FullInfoViewModel> GetUserByIdForView(string id)
         {
             var result = await userManager.FindByIdAsync(id);
             if (result == null) return null;
@@ -34,16 +35,37 @@ namespace Rentopolis.Repositories.Implementations
                 LastName = result.LastName,
                 UserName = result.UserName,
                 Email = result.Email,
+                ProfilePicUrl = result.ProfilePicture,
+            };
+
+            return user;
+        }
+
+        // Get user by Id for editing
+        public async Task<UpdateUserInfoViewModel> GetUserByIdForEdit(string id)
+        {
+            var result = await userManager.FindByIdAsync(id);
+            if (result == null) return null;
+
+            UpdateUserInfoViewModel user = new UpdateUserInfoViewModel
+            {
+                Id = result.Id,
+                FirstName = result.FirstName,
+                LastName = result.LastName,
+                UserName = result.UserName,
+                Email = result.Email,
+                ProfilePicUrl = result.ProfilePicture,
             };
 
             return user;
         }
 
         // For Login
-        public async Task<Status> LoginAsync(LoginViewModel model)
+        public async Task<Status> LoginUser(LoginViewModel model)
         {
             Status status = new Status();
             var user = await userManager.FindByNameAsync(model.UserName);
+
             // if user with the given username doesn't exist
             if (user == null)
             {
@@ -56,7 +78,7 @@ namespace Rentopolis.Repositories.Implementations
             if(await userManager.IsLockedOutAsync(user))
             {
                 status.StatusCode = 0;
-                status.StatusMessage = "User is banned!";
+                status.StatusMessage = "Your account has been banned!";
                 return status;
             }
 
@@ -68,7 +90,7 @@ namespace Rentopolis.Repositories.Implementations
                 return status;
             }
 
-            // if username and password match
+            // if username and password 
             SignInResult signInResult = await signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
             if (signInResult.Succeeded)
             {
@@ -83,7 +105,6 @@ namespace Rentopolis.Repositories.Implementations
                     authClaims.Add(new Claim(ClaimTypes.Role, userRole));
 
                 status.StatusCode = 1;
-                status.StatusMessage = "Logged in successfully!";
                 return status;
             }
             else
@@ -95,16 +116,17 @@ namespace Rentopolis.Repositories.Implementations
         }
 
         // For Logout
-        public async Task LogoutAsync()
+        public async Task LogoutUser()
         {
             await signInManager.SignOutAsync();
         }
 
         // For Registering
-        public async Task<Status> RegisterAsync(RegisterationViewModel model)
+        public async Task<Status> RegisterUser(RegisterationViewModel model)
         {
             Status status = new Status();
             var resut = await userManager.FindByNameAsync(model.UserName);
+
             //if username exists
             if (resut != null)
             {
@@ -112,6 +134,23 @@ namespace Rentopolis.Repositories.Implementations
                 status.StatusMessage = "A user with that username already exists! Please try another one.";
                 return status;
             }
+
+            // if profile pic was given
+            if (model.ProfilePic != null)
+            {
+                string folder = "Images/User Profiles/";
+                folder += Guid.NewGuid().ToString() + "_" + model.ProfilePic.FileName;
+
+                model.ProfilePicUrl = "/" + folder;
+
+                string serverFolder = Path.Combine(webHostEnvironment.WebRootPath, folder);
+
+                // saving image to folder
+                await model.ProfilePic.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+
+            }
+            else
+                model.ProfilePicUrl = "/Images/User Profiles/default.jpg";
 
             AppUser user = new AppUser
             {
@@ -121,6 +160,7 @@ namespace Rentopolis.Repositories.Implementations
                 Email = model.Email,
                 EmailConfirmed = true,
                 UserName = model.UserName,
+                ProfilePicture = model.ProfilePicUrl,
             };
 
             IdentityResult result = await userManager.CreateAsync(user, model.Password);
@@ -143,7 +183,7 @@ namespace Rentopolis.Repositories.Implementations
         }
         
         // For Editing profile
-        public async Task<Status> EditUserProfile(FullInfoViewModel model)
+        public async Task<Status> EditUserProfile(UpdateUserInfoViewModel model)
         {
             Status status = new Status();
             var user = await userManager.FindByIdAsync(model.Id);
@@ -158,13 +198,27 @@ namespace Rentopolis.Repositories.Implementations
             // are any fields empty?
             if (
                 string.IsNullOrEmpty(model.FirstName) || string.IsNullOrEmpty(model.LastName) ||
-                string.IsNullOrEmpty(model.UserName) || string.IsNullOrEmpty(model.Email) ||
-                string.IsNullOrEmpty(model.NewPassword) || string.IsNullOrEmpty(model.ConfirmPassword)
+                string.IsNullOrEmpty(model.UserName) || string.IsNullOrEmpty(model.Email)
             )
             {
                 status.StatusCode= 0;
                 status.StatusMessage = "All fields are required!";
                 return status;
+            }
+
+            // if a new profile pic was given
+            if (model.ProfilePic != null)
+            {
+                string folder = "Images/User Profiles/";
+                folder += Guid.NewGuid().ToString() + "_" + model.ProfilePic.FileName;
+
+                model.ProfilePicUrl = "/" + folder;
+
+                string serverFolder = Path.Combine(webHostEnvironment.WebRootPath, folder);
+
+                // saving image to folder
+                await model.ProfilePic.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+
             }
 
             // transfer data
@@ -173,7 +227,7 @@ namespace Rentopolis.Repositories.Implementations
             user.LastName = model.LastName;
             user.UserName = model.UserName;
             user.Email = model.Email;
-            user.PasswordHash = passwordHasher.HashPassword(user, model.NewPassword);
+            user.ProfilePicture = model.ProfilePicUrl;
 
             // update the profile
             IdentityResult result = await userManager.UpdateAsync(user);

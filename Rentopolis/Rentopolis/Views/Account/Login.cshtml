@@ -28,13 +28,27 @@
 
             <!-- Form -->
             <div class="form-box">
+
                 <h1 class="header">Login Account</h1>
-                <div asp-validation-summary="All" class="error-container">
-                    @if (TempData["msg"] != null)
-                    {
-                        <p class="error">@TempData["msg"]</p>
-                    }
-                </div>
+
+                @if (ViewBag.Success == false)
+                {
+                    <div asp-validation-summary="All" class="alert alert-danger" >
+                        @if (ViewBag.Message != null)
+                        {
+                            <ul> <li>@ViewBag.Message</li> </ul>
+                        }
+                    </div>
+                }
+
+                @if (TempData.ContainsKey("successMessage"))
+                {
+                    <div asp-validation-summary="All" class="alert alert-success" >
+                        <li>Registered successfully!</li>
+                    </div>
+                    TempData.Remove("successMessage");
+                }
+
                 <form method="post" asp-action="Login">
 
                     <div class="input-field">

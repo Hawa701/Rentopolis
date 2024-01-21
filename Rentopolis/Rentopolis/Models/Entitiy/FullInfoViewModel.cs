@@ -26,5 +26,7 @@ namespace Rentopolis.Models.Entitiy
         [Required]
         [Compare("NewPassword")]
         public string ConfirmPassword { get; set; }
+
+        public string? ProfilePicUrl { get; set; }
     }
 }

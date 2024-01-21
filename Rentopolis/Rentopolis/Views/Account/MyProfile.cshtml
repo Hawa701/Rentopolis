@@ -1,7 +1,7 @@
 ﻿@using System.Security.Claims
 @model Rentopolis.Models.Entitiy.FullInfoViewModel
 
-<h1 class="bg-dark text-white">View Profile</h1>
+<h1>My Profile</h1>
 
 <div asp-validation-summary="All" class="text-danger">
     @if (TempData["errorMessage"] != null)
@@ -11,6 +11,11 @@
 </div>
 
 <div>
+    @* profile *@
+    <div>
+        <img src="@Model.ProfilePicUrl" alt="@Model.FirstName @Model.LastName's profile picture" style="width:350px; border-radius: 50%;" />
+    </div>
+
     @* id *@
     <div>
         <p>User Id: @Model.Id</p>

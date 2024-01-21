@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Rentopolis.Models.Data;
 using Rentopolis.Models.Entitiy;
 using Rentopolis.Repositories.Interfaces;
 using System.Security.Claims;
@@ -28,12 +26,16 @@ namespace Rentopolis.Controllers
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
+            {
+                ViewBag.Success = false;
                 return View(model);
+            }
 
-            Status returnedStatus = await _services.LoginAsync(model);
+            Status returnedStatus = await _services.LoginUser(model);
             if (returnedStatus.StatusCode == 1)
             {
-                //string role = await _services.GetUserRoleAsync(model.UserName);
+                ViewBag.Success = true;
+
                 string role = User.FindFirstValue(ClaimTypes.Role);
 
                 if (role == "Admin") return RedirectToAction("Home", "Admin");
@@ -44,8 +46,9 @@ namespace Rentopolis.Controllers
             }
             else
             {
-                TempData["msg"] = returnedStatus.StatusMessage;
-                return RedirectToAction(nameof(Login));
+                ViewBag.Success = false;
+                ViewBag.Message = returnedStatus.StatusMessage;
+                return View(model);
             }
 
         }
@@ -56,9 +59,10 @@ namespace Rentopolis.Controllers
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
-            await _services.LogoutAsync();
+            await _services.LogoutUser();
             return RedirectToAction(nameof(Login));
         }
+
 
         // Register
         [HttpGet]
@@ -71,33 +75,45 @@ namespace Rentopolis.Controllers
         public async Task<IActionResult> Register(RegisterationViewModel model)
         {
             if (!ModelState.IsValid)
+            {
+                ViewBag.Success = false;
                 return View(model);
+            }
 
-            Status returnedStatus = await _services.RegisterAsync(model);
-            TempData["registrationMsg"] = returnedStatus.StatusMessage;
-            return RedirectToAction("Login");
+            Status returnedStatus = await _services.RegisterUser(model);
+
+            if (returnedStatus.StatusCode == 1)
+            {
+                TempData["successMessage"] = "Success";
+                return RedirectToAction("Login", new { success = true });
+            }
+            else
+            {
+                ViewBag.Success = false;
+                ViewBag.Message = returnedStatus.StatusMessage;
+                return View(model);
+            }
         }
 
 
-        // View own Profile
+        // Own Profile
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> ViewProfile(string id)
+        public async Task<IActionResult> MyProfile(string id)
         {
-            FullInfoViewModel user = await _services.GetUserById(id);
+            FullInfoViewModel user = await _services.GetUserByIdForView(id);
             return View(user);
         }
 
 
-        //View other users profile
+        // Other user profile
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> UserProfile(string id)
         {
-            FullInfoViewModel user = await _services.GetUserById(id);
+            FullInfoViewModel user = await _services.GetUserByIdForView(id);
             return View(user);
         }
-
 
 
         // Edit Profile
@@ -105,9 +121,9 @@ namespace Rentopolis.Controllers
         [Authorize]
         public async Task<IActionResult> EditProfile(string id)
         {
-            FullInfoViewModel user = await _services.GetUserById(id);
-            //user.Role = await _services.GetUserRoleAsync(user.UserName);
-            if (user == null)
+            UpdateUserInfoViewModel user = await _services.GetUserByIdForEdit(id);
+            
+            if (user == null) 
             {
                 TempData["errorMessage"] = "Couldn't find the username!";
                 return View(user);
@@ -118,14 +134,14 @@ namespace Rentopolis.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> EditProfile(FullInfoViewModel model)
+        public async Task<IActionResult> EditProfile(UpdateUserInfoViewModel model)
         {
             if(!ModelState.IsValid) 
                 return View(model);
 
             Status returnedStatus = await _services.EditUserProfile(model);
             TempData["errorMessage"] = returnedStatus.StatusMessage;
-            return RedirectToAction("ViewProfile", "Account", new { Id = User.FindFirstValue(ClaimTypes.NameIdentifier) });
+            return RedirectToAction("MyProfile", "Account", new { Id = User.FindFirstValue(ClaimTypes.NameIdentifier) });
         }
 
 
@@ -151,7 +167,7 @@ namespace Rentopolis.Controllers
         }
 
 
-        //For registering the admin
+        // For registering the admin
 
         //public async Task<IActionResult> regAdmin()
         //{

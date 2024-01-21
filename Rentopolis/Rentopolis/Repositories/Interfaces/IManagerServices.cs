@@ -5,7 +5,7 @@ namespace Rentopolis.Repositories.Interfaces
 {
     public interface IManagerServices
     {
-        Task<List<AppUser>> GetUsersList(string role);
+        Task<List<AppUser>> GetUsersByRole(string role);
         Task<Status> BanUser(string id);
         Task<Status> UnbanUser(string id);
     }

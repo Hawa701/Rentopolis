@@ -25,22 +25,23 @@ namespace Rentopolis.Controllers
 
         // Users List
         [HttpGet]
-        public async Task<IActionResult> ListUsers(string role)
+        public async Task<IActionResult> AllUsers(string role)
         {
             var users = await _services.GetUsersByRole(role);
             TempData["role"] = role;
             return View(users);
         }
 
+
         // Add managers
         [HttpGet]
-        public async Task<IActionResult> NewManager()
+        public async Task<IActionResult> AddManager()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> NewManager(RegisterationViewModel model)
+        public async Task<IActionResult> AddManager(RegisterationViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
@@ -54,6 +55,8 @@ namespace Rentopolis.Controllers
             return RedirectToAction("ListUsers", "Admin", new { role = "Manager" });
         }
 
+
+        // Delete managers
         [HttpGet]
         public async Task<IActionResult> DeleteManager(string id)
         {

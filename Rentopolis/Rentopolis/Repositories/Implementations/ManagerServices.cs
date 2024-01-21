@@ -8,16 +8,14 @@ namespace Rentopolis.Repositories.Implementations
     public class ManagerServices : IManagerServices
     {
         private readonly UserManager<AppUser> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
 
-        public ManagerServices(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
+        public ManagerServices(UserManager<AppUser> userManager)
         {
             this.userManager = userManager;
-            this.roleManager = roleManager;
         }
 
         // Get user list
-        public async Task<List<AppUser>> GetUsersList(string role)
+        public async Task<List<AppUser>> GetUsersByRole(string role)
         {
             if (role == "Landlord" || role == "Tenant")
             {

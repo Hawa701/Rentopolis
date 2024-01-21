@@ -1,4 +1,4 @@
-﻿@model Rentopolis.Models.Entitiy.FullInfoViewModel
+﻿@model Rentopolis.Models.Entitiy.UpdateUserInfoViewModel
 
 <h1 class="bg-dark text-white">Edit Profile</h1>
 
@@ -9,10 +9,8 @@
     }
 </div>
 
-<form method="post" asp-action="EditProfile">
+<form method="post" enctype="multipart/form-data" asp-action="EditProfile">
 
-    @* <input type="text" name="oldUsername" value="@Model.UserName" hidden/> *@
-    
     @* id *@
     <div class="form-group">
         <label asp-for="Id" hidden></label>
@@ -43,16 +41,10 @@
         <input asp-for="UserName" class="form-control" type="text" />
     </div>
 
-    @* password *@
+    @* profile input *@
     <div class="form-group">
-        <label asp-for="NewPassword"></label>
-        <input asp-for="NewPassword" class="form-control" type="text" />
-    </div>
-
-    @* confirm password *@
-    <div class="form-group">
-        <label asp-for="ConfirmPassword"></label>
-        <input asp-for="ConfirmPassword" class="form-control" type="text" />
+        <label asp-for="ProfilePic" for="formFile" class="form-label"></label>
+        <input asp-for="ProfilePic" class="form-control" type="file" id="formFile">
     </div>
 
     <br />

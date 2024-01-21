@@ -20,11 +20,12 @@ namespace Rentopolis.Controllers
             return View();
         }
 
+
         // Users list
         [HttpGet]
-        public async Task<IActionResult> ListUsers(string role)
+        public async Task<IActionResult> AllUsers(string role)
         {
-            var users = await _services.GetUsersList(role);
+            var users = await _services.GetUsersByRole(role);
 
             if (users == null)
                 return RedirectToAction("AccessDenied", "Account");
@@ -33,20 +34,24 @@ namespace Rentopolis.Controllers
             return View(users);
         }
 
+
         //Ban users
+        [HttpGet]
         public async Task<IActionResult> BanUser(string id, string role)
         {
             Status returnedStatus = await _services.BanUser(id);
             if (returnedStatus.StatusCode == 0) ViewData["banError"] = returnedStatus.StatusMessage;
-            return RedirectToAction("ListUsers", "Manager", new { role = role });
+            return RedirectToAction("AllUsers", "Manager", new { role = role });
         }
         
+
         //Unban users
+        [HttpGet]
         public async Task<IActionResult> UnbanUser(string id, string role)
         {
             Status returnedStatus = await _services.UnbanUser(id);
             if (returnedStatus.StatusCode == 0) ViewData["banError"] = returnedStatus.StatusMessage;
-            return RedirectToAction("ListUsers", "Manager", new { role = role });
+            return RedirectToAction("AllUsers", "Manager", new { role = role });
         }
     }
 }

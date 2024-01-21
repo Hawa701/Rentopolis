@@ -4,6 +4,11 @@
 <h1>User Profile</h1>
 
 <div>
+    @* profile *@
+    <div>
+        <img src="@Model.ProfilePicUrl" alt="@Model.FirstName @Model.LastName's profile picture" style="width:350px; height: 350px; border-radius: 50%;" />
+    </div>
+
     @* id *@
     <div>
         <p>User Id: @Model.Id</p>

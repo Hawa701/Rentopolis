@@ -4,11 +4,12 @@ namespace Rentopolis.Repositories.Interfaces
 {
     public interface IAccountServices
     {
-        Task<FullInfoViewModel> GetUserById(string id);
-        Task<Status> LoginAsync(LoginViewModel model);
-        Task LogoutAsync();
-        Task<Status> RegisterAsync(RegisterationViewModel model);
-        Task<Status> EditUserProfile(FullInfoViewModel model);
+        Task<FullInfoViewModel> GetUserByIdForView(string id);
+        Task<UpdateUserInfoViewModel> GetUserByIdForEdit(string id);
+        Task<Status> LoginUser(LoginViewModel model);
+        Task LogoutUser();
+        Task<Status> RegisterUser(RegisterationViewModel model);
+        Task<Status> EditUserProfile(UpdateUserInfoViewModel model);
         Task<Status> DeleteUserProfile(string id);
     }
 }

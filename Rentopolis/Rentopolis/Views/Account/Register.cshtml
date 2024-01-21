@@ -27,15 +27,20 @@
 
             <!-- Form -->
             <div class="form-box">
+
                 <h1 class="header">Create Account</h1>
-                <div class="error-container" asp-validation-summary="All">
-                    @if (TempData["registrationMsg"] != null)
-                    {
-                        <p class="error">@TempData["registrationMsg"]</p>
-                    }
-                </div>
+
+                @if (ViewBag.Success == false)
+                {
+                    <div asp-validation-summary="All" class="alert alert-danger">
+                        @if (ViewBag.Message != null)
+                        {
+                            <ul> <li>@ViewBag.Message</li> </ul>
+                        }
+                    </div>
+                }
                 
-                <form method="post" asp-action="Register">
+                <form method="post" enctype="multipart/form-data" asp-action="Register">
 
                     @* first name and last name*@
                     <div class="input-field-container">
@@ -83,7 +88,15 @@
                         </select>
                     </div>
 
-                    <br />
+                    @* profile pic *@
+                    <div class="input-field mb-3">
+                        <label asp-for="ProfilePic" for="formFile" class="form-label"></label>
+                        <input asp-for="ProfilePic" class="form-control" type="file" id="formFile" >
+                    </div>
+
+                    @* profile url *@
+                    <input asp-for="ProfilePicUrl" value="" type="text" hidden>
+
 
                     @* button *@
                     <div class="input-field">
@@ -93,7 +106,7 @@
                     @* link *@
                     <div class="sign-up">
                         <span>
-                            Already have an account?'
+                            Already have an account?
                             <a asp-action="Login">Click here to login</a>
                         </span>
                     </div>

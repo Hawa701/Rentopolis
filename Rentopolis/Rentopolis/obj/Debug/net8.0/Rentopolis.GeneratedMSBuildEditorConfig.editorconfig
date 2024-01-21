@@ -38,6 +38,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/paulo/Documents/GitHub/Rentopolis/Rentopolis/Rentopolis/Views/Account/MyProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxNeVByb2ZpbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/paulo/Documents/GitHub/Rentopolis/Rentopolis/Rentopolis/Views/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -46,20 +50,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxVc2VyUHJvZmlsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/paulo/Documents/GitHub/Rentopolis/Rentopolis/Rentopolis/Views/Account/ViewProfile.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxWaWV3UHJvZmlsZS5jc2h0bWw=
+[C:/Users/paulo/Documents/GitHub/Rentopolis/Rentopolis/Rentopolis/Views/Admin/AddManager.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQWRkTWFuYWdlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/paulo/Documents/GitHub/Rentopolis/Rentopolis/Rentopolis/Views/Admin/AllUsers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQWxsVXNlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/paulo/Documents/GitHub/Rentopolis/Rentopolis/Rentopolis/Views/Admin/Home.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSG9tZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/paulo/Documents/GitHub/Rentopolis/Rentopolis/Rentopolis/Views/Admin/ListUsers.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTGlzdFVzZXJzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/paulo/Documents/GitHub/Rentopolis/Rentopolis/Rentopolis/Views/Admin/NewManager.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTmV3TWFuYWdlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/paulo/Documents/GitHub/Rentopolis/Rentopolis/Rentopolis/Views/Home/Index.cshtml]
@@ -74,12 +74,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGFuZGxvcmRcSG9tZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/paulo/Documents/GitHub/Rentopolis/Rentopolis/Rentopolis/Views/Manager/Home.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlclxIb21lLmNzaHRtbA==
+[C:/Users/paulo/Documents/GitHub/Rentopolis/Rentopolis/Rentopolis/Views/Manager/AllUsers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlclxBbGxVc2Vycy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/paulo/Documents/GitHub/Rentopolis/Rentopolis/Rentopolis/Views/Manager/ListUsers.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlclxMaXN0VXNlcnMuY3NodG1s
+[C:/Users/paulo/Documents/GitHub/Rentopolis/Rentopolis/Rentopolis/Views/Manager/Home.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlclxIb21lLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/paulo/Documents/GitHub/Rentopolis/Rentopolis/Rentopolis/Views/Shared/Error.cshtml]

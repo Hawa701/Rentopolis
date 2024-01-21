@@ -28,11 +28,12 @@ html {
 
 body {
     background-color: var(--body);
+    height: 115vh;
 }
 
 .wrapper {
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     padding: 0;
     background-color: var(--body);
 }
@@ -42,6 +43,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100%;
+    width: 100%;
 }
 
 .containr .image-box,
@@ -84,6 +86,7 @@ body {
 
 .containr .form-box {
     flex-direction: column;
+    justify-content: start
 }
 
 .form-box .header {
@@ -91,28 +94,11 @@ body {
 }
 
 /* */
-.form-box .error-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: start;
+.form-box .alert {
     width: 400px;
-}
-.error-container .error {
-    color: var(--error);
-    margin-bottom: 0;
 }
 
-/* */
 .form-box ul {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: start;
-    width: 400px;
-}
-.form-box ul li {
-    color: var(--error);
     margin-bottom: 0;
 }
 
@@ -131,6 +117,7 @@ form .input-field {
     height: 35px;
     width: 100%;
     margin-bottom: 10px;
+    padding-left: 10px;
 }
 
 form .input-field-container{
@@ -138,9 +125,10 @@ form .input-field-container{
     gap: 10px;
 }
 .input-field .btn {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 form .sign-up {
     display: flex;
     justify-content: center;
+    margin-bottom: 20px;
 }
