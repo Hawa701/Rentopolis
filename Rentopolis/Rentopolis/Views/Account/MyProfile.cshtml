@@ -1,62 +1,15 @@
 ﻿@using System.Security.Claims
 @model Rentopolis.Models.Entitiy.FullInfoViewModel
 
-
-
-
 @* 
-<h1>My Profile</h1>
-
 <div asp-validation-summary="All" class="text-danger">
     @if (TempData["errorMessage"] != null)
     {
         <p>@TempData["errorMessage"]</p>
     }
 </div> 
-
-
-<div>
-    <div>
-        <img src="@Model.ProfilePicUrl" alt="@Model.FirstName @Model.LastName's profile picture" style="width:350px; border-radius: 50%;" />
-    </div>
-
-    <div>
-        <p>User Id: @Model.Id</p>
-    </div>
-
-    <div>
-        <p>First Name: @Model.FirstName</p>
-    </div>
-
-    <div>
-        <p>Last Name: @Model.LastName</p>
-    </div>
-
-    <div>
-        <p>Email: @Model.Email</p>
-    </div>
-
-    <div>
-        <p>Username: @Model.UserName</p>
-    </div>
-
-    <div>
-        <p>Role: @User.FindFirstValue(ClaimTypes.Role)</p>
-    </div>
-
-    <br />
-
-    <div class="form-group">
-        <a class="btn btn-primary" asp-controller="Account" asp-action="EditProfile" asp-route-id="@Model.Id">Edit</a>
-    </div>
-
-</div>
 *@
 
-
-
-@* <div class="shadow p-3 mb-5 bg-body rounded">
-</div> *@
 
 <div class="p-5 mb-5 rounded" style="box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.23);">
 
@@ -71,25 +24,30 @@
         @* info *@
         <div class="flex-grow-1">
             
+            @* id *@
             <div>
                 <p class="fw-light fst-italic" style="font-size: 13px;">User Id = @Model.Id</p>
             </div>
 
+            @* full name *@
             <div class="d-flex justify-content-start align-items-center gap-2">
                 <p>Full Name:  </p>
                 <p class="fw-bold fs-5">@Model.FirstName @Model.LastName </p>
             </div>
 
+            @* username *@
             <div class ="d-flex justify-content-start align-items-center gap-2">
-                <p>Username: </p>
+                <p>User Name: </p>
                 <p class="fw-bold fs-5">@Model.UserName</p>
             </div>
 
+            @* email *@
             <div class="d-flex justify-content-start align-items-center gap-2">
                 <p>Email: </p>
                 <p class="fw-bold fs-5">@Model.Email</p>
             </div>
 
+            @* registered as *@
             <div class="d-flex justify-content-start align-items-center gap-2">
                 <p>Registered as: </p>
                 <p class="fw-bold fs-5">@User.FindFirstValue(ClaimTypes.Role)</p>
@@ -97,8 +55,33 @@
 
             <br />
 
-            <div class="d-flex justify-content-end">
-                <a class="btn btn-primary" asp-controller="Account" asp-action="EditProfile" asp-route-id="@Model.Id">Edit Profile</a>
+            @* edit button *@
+            <div class="d-flex justify-content-end gap-3">
+                <a class="btn btn-primary" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);" asp-controller="Account" asp-action="EditProfile" asp-route-id="@Model.Id">Edit Profile</a>
+                @if (User.IsInRole("Landlord") || User.IsInRole("Tenant"))
+                {
+                    <button class="btn btn-danger" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);" data-bs-toggle="modal" data-bs-target="#terminateAccountModal">
+                        Terminate Account
+                    </button>
+
+                    <!-- Terminate Account Modal -->
+                    <div class="modal fade" id="terminateAccountModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="terminateAccountModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="terminateAccountModalLabel">Confirmation</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Changes made can't be undone! <br/> Are you sure you want to terminate your account?</p>
+                                </div>
+                                <div class="modal-footer gap-2">
+                                    <button type="button" class="btn btn-secondary" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);" data-bs-dismiss="modal">Cancel</button>
+                                    <a class="btn btn-danger" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);" asp-action="DeleteProfile" asp-controller="Account" asp-route-id="@Model.Id">Terminate</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
 
         </div>

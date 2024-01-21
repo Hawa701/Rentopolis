@@ -1,42 +1,51 @@
 ﻿@using System.Security.Claims
 @model Rentopolis.Models.Entitiy.FullInfoViewModel
 
-<h1>User Profile</h1>
+<div class="p-5 mb-5 rounded" style="box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.23);">
 
-<div>
-    @* profile *@
-    <div>
-        <img src="@Model.ProfilePicUrl" alt="@Model.FirstName @Model.LastName's profile picture" style="width:350px; height: 350px; border-radius: 50%;" />
-    </div>
+    <h1>User Profile</h1>
 
-    @* id *@
-    <div>
-        <p>User Id: @Model.Id</p>
-    </div>
+    <div class="container d-flex justify-content-center align-items-center gap-5 p-4" style="height: 50vh;">
+        @* pic *@
+        <div>
+            <img src="@Model.ProfilePicUrl" alt="@Model.FirstName @Model.LastName's profile picture" style="width:250px; height: 250px; border-radius: 50%;" />
+        </div>
 
-    @* first name *@
-    <div>
-        <p>First Name: @Model.FirstName</p>
-    </div>
+        @* info *@
+        <div class="flex-grow-1">
 
-    @* last name *@
-    <div>
-        <p>Last Name: @Model.LastName</p>
-    </div>
+            @* id *@
+            <div>
+                <p class="fw-light fst-italic" style="font-size: 13px;">User Id = @Model.Id</p>
+            </div>
 
-    @* email *@
-    <div>
-        <p>Email: @Model.Email</p>
-    </div>
+            @* full name *@
+            <div class="d-flex justify-content-start align-items-center gap-2">
+                <p>Full Name:  </p>
+                <p class="fw-bold fs-5">@Model.FirstName @Model.LastName </p>
+            </div>
 
-    @* user name *@
-    <div>
-        <p>Username: @Model.UserName</p>
-    </div>
+            @* username *@
+            <div class="d-flex justify-content-start align-items-center gap-2">
+                <p>User Name: </p>
+                <p class="fw-bold fs-5">@Model.UserName</p>
+            </div>
 
-    @* role *@
-    <div>
-        <p>Role: @User.FindFirstValue(ClaimTypes.Role)</p>
+            @* email *@
+            <div class="d-flex justify-content-start align-items-center gap-2">
+                <p>Email: </p>
+                <p class="fw-bold fs-5">@Model.Email</p>
+            </div>
+
+            @* registered as *@
+            <div class="d-flex justify-content-start align-items-center gap-2">
+                <p>Registered as: </p>
+                <p class="fw-bold fs-5">Unknown</p>
+            </div>
+
+        </div>
+
+
     </div>
 
 </div>
