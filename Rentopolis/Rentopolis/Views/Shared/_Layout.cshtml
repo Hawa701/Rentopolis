@@ -77,9 +77,29 @@
                         </a>
 
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" asp-controller="Account" asp-action="MyProfile" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">View Profile</a></li>
-                            <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout">Log Out</a></li>
+                            <li><a class="dropdown-item" asp-controller="Account" asp-action="MyProfile" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">My Profile</a></li>
+                            <li><a class="dropdown-item" asp-controller="Account" asp-action="ChangePassword" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">Change Password</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">Log Out</a></li>
                         </ul>
+                    </div>
+
+                    <!-- Logout Modal -->
+                    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content ps-3 pe-3">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="logoutModalLabel">Confirmation</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure you want to log out?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <a class="btn btn-primary" href="/Account/Logout">Log Out</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                 }
