@@ -15,6 +15,16 @@
 
     <h1 class="mb-4">Edit Profile</h1>
 
+    @if (ViewBag.Success == false)
+    {
+        <div asp-validation-summary="All" class="alert alert-danger">
+            @if (ViewBag.Message != null)
+            {
+                <ul> <li>@ViewBag.Message</li> </ul>
+            }
+        </div>
+    }
+
     <form method="post" enctype="multipart/form-data" asp-action="EditProfile">
 
         @* first and last name *@
@@ -57,8 +67,26 @@
 
         @* button *@
         <div class="d-flex justify-content-end gap-3">
-            <button class="btn btn-success" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);" type="submit">Update</button>
+            <button class="btn btn-success" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);" type="button" data-bs-toggle="modal" data-bs-target="#updateModal">Update</button>
             <a class="btn btn-secondary" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);" asp-action="MyProfile" asp-controller="Account" asp-route-id="@Model.Id">Cancel</a>
+        </div>
+
+        <!-- Update Modal -->
+        <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateModalLabel">Confirmation</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to save the changes?</p>
+                    </div>
+                    <div class="modal-footer gap-2">
+                        <button class="btn btn-success" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);" type="submit">Yes</button>
+                        <button type="button" class="btn btn-secondary" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);" data-bs-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </form>

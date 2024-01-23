@@ -85,7 +85,7 @@ namespace Rentopolis.Controllers
             if (returnedStatus.StatusCode == 1)
             {
                 TempData["successMessage"] = "Success";
-                return RedirectToAction("Login", new { success = true });
+                return RedirectToAction("Login");
             }
             else
             {
@@ -136,12 +136,25 @@ namespace Rentopolis.Controllers
         [Authorize]
         public async Task<IActionResult> EditProfile(UpdateUserInfoViewModel model)
         {
-            if(!ModelState.IsValid) 
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Success = false;
                 return View(model);
+            }
 
             Status returnedStatus = await _services.EditUserProfile(model);
-            TempData["errorMessage"] = returnedStatus.StatusMessage;
-            return RedirectToAction("MyProfile", "Account", new { Id = User.FindFirstValue(ClaimTypes.NameIdentifier) });
+
+            if (returnedStatus.StatusCode == 1)
+            {
+                TempData["successMessage"] = "Success";
+                return RedirectToAction("MyProfile", "Account", new { Id = User.FindFirstValue(ClaimTypes.NameIdentifier) });
+            }
+            else
+            {
+                ViewBag.Success = false;
+                ViewBag.Message = returnedStatus.StatusMessage;
+                return View(model);
+            }
         }
 
 

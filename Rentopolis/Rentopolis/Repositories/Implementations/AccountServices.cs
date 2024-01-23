@@ -191,7 +191,7 @@ namespace Rentopolis.Repositories.Implementations
             // if user doesn't exist
             if (user == null) { 
                 status.StatusCode = 0;
-                status.StatusMessage = "A user with this Id doesn't exist!";
+                status.StatusMessage = "Couldn't find a user with this Id! Please try again!";
                 return status;
             }
 
@@ -227,7 +227,8 @@ namespace Rentopolis.Repositories.Implementations
             user.LastName = model.LastName;
             user.UserName = model.UserName;
             user.Email = model.Email;
-            user.ProfilePicture = model.ProfilePicUrl;
+            user.ProfilePicture = model.ProfilePicUrl == null ? user.ProfilePicture: model.ProfilePicUrl;
+            //model.ProfilePicUrl == null?
 
             // update the profile
             IdentityResult result = await userManager.UpdateAsync(user);
@@ -239,7 +240,7 @@ namespace Rentopolis.Repositories.Implementations
             else
             {
                 status.StatusCode = 0;
-                status.StatusMessage = "Failed to update the profile information!";
+                status.StatusMessage = "Failed to update the user profile!";
             }
 
             return status;
