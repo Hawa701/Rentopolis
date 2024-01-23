@@ -1,0 +1,11 @@
+﻿@model List<Rentopolis.Models.Data.Property>
+
+@foreach (var property in Model)
+{
+    <div class="card shadow-lg p-3 mb-5 rounded" style="width: 18rem;">
+        <img src="@property.ImageUrl" class="card-img-top" alt="@property.Address's image">
+        <div class="card-body">
+            <p class="card-text">@property.Address</p>
+        </div>
+    </div>
+}

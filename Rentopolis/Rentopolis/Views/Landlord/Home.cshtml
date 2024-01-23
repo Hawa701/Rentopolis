@@ -4,4 +4,12 @@
 
 <h1>Landlord Page</h1>
 
+@if (TempData.ContainsKey("successMessage"))
+{
+    <div asp-validation-summary="All" class="alert alert-success">
+        <li>Registered successfully!</li>
+    </div>
+    TempData.Remove("successMessage");
+}
+
 <p>Hello @username! You are a landlord!</p>

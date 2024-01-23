@@ -1,0 +1,18 @@
+﻿@model List<Rentopolis.Models.Data.Property>
+
+
+<h1>Approval list</h1>
+
+@foreach (var property in Model)
+{
+    <div class="card shadow-lg p-3 mb-5 rounded" style="width: 18rem;">
+        <img src="@property.ImageUrl" class="card-img-top" alt="@property.Address's image">
+        <div class="card-body">
+            <p class="card-text">@property.Address</p>
+            <div>
+                <a href="#" class="btn btn-success">Approve</a>
+                <a href="#" class="btn btn-danger">Reject</a>
+            </div>
+        </div>
+    </div>
+}

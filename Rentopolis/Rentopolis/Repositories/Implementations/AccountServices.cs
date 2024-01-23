@@ -90,7 +90,7 @@ namespace Rentopolis.Repositories.Implementations
                 return status;
             }
 
-            // if username and password 
+            // if there are no problems
             SignInResult signInResult = await signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
             if (signInResult.Succeeded)
             {

@@ -1,0 +1,22 @@
+﻿@model List<Rentopolis.Models.Data.Property>
+
+@{
+    string landlordId = ViewBag.LandlordId;
+}
+
+<h1>My Properties</h1>
+
+<a class="btn btn-secondary" asp-controller="Property" asp-action="CreateProperty" asp-route-id="@landlordId">Create</a>
+
+@foreach (var property in Model)
+{
+    <div class="card shadow-lg p-3 mb-5 rounded" style="width: 18rem;">
+        <img src="@property.ImageUrl" class="card-img-top" alt="@property.Address's image">
+        <div class="card-body">
+            <p class="card-text">@property.Address</p>
+            <div>
+                <a href="#" class="btn btn-primary">Detail</a>
+            </div>
+        </div>
+    </div>
+}

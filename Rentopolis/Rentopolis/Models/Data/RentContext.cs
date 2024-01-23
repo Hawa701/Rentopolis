@@ -8,5 +8,7 @@ namespace Rentopolis.Models.Data
         public RentContext(DbContextOptions<RentContext> options) : base(options)
         {
         }
+
+        public DbSet<Property> Properties { get; set; }
     }
 }

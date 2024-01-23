@@ -33,26 +33,27 @@
                         <a class="nav-link active" aria-current="page" asp-controller="Admin" asp-action="Home">Dashboard</a>
                         <a class="nav-link" asp-controller="Admin" asp-action="AllUsers" asp-route-role="Manager">Managers</a>
                         <a class="nav-link" asp-controller="Admin" asp-action="AllUsers" asp-route-role="Landlord">Landlords</a>
-                        <a class="nav-link me-5" asp-controller="Admin" asp-action="AllUsers" asp-route-role="Tenant">Tenants</a>
+                        <a class="nav-link" asp-controller="Admin" asp-action="AllUsers" asp-route-role="Tenant">Tenants</a>
+                        <a class="nav-link me-5" asp-controller="Property" asp-action="AllProperties">Properties</a>
                     }
                     @if (User.IsInRole("Manager"))
                     {
                         <a class="nav-link active" aria-current="page" asp-controller="Manager" asp-action="Home">Dashboard</a>
-                        <a class="nav-link" asp-controller="Manager" asp-action="">Pending Approvals</a>
+                        <a class="nav-link" asp-controller="Property" asp-action="PendingProperties">Pending Approvals</a>
                         <a class="nav-link" asp-controller="Manager" asp-action="AllUsers" asp-route-role="Landlord">Landlords</a>
                         <a class="nav-link me-5" asp-controller="Manager" asp-action="AllUsers" asp-route-role="Tenant">Tenants</a>
                     }
                     @if (User.IsInRole("Landlord"))
                     {
                         <a class="nav-link active" aria-current="page" asp-controller="Landlord" asp-action="Home">Home</a>
-                        <a class="nav-link" asp-controller="Landlord" asp-action="">Properties</a>
+                        <a class="nav-link" asp-controller="Property" asp-action="MyProperties" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">My Property</a>
                         @* <a class="nav-link" asp-controller="Landlord" asp-action=""></a> *@
                         <a class="nav-link me-5" asp-controller="Landlord" asp-action="">Messages</a>
                     }
                     @if (User.IsInRole("Tenant"))
                     {
                         <a class="nav-link active" aria-current="page" asp-controller="Tenant" asp-action="Home">Home</a>
-                        <a class="nav-link" asp-controller="Tenant" asp-action="">Listings</a>
+                        <a class="nav-link" asp-controller="Property" asp-action="Listings">Listings</a>
                         <a class="nav-link" asp-controller="Tenant" asp-action="">Favorites</a>
                         <a class="nav-link me-5" asp-controller="Tenant" asp-action="">Messages</a>
                     }

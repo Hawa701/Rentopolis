@@ -27,6 +27,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
 builder.Services.AddScoped<IAccountServices, AccountServices>();
 builder.Services.AddScoped<IAdminServices, AdminServices>();
 builder.Services.AddScoped<IManagerServices, ManagerServices>();
+builder.Services.AddScoped<IPropertyServices, PropertyServices>();
 
 // for unauthenticated user redirection
 builder.Services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/Login");
@@ -51,7 +52,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 // custom middleware for default routing
-app.UseMiddleware<RoleBasedDefaultRouteMiddleware>();
+//app.UseMiddleware<RoleBasedDefaultRouteMiddleware>();
 
 app.UseRouting();
 
