@@ -1,5 +1,9 @@
 ﻿@model Rentopolis.Models.Data.Property
 
+@{
+    var propertyGalleryList = Model.propertyGallery.ToList();
+}
+
 @if (ViewBag.Success == false)
 {
     <div asp-validation-summary="All" class="alert alert-danger">
@@ -22,7 +26,46 @@
 <div>
 
     <p>@Model.Id</p>
-    <img src="@Model.ImageUrl" alt="Property Image" style="width:400px;"/>
+    @if (Model.propertyGallery.Count() <= 0)
+    {
+        <img src="@Model.ImageUrl" alt="Property Image" style="width:400px;"/>
+        
+    }
+
+    @if (Model.propertyGallery.Count() > 0)
+    {
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="width:400px;">
+            <div class="carousel-indicators">
+                @* indicators *@
+                @for (int i = 0; i < Model.propertyGallery.Count(); i++)
+                {
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@i" class="@(i==0? "active": "")" aria-current="true" aria-label="Slide @i"></button>
+                }
+            </div>
+            <div class="carousel-inner">
+                @* images *@
+                @for (int i = 0; i < Model.propertyGallery.Count(); i++)
+                {
+                    <div class="@(i==0? "carousel-item active": "carousel-item")">
+                        <img 
+                        src="@propertyGalleryList[i].URL"
+                        class="d-block w-100"
+                        alt="..."
+                        >
+                    </div>
+                }
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    }
+
     <h1>@Model.Address</h1>
     <h3>@Model.City</h3>
     <p>@Model.Features</p>

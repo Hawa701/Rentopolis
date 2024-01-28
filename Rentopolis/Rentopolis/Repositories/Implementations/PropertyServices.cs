@@ -24,7 +24,7 @@ namespace Rentopolis.Repositories.Implementations
         {
             Status status = new Status();
 
-            // if cover photo was given
+            // if main photo was given
             if (model.MainPhoto != null)
             {
                 string folder = "Images/Property Images/Main/";
@@ -33,6 +33,26 @@ namespace Rentopolis.Repositories.Implementations
             }
             else
                 model.MainPhotoUrl = "/Images/Property Images/Main/default.jpg";
+
+            // if gallery photos were given
+            if (model.GalleryPhotos != null)
+            {
+                string folder = "Images/Property Images/Gallery/";
+
+                model.Gallery = new List<PropertyGalleryModel>();
+
+                foreach(var file in model.GalleryPhotos)
+                {
+                    var gallery = new PropertyGalleryModel()
+                    {
+                        Name = file.Name,
+                        URL = await UploadImage(folder, file)
+                    };
+                    model.Gallery.Add(gallery);
+                }
+
+                
+            }
 
             Property newProperty = new Property
             {
@@ -51,9 +71,20 @@ namespace Rentopolis.Repositories.Implementations
                 ImageUrl = model.MainPhotoUrl,
             };
 
+            newProperty.propertyGallery = new List<PropertyGallery>();
+
+            foreach(var file in model.Gallery)
+            {
+                newProperty.propertyGallery.Add(new PropertyGallery()
+                {
+                    Name = file.Name,
+                    URL = file.URL
+                });
+            }
+
             try
             {
-                rentContext.Properties.Add(newProperty);
+                await rentContext.Properties.AddAsync(newProperty);
                 await rentContext.SaveChangesAsync();
 
                 status.StatusCode = 1;
@@ -160,21 +191,8 @@ namespace Rentopolis.Repositories.Implementations
 
             try
             {
-                property = await rentContext.Properties.FindAsync(id);
-                //property.Id = prop.Id;
-                //property.ImageUrl = prop.ImageUrl;
-                //property.Address = prop.Address;
-                //property.City = prop.City;
-                //property.Features = prop.Features;
-                //property.Bedroom = prop.Bedroom;
-                //property.Bathroom = prop.Bathroom;
-                //property.Area = prop.Area;
-                //property.PricePerMonth = prop.PricePerMonth;
-                //property.LandlordId = prop.LandlordId;
-                //property.IsApproved = prop.IsApproved;
-                //property.IsDeleted = prop.IsDeleted;
-                //property.IsRented = prop.IsRented;
-                //property.AddedDate = prop.AddedDate;
+                property = await rentContext.Properties.Include(p => p.propertyGallery).FirstOrDefaultAsync(p => p.Id == id);
+
             }
             catch (Exception ex)
             {

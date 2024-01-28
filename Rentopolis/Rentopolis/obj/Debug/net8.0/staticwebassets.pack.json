@@ -21,8 +21,32 @@
       "PackagePath": "staticwebassets\\Images\\Assets\\suitcase.png"
     },
     {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Gallery\\49deeb4a-10d2-46ce-9736-fac0d99931bb_aaa2.jpg",
+      "PackagePath": "staticwebassets\\Images\\Property Images\\Gallery\\49deeb4a-10d2-46ce-9736-fac0d99931bb_aaa2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Gallery\\8fd8222b-0466-4ec6-a7c0-8ef3752f096d_aaa4.jpg",
+      "PackagePath": "staticwebassets\\Images\\Property Images\\Gallery\\8fd8222b-0466-4ec6-a7c0-8ef3752f096d_aaa4.jpg"
+    },
+    {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Gallery\\9445e5b7-4abb-4c16-bcb9-4764c189b574_aaa5.jpg",
+      "PackagePath": "staticwebassets\\Images\\Property Images\\Gallery\\9445e5b7-4abb-4c16-bcb9-4764c189b574_aaa5.jpg"
+    },
+    {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Gallery\\bb54e56c-455b-40b4-87fd-30efc26b19c5_aaa3.jpg",
+      "PackagePath": "staticwebassets\\Images\\Property Images\\Gallery\\bb54e56c-455b-40b4-87fd-30efc26b19c5_aaa3.jpg"
+    },
+    {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Main\\68a21c38-e0fb-4f49-a2b0-49465ab914c6_harri-nieminen-sw93fB4sRQA-unsplash.jpg",
       "PackagePath": "staticwebassets\\Images\\Property Images\\Main\\68a21c38-e0fb-4f49-a2b0-49465ab914c6_harri-nieminen-sw93fB4sRQA-unsplash.jpg"
+    },
+    {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Main\\b9b24706-b2a1-443f-b752-588b1176e8e2_aaa.jpg",
+      "PackagePath": "staticwebassets\\Images\\Property Images\\Main\\b9b24706-b2a1-443f-b752-588b1176e8e2_aaa.jpg"
+    },
+    {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Main\\cae0c7f7-c4c4-4b2b-94ac-eca2fd35be8e_aaa.jpg",
+      "PackagePath": "staticwebassets\\Images\\Property Images\\Main\\cae0c7f7-c4c4-4b2b-94ac-eca2fd35be8e_aaa.jpg"
     },
     {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Main\\default.png",

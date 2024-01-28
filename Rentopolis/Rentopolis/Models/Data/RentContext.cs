@@ -10,6 +10,6 @@ namespace Rentopolis.Models.Data
         }
 
         public DbSet<Property> Properties { get; set; }
-        //public DbSet<PropertyGallery> PropertyGallery { get; set; }
+        public DbSet<PropertyGallery> PropertyGallery { get; set; }
     }
 }

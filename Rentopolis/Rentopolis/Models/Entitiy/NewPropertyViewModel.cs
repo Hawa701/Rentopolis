@@ -32,5 +32,7 @@ namespace Rentopolis.Models.Entitiy
         [Display(Name = "Cover Photo")]
         public IFormFile MainPhoto { get; set; }
         public string? MainPhotoUrl { get; set; } = "";
+        public IFormFileCollection GalleryPhotos { get; set; }
+        public List<PropertyGalleryModel> Gallery { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace Rentopolis.Controllers
         [Authorize(Roles = "Landlord")]
         public IActionResult CreateProperty(string id)
         {
-            ViewBag.LandlordId = id;
+            TempData["LandlordId"] = id;
             return View();
         }
 

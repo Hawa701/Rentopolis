@@ -1,9 +1,5 @@
 ﻿@model Rentopolis.Models.Entitiy.NewPropertyViewModel
 
-@{
-    string landlordId = ViewBag.LandlordId;
-}
-
 <h1>Create Property</h1>
 
 @if (ViewBag.Success == false)
@@ -19,7 +15,7 @@
 <div class="mt-3">
     <form method="post" enctype="multipart/form-data" asp-action="CreateProperty" class="">
 
-        <input type="text" asp-for="LandlordId" value="@landlordId" hidden />
+        <input type="text" asp-for="LandlordId" value="@TempData["LandlordId"]" hidden />
 
         @* address *@
         <div class="d-flex flex-column gap-1 mb-3">
@@ -86,6 +82,15 @@
 
         @* main photo url *@
         <input asp-for="MainPhotoUrl" value="" type="text" hidden>
+
+        @* gallery photos *@
+        <div class="d-flex flex-column gap-1 mb-3">
+            <label asp-for="GalleryPhotos" for="formFile"></label>
+            <input asp-for="GalleryPhotos" class="input" type="file" id="formFile" multiple>
+        </div>
+
+        @* main photo url *@
+        <input asp-for="Gallery" value="" type="text" hidden>
 
         <br />
 
