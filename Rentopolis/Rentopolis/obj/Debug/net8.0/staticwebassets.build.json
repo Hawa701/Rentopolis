@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "BJe4IjC1Jfj+65fat/trgAG3Tj9Bk8Y6QOJQMhdKIg8=",
+  "Hash": "uPHSFZIJ+89LA6AzRP628t8B+7NR7ECxMFn65kD10fI=",
   "Source": "Rentopolis",
   "BasePath": "_content/Rentopolis",
   "Mode": "Default",
@@ -245,12 +245,12 @@
       "OriginalItemSpec": "wwwroot\\Images\\Assets\\suitcase.png"
     },
     {
-      "Identity": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\default.png",
+      "Identity": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Main\\68a21c38-e0fb-4f49-a2b0-49465ab914c6_harri-nieminen-sw93fB4sRQA-unsplash.jpg",
       "SourceId": "Rentopolis",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\",
       "BasePath": "_content/Rentopolis",
-      "RelativePath": "Images/Property Images/default.png",
+      "RelativePath": "Images/Property Images/Main/68a21c38-e0fb-4f49-a2b0-49465ab914c6_harri-nieminen-sw93fB4sRQA-unsplash.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -261,7 +261,26 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Images\\Property Images\\default.png"
+      "OriginalItemSpec": "wwwroot\\Images\\Property Images\\Main\\68a21c38-e0fb-4f49-a2b0-49465ab914c6_harri-nieminen-sw93fB4sRQA-unsplash.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Main\\default.png",
+      "SourceId": "Rentopolis",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\",
+      "BasePath": "_content/Rentopolis",
+      "RelativePath": "Images/Property Images/Main/default.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\Property Images\\Main\\default.png"
     },
     {
       "Identity": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\User Profiles\\257b2748-e1a8-4c6d-a7e5-389f04f92223_Pic1.jpg",

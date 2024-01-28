@@ -78,6 +78,15 @@
 
         </div>
 
+        @* main photo *@
+        <div class="d-flex flex-column gap-1 mb-3">
+            <label asp-for="MainPhoto" for="formFile"></label>
+            <input asp-for="MainPhoto" class="input" type="file" id="formFile">
+        </div>
+
+        @* main photo url *@
+        <input asp-for="MainPhotoUrl" value="" type="text" hidden>
+
         <br />
 
         @* button *@

@@ -4,7 +4,6 @@ namespace Rentopolis.Models.Entitiy
 {
     public class NewPropertyViewModel
     {
-        //public string ImageUrl { get; set; }
         [Required]
         public string LandlordId { get; set; }
 
@@ -12,6 +11,7 @@ namespace Rentopolis.Models.Entitiy
         public string Address { get; set; }
 
         [Required]
+        [Display(Name = "Sub City")]
         public string City { get; set; }
 
         public string Features { get; set; }
@@ -26,6 +26,11 @@ namespace Rentopolis.Models.Entitiy
         public decimal Area { get; set; }
 
         [Required]
+        [Display(Name = "Price Per Month")]
         public decimal PricePerMonth { get; set; }
+
+        [Display(Name = "Cover Photo")]
+        public IFormFile MainPhoto { get; set; }
+        public string? MainPhotoUrl { get; set; } = "";
     }
 }

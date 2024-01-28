@@ -4,6 +4,7 @@ using Rentopolis.Models.Data;
 using Rentopolis.Models.Entitiy;
 using Rentopolis.Repositories.Interfaces;
 using System.Net;
+using static NuGet.Packaging.PackagingConstants;
 
 namespace Rentopolis.Repositories.Implementations
 {
@@ -23,9 +24,18 @@ namespace Rentopolis.Repositories.Implementations
         {
             Status status = new Status();
 
+            // if cover photo was given
+            if (model.MainPhoto != null)
+            {
+                string folder = "Images/Property Images/Main/";
+
+                model.MainPhotoUrl = await UploadImage(folder, model.MainPhoto);
+            }
+            else
+                model.MainPhotoUrl = "/Images/Property Images/Main/default.jpg";
+
             Property newProperty = new Property
             {
-                ImageUrl = "/Images/Property Images/default.png",
                 Address = model.Address,
                 City = model.City,
                 Features = model.Features,
@@ -38,6 +48,7 @@ namespace Rentopolis.Repositories.Implementations
                 IsDeleted = false,
                 IsRented = false,
                 AddedDate = DateTime.Now,
+                ImageUrl = model.MainPhotoUrl,
             };
 
             try
@@ -55,6 +66,17 @@ namespace Rentopolis.Repositories.Implementations
 
 
             return status;
+        }
+
+        private async Task<string> UploadImage(string folderPath, IFormFile file)
+        {
+            folderPath += Guid.NewGuid().ToString() + "_" + file.FileName;
+
+            string serverFolder = Path.Combine(webHostEnvironment.WebRootPath, folderPath);
+
+            await file.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+
+            return "/" + folderPath;
         }
 
 
