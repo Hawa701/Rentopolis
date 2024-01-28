@@ -2,40 +2,103 @@
 
 @* For Admin page *@
 
-<h1>@TempData["role"]s</h1>
+<div class="d-flex align-items-center">
 
-<div asp-validation-summary="All" class="text-danger">
-    @if (TempData["deletionErrors"] != null)
+    <div class="d-flex flex-column flex-grow-1">
+        <h1>@TempData["role"]s</h1>
+        <p>These is the list of @TempData["role"]s you currently have!</p>
+    </div>
+
+    @if (TempData["role"].ToString() == "Manager")
     {
-        <p>@TempData["deletionErrors"]</p>
+        <div class="d-flex flex-column">
+            <a class="btn btn-outline-secondary d-flex justify-content-center align-items-center gap-2" asp-controller="Admin" asp-action="AddManager">
+                <i class="fa-solid fa-user-plus"></i>
+                New Manager
+            </a>
+        </div>
     }
 </div>
 
-@if (TempData["role"].ToString() == "Manager")
+@if (TempData["deletionErrors"] != null)
 {
-    <a class="btn btn-secondary mt-3 mb-3" asp-controller="Admin" asp-action="NewManager">Create Manager Account</a>
+    <div asp-validation-summary="All" class="text-danger">
+        <p>@TempData["deletionErrors"]</p>
+    </div>
 }
 
 
 <br />
 
-<table class="table table-sm table-bordered">
-    <tr>
-        <td>ID</td>
-        <td>Name</td>
-        <td>Email</td>
-        <td colspan="2">Action</td>
-    </tr>
-    @foreach (var user in Model)
-    {
-        <tr>
-            <td>@user.Id</td>
-            <td>@user.UserName</td>
-            <td>@user.Email</td>
-            <td>
-                <a class="btn btn-success" asp-controller="Account" asp-action="UserProfile" asp-route-id="@user.Id">Detail</a>
-                <a class="btn btn-danger" asp-action="DeleteManager" asp-route-id="@user.Id">Delete</a>
-            </td>
+@if (Model.Count == 0)
+{
+    <div class="d-flex justify-content-center" style="margin-top:100px">
+        <h4>No users available!</h4>
+    </div>
+}
+
+@if (Model.Count != 0)
+{
+    <table class="table table-hover">
+        <tr class="table-dark" style="height:50px">
+            <th>User Id</th>
+            <th>User</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Banned</th>
+            <th></th>
         </tr>
-    }
-</table>
+        @foreach (var user in Model)
+        {
+            <tr>
+                @* user id *@
+                <td>
+                    <p class="fw-light" style="font-size:13px">@user.Id</p>
+                </td>
+
+                @* profile *@
+                <td>
+                    <div class="d-flex justify-content-start align-items-center gap-2">
+                        <img src="@user.ProfilePicture" alt="profile pic" style="width:35px; height:35px; border-radius:50%;" />
+                        @user.UserName
+                    </div>
+                </td>
+
+                @* full name *@
+                <td>
+                    <div class="d-flex justify-content-start align-items-center gap-1">
+                        <p>@user.FirstName</p>
+                        <p>@user.LastName</p>
+                    </div>
+                </td>
+
+                @* email *@
+                <td>@user.Email</td>
+
+                @* banned? *@
+                <td>
+                    @if (user.LockoutEnd == null)
+                    {
+                        <p>False</p>
+                    }
+                    @if (user.LockoutEnd != null)
+                    {
+                        <p>True</p>
+                    }
+                </td>
+
+                @* buttons *@
+                <td>
+                    <div class="d-flex justify-content-end gap-2 me-3">
+                        <a class="btn" asp-controller="Account" asp-action="UserProfile" asp-route-id="@user.Id">
+                            <i class="fa-solid fa-circle-info fs-5" style="color: black;" onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';"></i>
+                        </a>
+                    </div>
+                </td>
+
+            </tr>
+        }
+
+
+    </table>
+}

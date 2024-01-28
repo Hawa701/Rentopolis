@@ -269,6 +269,9 @@ namespace Rentopolis.Migrations
                     b.Property<bool>("IsApproved")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsRented")
                         .HasColumnType("bit");
 

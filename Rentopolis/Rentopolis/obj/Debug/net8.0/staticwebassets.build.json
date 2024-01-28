@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "TWdzEwzAcAwc6BP88jGYX8TRF2jS3djhV/LJF6g4FeY=",
+  "Hash": "BJe4IjC1Jfj+65fat/trgAG3Tj9Bk8Y6QOJQMhdKIg8=",
   "Source": "Rentopolis",
   "BasePath": "_content/Rentopolis",
   "Mode": "Default",
@@ -283,6 +283,25 @@
       "OriginalItemSpec": "wwwroot\\Images\\User Profiles\\257b2748-e1a8-4c6d-a7e5-389f04f92223_Pic1.jpg"
     },
     {
+      "Identity": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\User Profiles\\46ab2224-1ffa-4d11-8796-d9397499943c_Pic1.jpg",
+      "SourceId": "Rentopolis",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\",
+      "BasePath": "_content/Rentopolis",
+      "RelativePath": "Images/User Profiles/46ab2224-1ffa-4d11-8796-d9397499943c_Pic1.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\User Profiles\\46ab2224-1ffa-4d11-8796-d9397499943c_Pic1.jpg"
+    },
+    {
       "Identity": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\User Profiles\\7a359db0-f1fb-4fb6-bebf-c481c84fe1a3_Mikasa Ackerman.jpg",
       "SourceId": "Rentopolis",
       "SourceType": "Discovered",
@@ -395,6 +414,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\User Profiles\\default.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\User Profiles\\df4307f6-cbcf-46c4-918b-4e3656d28e18_43.jpg",
+      "SourceId": "Rentopolis",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\",
+      "BasePath": "_content/Rentopolis",
+      "RelativePath": "Images/User Profiles/df4307f6-cbcf-46c4-918b-4e3656d28e18_43.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\User Profiles\\df4307f6-cbcf-46c4-918b-4e3656d28e18_43.jpg"
     },
     {
       "Identity": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\User Profiles\\f2635a2e-2233-49c3-89c7-7a3b6b1f46fb_Pic1.jpg",

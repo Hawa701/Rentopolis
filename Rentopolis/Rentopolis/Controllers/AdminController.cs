@@ -15,6 +15,7 @@ namespace Rentopolis.Controllers
             this._services = adminServices;
         }
 
+
         // Home page
         [HttpGet]
         public IActionResult Home()
@@ -35,7 +36,7 @@ namespace Rentopolis.Controllers
 
         // Add managers
         [HttpGet]
-        public async Task<IActionResult> AddManager()
+        public IActionResult AddManager()
         {
             return View();
         }
@@ -44,15 +45,24 @@ namespace Rentopolis.Controllers
         public async Task<IActionResult> AddManager(RegisterationViewModel model)
         {
             if (!ModelState.IsValid)
+            {
+                ViewBag.Success = false;
                 return View(model);
+            }
 
             Status returnedStatus = await _services.CreateNewManager(model);
-            if (returnedStatus.StatusCode == 0)
+
+            if (returnedStatus.StatusCode == 1)
             {
-                TempData["registrationMsg"] = returnedStatus.StatusMessage;
-                return View();
+                //TempData["successMessage"] = "Success";
+                return RedirectToAction("AllUsers", "Admin", new { role = "Manager" });
             }
-            return RedirectToAction("ListUsers", "Admin", new { role = "Manager" });
+            else
+            {
+                ViewBag.Success = false;
+                ViewBag.Message = returnedStatus.StatusMessage;
+                return View(model);
+            }
         }
 
 
@@ -62,7 +72,7 @@ namespace Rentopolis.Controllers
         {
             Status returnedStatus = await _services.DeleteManager(id);
             if (returnedStatus.StatusCode == 0) TempData["deletionErrors"] = returnedStatus.StatusMessage;
-            return RedirectToAction("ListUsers", "Admin", new { role = "Manager" });
+            return RedirectToAction("AllUsers", "Admin", new { role = "Manager" });
         }
     }
 }

@@ -19,7 +19,7 @@
             <!-- Image -->
             <div class="image-box">
                 <div class="text">
-                    <p>Sign up to Discover Your Dream Rental!</p>
+                    <p>Add a new manager and let them join the family!</p>
                     <p class="italic">
                         <a asp-controller="Home" asp-action="Index">Rentopolis</a>
                     </p>
@@ -28,13 +28,18 @@
 
             <!-- Form -->
             <div class="form-box">
-                <h1 class="header">Create Account</h1>
-                <div class="error-container" asp-validation-summary="All">
-                    @if (TempData["registrationMsg"] != null)
-                    {
-                        <p class="error">@TempData["registrationMsg"]</p>
-                    }
-                </div>
+
+                <h1 class="header" style="margin-top:110px">Create Manager</h1>
+
+                @if (ViewBag.Success == false)
+                {
+                    <div asp-validation-summary="All" class="alert alert-danger">
+                        @if (ViewBag.Message != null)
+                        {
+                            <ul> <li>@ViewBag.Message</li> </ul>
+                        }
+                    </div>
+                }
 
                 <form method="post" asp-action="AddManager">
 
@@ -88,13 +93,6 @@
                         <button class="btn btn-primary" type="submit">Register</button>
                     </div>
 
-                    @* link *@
-                    <div class="sign-up">
-                        <span>
-                            Already have an account?'
-                            <a asp-action="Login">Click here to login</a>
-                        </span>
-                    </div>
                 </form>
 
             </div>

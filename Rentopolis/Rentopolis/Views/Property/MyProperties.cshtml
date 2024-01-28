@@ -4,19 +4,142 @@
     string landlordId = ViewBag.LandlordId;
 }
 
-<h1>My Properties</h1>
+@* <h1>My Properties</h1>
+*@
 
-<a class="btn btn-secondary" asp-controller="Property" asp-action="CreateProperty" asp-route-id="@landlordId">Create</a>
+<div class="d-flex align-items-center">
 
-@foreach (var property in Model)
-{
-    <div class="card shadow-lg p-3 mb-5 rounded" style="width: 18rem;">
-        <img src="@property.ImageUrl" class="card-img-top" alt="@property.Address's image">
-        <div class="card-body">
-            <p class="card-text">@property.Address</p>
-            <div>
-                <a href="#" class="btn btn-primary">Detail</a>
-            </div>
+    <div class="d-flex flex-column flex-grow-1 mb-4">
+        <h1>My Properties</h1>
+        <p>These is the list of properties you own!</p>
+    </div>
+
+    @if (Model.Count != 0)
+    {
+        <div class="d-flex flex-column">
+            <a class="btn btn-primary" asp-controller="Property" asp-action="CreateProperty" asp-route-id="@landlordId">
+                <i class="fa-solid fa-plus me-1"></i>
+                New Property
+            </a> 
         </div>
+    }
+</div>
+
+
+@if (TempData.ContainsKey("successMessage"))
+{
+    <div asp-validation-summary="All" class="alert alert-success">
+        <li>@TempData["successMessage"]</li>
+    </div>
+    TempData.Remove("successMessage");
+}
+
+
+@if (Model.Count == 0)
+{
+    <div class="d-flex flex-column justify-content-center align-items-center" style="margin-top:100px">
+        <h5 class="mb-4">You dont have any properties yet!</h5>
+        <a class="btn btn-outline-primary w-25" asp-controller="Property" asp-action="CreateProperty" asp-route-id="@landlordId">
+            Create a new Property
+        </a>
+    </div>
+}
+
+@if (Model.Count != 0)
+{
+    <div class="d-flex flex-column justify-content-center align-items-start ps-4 pe-4">
+        @foreach (var property in Model)
+        {
+        <a asp-controller="Property" asp-action="Detail" asp-route-id="@property.Id" style="text-decoration:none; color:black">
+            <div class="card mb-3 shadow-lg p-3 mb-5 rounded" style="width:100%; height:250px;">
+                <div class="row g-0">
+
+                    @* image *@
+                    <div class="col-md-3">
+                            <img src="@property.ImageUrl" class="img-fluid rounded-start" alt="@property.Address's image" style="width:250px;height:220px;">
+                    </div>
+
+                    <div class="col-md-9">
+                        <div class="card-body">
+
+                            @* address *@
+                            <h5 class="card-title">@property.Address</h5>
+
+                            @* features *@
+                            <p class="card-text">@property.Features</p>
+
+                            <div class="d-flex justify-content-between align-items-center">
+
+                                @* bedroom *@
+                                <div class="d-flex flex-column flex-grow-1 gap-2">
+                                    <i class="fa-solid fa-bed  fs-5"></i>
+                                    <p>@property.Bedroom</p>
+                                </div>
+
+                                @* bathroom *@
+                                <div class="d-flex flex-column flex-grow-1">
+                                    <i class="fa-solid fa-bath fs-5"></i>
+                                    <p>@property.Bathroom</p>
+                                </div>
+
+                                @* area *@
+                                <div class="d-flex flex-column flex-grow-1">
+                                    <i class="fa-solid fa-chart-area  fs-5"></i>
+                                    <p>@property.Area</p>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center">
+
+                                @* added date *@
+                                <p class="card-text"><small class="text-muted">Posted on: @property.AddedDate</small></p>
+                                
+                                <div class="d-flex justify-content-center gap-3 w-50">
+                                    @* approval status *@
+                                    @if(property.IsApproved == true && property.IsDeleted == false)
+                                    {
+                                        <div class="d-flex justify-content-center align-items-center w-50 gap-2 rounded" style="background-color:green; color: white;">
+                                            <i class="fa-regular fa-circle-check"></i>
+                                            <h6 class="mt-2 mb-2">Approved</h6>
+                                        </div>
+                                    }
+                                    @if(property.IsApproved == false && property.IsDeleted == false)
+                                    {
+                                        <div class="d-flex justify-content-center align-items-center w-50 gap-2 rounded" style="background-color:dimgray; color: white;">
+                                            <i class="fa-regular fa-clock"></i>
+                                            <h6 class="mt-2 mb-2">Waiting</h6>
+                                        </div>
+                                    }
+                                    @if(property.IsApproved == false && property.IsDeleted == true)
+                                    {
+                                        <div class="d-flex justify-content-center align-items-center w-50 gap-2 rounded" style="background-color:red; color: white;">
+                                                <i class="fa-regular fa-circle-xmark"></i>
+                                            <h6 class="mt-2 mb-2">Rejected</h6>
+                                        </div>
+                                    }
+
+                                    @* rent status *@
+                                    @if(property.IsRented == true)
+                                    {
+                                        <div class="d-flex justify-content-center align-items-center w-50 gap-2 rounded" style="background-color:green; color: white;">
+                                            <i class="fa-regular fa-circle-check"></i>
+                                            <h6 class="mt-2 mb-2">Rented</h6>
+                                        </div>
+                                    }
+                                    @if(property.IsRented == false)
+                                    {
+                                        <div class="d-flex justify-content-center align-items-center w-50 gap-2 rounded" style="background-color:dimgray; color: white;">
+                                                <i class="fa-regular fa-circle-xmark"></i>
+                                            <h6 class="mt-2 mb-2">Not Rented</h6>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        }
     </div>
 }

@@ -1,0 +1,57 @@
+﻿@model Rentopolis.Models.Data.Property
+
+@if (ViewBag.Success == false)
+{
+    <div asp-validation-summary="All" class="alert alert-danger">
+        @if (ViewBag.Message != null)
+        {
+            <ul> <li>@ViewBag.Message</li> </ul>
+        }
+    </div>
+}
+
+@if (TempData.ContainsKey("successMessage"))
+{
+    <div asp-validation-summary="All" class="alert alert-success">
+        <li>@TempData["successMessage"]</li>
+    </div>
+    TempData.Remove("successMessage");
+}
+
+
+<div>
+
+    <p>@Model.Id</p>
+    <img src="@Model.ImageUrl" alt="Property Image" style="width:400px;"/>
+    <h1>@Model.Address</h1>
+    <h3>@Model.City</h3>
+    <p>@Model.Features</p>
+    <p>Bedroom: @Model.Bedroom</p>
+    <p>Bathroom: @Model.Bathroom</p>
+    <p>Area: @Model.Area</p>
+    <p>Price: @Model.PricePerMonth</p>
+    <p>Landlord Id: @Model.LandlordId</p>
+    <p>Tenant Id: @Model.TenantId</p>
+    <p>Posted on: @Model.AddedDate</p>
+    <p>Approved: @Model.IsApproved</p>
+    <p>Rejected: @Model.IsDeleted</p>
+    <p>Rented: @Model.IsRented</p>
+
+    @if (User.IsInRole("Manager"))
+    {
+        <a class="btn btn-success" asp-action="Approve" asp-route-id="@Model.Id">Approve</a>
+        <a class="btn btn-danger" asp-action="Reject" asp-route-id="@Model.Id">Reject</a>
+    }
+    
+    @if (User.IsInRole("Landlord"))
+    {
+        <a class="btn btn-primary" asp-action="EditProperty" asp-route-id="@Model.Id">Edit</a>
+        <a class="btn btn-danger" asp-action="DeleteProperty" asp-route-id="@Model.Id">Delete</a>
+    }
+    
+    @if (User.IsInRole("Tenant"))
+    {
+        <a class="btn btn-danger" asp-action="" asp-route-id="@Model.Id">Like</a>
+        <a class="btn btn-success" asp-action="" asp-route-id="@Model.Id">Rent</a>
+    }
+</div>

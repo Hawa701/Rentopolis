@@ -35,6 +35,7 @@ body {
 .btn-secondary,
 .btn-success,
 .btn-danger,
+.btn-outline-primary,
 .btn-outline-secondary {
     padding: 12px 20px;
 }

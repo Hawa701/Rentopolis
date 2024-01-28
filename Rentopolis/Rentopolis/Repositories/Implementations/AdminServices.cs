@@ -29,12 +29,22 @@ namespace Rentopolis.Repositories.Implementations
         public async Task<Status> CreateNewManager(RegisterationViewModel model)
         {
             Status status = new Status();
-            var resut = await userManager.FindByNameAsync(model.UserName);
-            //if username exists
-            if (resut != null)
+
+            //if username already exists
+            var result = await userManager.FindByNameAsync(model.UserName);
+            if (result != null)
             {
                 status.StatusCode = 0;
                 status.StatusMessage = "A user with that username already exists! Please try another one.";
+                return status;
+            }
+
+            //if email already exists
+            var result2 = await userManager.FindByEmailAsync(model.Email);
+            if (result2 != null)
+            {
+                status.StatusCode = 0;
+                status.StatusMessage = "A user with that email already exists! Please try another one.";
                 return status;
             }
 
@@ -46,11 +56,13 @@ namespace Rentopolis.Repositories.Implementations
                 Email = model.Email,
                 EmailConfirmed = true,
                 UserName = model.UserName,
+                ProfilePicture = "/Images/User Profiles/default.jpg"
             };
 
-            IdentityResult result = await userManager.CreateAsync(user, model.Password);
+            IdentityResult createResult = await userManager.CreateAsync(user, model.Password);
+            
             //if it failed
-            if (!result.Succeeded)
+            if (!createResult.Succeeded)
             {
                 status.StatusCode = 0;
                 status.StatusMessage = "Failed to register the account!";
@@ -66,6 +78,7 @@ namespace Rentopolis.Repositories.Implementations
             status.StatusCode = 1;
             return status;
         }
+
 
         // Delete manager
         public async Task<Status> DeleteManager(string id)

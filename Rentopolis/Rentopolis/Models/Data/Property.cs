@@ -21,6 +21,7 @@ namespace Rentopolis.Models.Data
         public string? TenantId { get; set; }
         public bool IsApproved { get; set; }
         public bool IsRented { get; set; }
+        public bool IsDeleted { get; set; }
         public DateTime AddedDate { get; set; }
         public DateTime? ApprovedDate { get; set; }
     }

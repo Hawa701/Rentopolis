@@ -1,11 +1,69 @@
 ﻿@model List<Rentopolis.Models.Data.Property>
 
-@foreach (var property in Model)
+<div class="d-flex flex-column mb-4">
+    <h1>All Properties</h1>
+    <p>These are all the properties available in the whole system!</p>
+</div>
+
+@if (Model.Count == 0)
 {
-    <div class="card shadow-lg p-3 mb-5 rounded" style="width: 18rem;">
-        <img src="@property.ImageUrl" class="card-img-top" alt="@property.Address's image">
-        <div class="card-body">
-            <p class="card-text">@property.Address</p>
-        </div>
+    <div class="d-flex justify-content-center" style="margin-top:100px">
+        <h4>No properties available!</h4>
     </div>
+}
+
+@if (Model.Count != 0)
+{
+    <table class="table table-hover">
+        <tr class="table-dark" style="height:50px">
+            <th>Id</th>
+            <th>Address</th>
+            <th>Sub-City</th>
+            <th>Added Date</th>
+            <th>Approval Status</th>
+            <th></th>
+        </tr>
+    
+        @foreach (var property in Model)
+        {
+            <tr>
+
+                @* id *@
+                <td>@property.Id</td>
+
+                @* address *@
+                <td>@property.Address</td>
+
+                @* sub city *@
+                <td>@property.City</td>
+                
+                @* added date *@
+                <td>@property.AddedDate</td>
+                
+                @* status *@
+                <td>
+                    @if (property.IsApproved == true && property.IsDeleted == false)
+                    {
+                        <p>Approved</p>
+                    }
+                    @if (property.IsApproved == false && property.IsDeleted == false)
+                    {
+                        <p>Waiting</p>
+                    }@if (property.IsApproved == false && property.IsDeleted == true)
+                    {
+                        <p>Rejected</p>
+                    }
+                </td>
+
+                @* detail button *@
+                <td>
+                    <div class="d-flex justify-content-end gap-2 me-3">
+                        <a class="btn" asp-action="Detail" asp-route-id="@property.Id">
+                            <i class="fa-solid fa-circle-info fs-5" style="color: black;" onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
 }

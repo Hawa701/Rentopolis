@@ -22,6 +22,7 @@ namespace Rentopolis.Repositories.Implementations
             this.webHostEnvironment = webHostEnvironment;
         }
 
+
         // Get user by Id for viewing
         public async Task<FullInfoViewModel> GetUserByIdForView(string id)
         {
@@ -41,6 +42,7 @@ namespace Rentopolis.Repositories.Implementations
             return user;
         }
 
+
         // Get user by Id for editing
         public async Task<UpdateUserInfoViewModel> GetUserByIdForEdit(string id)
         {
@@ -59,6 +61,7 @@ namespace Rentopolis.Repositories.Implementations
 
             return user;
         }
+
 
         // For Login
         public async Task<Status> LoginUser(LoginViewModel model)
@@ -115,23 +118,34 @@ namespace Rentopolis.Repositories.Implementations
             }
         }
 
+
         // For Logout
         public async Task LogoutUser()
         {
             await signInManager.SignOutAsync();
         }
 
+
         // For Registering
         public async Task<Status> RegisterUser(RegisterationViewModel model)
         {
             Status status = new Status();
-            var resut = await userManager.FindByNameAsync(model.UserName);
 
-            //if username exists
-            if (resut != null)
+            //if username already exists
+            var result = await userManager.FindByNameAsync(model.UserName);
+            if (result != null)
             {
                 status.StatusCode = 0;
                 status.StatusMessage = "A user with that username already exists! Please try another one.";
+                return status;
+            }
+
+            //if email already exists
+            var result2 = await userManager.FindByEmailAsync(model.Email);
+            if (result2 != null)
+            {
+                status.StatusCode = 0;
+                status.StatusMessage = "A user with that email already exists!";
                 return status;
             }
 
@@ -163,25 +177,25 @@ namespace Rentopolis.Repositories.Implementations
                 ProfilePicture = model.ProfilePicUrl,
             };
 
-            IdentityResult result = await userManager.CreateAsync(user, model.Password);
+            IdentityResult createResult = await userManager.CreateAsync(user, model.Password);
             //if it failed
-            if (!result.Succeeded)
+            if (!createResult.Succeeded)
             {
                 status.StatusCode = 0;
                 status.StatusMessage = "Failed to register the account!";
                 return status;
             }
 
-            // checking if a role was specified or not
+            // checking if the specified role exists or not
             bool roleExists = await roleManager.RoleExistsAsync(model.Role);
             if (roleExists) await userManager.AddToRoleAsync(user, model.Role);
-
             if (!roleExists) await roleManager.CreateAsync(new IdentityRole(model.Role));
 
             status.StatusCode = 1;
             return status;
         }
         
+
         // For Editing profile
         public async Task<Status> EditUserProfile(UpdateUserInfoViewModel model)
         {
@@ -245,6 +259,7 @@ namespace Rentopolis.Repositories.Implementations
 
             return status;
         }
+
 
         // For deleting profile
         public async Task<Status> DeleteUserProfile(string id)

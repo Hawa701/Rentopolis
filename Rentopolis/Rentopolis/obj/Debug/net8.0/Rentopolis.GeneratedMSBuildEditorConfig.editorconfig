@@ -90,6 +90,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvcGVydHlcQ3JlYXRlUHJvcGVydHkuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/paulo/Documents/GitHub/Rentopolis/Rentopolis/Rentopolis/Views/Property/Detail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvcGVydHlcRGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/paulo/Documents/GitHub/Rentopolis/Rentopolis/Rentopolis/Views/Property/EditProperty.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvcGVydHlcRWRpdFByb3BlcnR5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/paulo/Documents/GitHub/Rentopolis/Rentopolis/Rentopolis/Views/Property/Listings.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvcGVydHlcTGlzdGluZ3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

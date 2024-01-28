@@ -40,7 +40,14 @@ namespace Rentopolis.Controllers
         public async Task<IActionResult> BanUser(string id, string role)
         {
             Status returnedStatus = await _services.BanUser(id);
-            if (returnedStatus.StatusCode == 0) ViewData["banError"] = returnedStatus.StatusMessage;
+
+            if (returnedStatus.StatusCode == 0)
+            {
+                ViewBag.Success = false;
+                ViewBag.Message = returnedStatus.StatusMessage;
+            }
+            else ViewBag.Success = true;
+
             return RedirectToAction("AllUsers", "Manager", new { role = role });
         }
         
@@ -50,7 +57,14 @@ namespace Rentopolis.Controllers
         public async Task<IActionResult> UnbanUser(string id, string role)
         {
             Status returnedStatus = await _services.UnbanUser(id);
-            if (returnedStatus.StatusCode == 0) ViewData["banError"] = returnedStatus.StatusMessage;
+
+            if (returnedStatus.StatusCode == 0)
+            {
+                ViewBag.Success = false;
+                ViewBag.Message = returnedStatus.StatusMessage;
+            }
+            else ViewBag.Success = true;
+
             return RedirectToAction("AllUsers", "Manager", new { role = role });
         }
     }
