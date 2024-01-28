@@ -63,6 +63,21 @@ namespace Rentopolis.Repositories.Implementations
         }
 
 
+        //Get user by Id for password
+        public async Task<PasswordViewModel> GetUserByIdForPassword(string id)
+        {
+            var result = await userManager.FindByIdAsync(id);
+            if (result == null) return null;
+
+            PasswordViewModel userInfo = new PasswordViewModel
+            {
+                Id = result.Id,
+            };
+
+            return userInfo;
+        }
+
+
         // For Login
         public async Task<Status> LoginUser(LoginViewModel model)
         {
@@ -255,6 +270,41 @@ namespace Rentopolis.Repositories.Implementations
             {
                 status.StatusCode = 0;
                 status.StatusMessage = "Failed to update the user profile!";
+            }
+
+            return status;
+        }
+        
+
+        // For Changing Password
+        public async Task<Status> ChangeUserPassword(PasswordViewModel model)
+        {
+            Status status = new Status();
+
+            // if user doesn't exist
+            var user = await userManager.FindByIdAsync(model.Id);
+            if (user == null)
+            {
+                status.StatusCode = 0;
+                status.StatusMessage = "Couldn't find a user with this Id! Please try again!";
+                return status;
+            }
+
+            // if old password doesn't match
+            if (!await userManager.CheckPasswordAsync(user, model.OldPassword))
+            {
+                status.StatusCode = 0;
+                status.StatusMessage = "Old password is incorrect!";
+                return status;
+            }
+
+            // Update the password
+            var changePasswordResult = await userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+            if (changePasswordResult.Succeeded) status.StatusCode = 1;
+            else
+            {
+                status.StatusCode = 0;
+                status.StatusMessage = "Failed to change the password!";
             }
 
             return status;

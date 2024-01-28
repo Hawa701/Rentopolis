@@ -21,9 +21,11 @@
         <div class="container">
 
             <!-- Logo -->
-            @* <i class="fa-solid fa-cubes fs-4 me-1"></i> *@
-            <i class="fa-solid fa-fan fs-4 me-1"></i>
-            <a class="navbar-brand fs-4" asp-controller="Home" asp-action="Index">Rentopolis</a>
+            <a class="navbar-brand fs-4" asp-controller="Home" asp-action="Index">
+                @* <i class="fa-solid fa-cubes fs-4 me-1"></i> *@
+                <i class="fa-solid fa-fan fs-4 me-1"></i>
+                Rentopolis
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -69,14 +71,14 @@
                 @if (!isAuthenticated)
                 {
                     <!-- Sign in button -->
-                    <a class="btn btn-outline-secondary shadow-sm d-sm d-block" asp-controller="Account" asp-action="Login">Sign In</a>
+                    <a class="btn btn-outline-secondary shadow-sm d-sm d-block" style="box-shadow: none;" asp-controller="Account" asp-action="Login">Sign In</a>
                 }
 
                 @if (isAuthenticated)
                 {
                     <!-- User Avatar -->
                     <div class="dropdown ml-auto">
-                        <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="btn btn-outline-secondary dropdown-toggle" style="box-shadow: none;" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                             @User.FindFirstValue(ClaimTypes.Name)
                         </a>
 
@@ -114,8 +116,8 @@
                                     <p>Are you sure you want to log out?</p>
                                 </div>
                                 <div class="modal-footer gap-2">
-                                    <a class="btn btn-primary" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);" href="/Account/Logout">Yes</a>
-                                    <button type="button" class="btn btn-secondary" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);" data-bs-dismiss="modal">No</button>
+                                    <a class="btn btn-primary" href="/Account/Logout">Yes</a>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                                 </div>
                             </div>
                         </div>

@@ -6,10 +6,12 @@ namespace Rentopolis.Repositories.Interfaces
     {
         Task<FullInfoViewModel> GetUserByIdForView(string id);
         Task<UpdateUserInfoViewModel> GetUserByIdForEdit(string id);
+        Task<PasswordViewModel> GetUserByIdForPassword(string id);
         Task<Status> LoginUser(LoginViewModel model);
         Task LogoutUser();
         Task<Status> RegisterUser(RegisterationViewModel model);
         Task<Status> EditUserProfile(UpdateUserInfoViewModel model);
+        Task<Status> ChangeUserPassword(PasswordViewModel model);
         Task<Status> DeleteUserProfile(string id);
     }
 }

@@ -158,6 +158,42 @@ namespace Rentopolis.Controllers
         }
 
 
+        // Change Password
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword(string id)
+        {
+            PasswordViewModel model = await _services.GetUserByIdForPassword(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword(PasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Success = false;
+                return View(model);
+            }
+
+            Status returnedStatus = await _services.ChangeUserPassword(model);
+
+            if (returnedStatus.StatusCode == 1)
+            {
+                string role = User.FindFirstValue(ClaimTypes.Role);
+                TempData["successMessage"] = "Success";
+                return RedirectToAction("Home", role);
+            }
+            else
+            {
+                ViewBag.Success = false;
+                ViewBag.Message = returnedStatus.StatusMessage;
+                return View(model);
+            }
+        }
+
+
         // Delete Profile
         [HttpGet]
         [Authorize(Roles = "Landlord,Tenant")]
@@ -171,6 +207,7 @@ namespace Rentopolis.Controllers
             } 
             return await Logout();
         }
+
 
         // When unauthorized
         [HttpGet]
