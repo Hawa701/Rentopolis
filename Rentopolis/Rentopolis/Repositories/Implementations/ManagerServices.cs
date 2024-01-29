@@ -14,16 +14,22 @@ namespace Rentopolis.Repositories.Implementations
             this.userManager = userManager;
         }
 
-        // Get user list
-        public async Task<List<AppUser>> GetUsersByRole(string role)
+        // Get user list by their role
+        public async Task<List<AppUser>> GetUsersByRole(string role, string searchString)
         {
-            if (role == "Landlord" || role == "Tenant")
+            var userList = await userManager.GetUsersInRoleAsync(role);
+
+            if (!string.IsNullOrEmpty(searchString))
             {
-                var userList = await userManager.GetUsersInRoleAsync(role);
-                return userList.ToList();
+                userList = userList.Where(u =>
+                    u.FirstName.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    u.LastName.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    u.UserName.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    u.Email.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0
+                ).ToList();
             }
 
-            return null;
+            return userList.ToList();
         }
 
         // Ban user

@@ -6,7 +6,7 @@ namespace Rentopolis.Repositories.Interfaces
 {
     public interface IAdminServices
     {
-        Task<List<AppUser>> GetUsersByRole(string role);
+        Task<List<AppUser>> GetUsersByRole(string role, string searchString);
         Task<Status> CreateNewManager(RegisterationViewModel model);
         Task<Status> DeleteManager(string id);
     }

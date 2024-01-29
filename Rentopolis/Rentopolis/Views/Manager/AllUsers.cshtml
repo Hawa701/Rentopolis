@@ -3,9 +3,21 @@
 @* For Manager page *@
 
 <div class="d-flex flex-column flex-grow-1">
-    <h1>@ViewData["role"]s</h1>
-    <p>These is the list of @ViewData["role"]s that are available!</p>
+    <h1>@TempData["role"]s</h1>
+    <p>These is the list of @TempData["role"]s that are available!</p>
 </div>
+
+@* search form *@
+<form method="get" asp-action="AllUsers">
+    <div class="d-flex flex-column mt-4">
+        <h5>Search</h5>
+        <div class="input-group mb-3">
+            <input type="hidden" name="role" value="@TempData["role"]">
+            <input type="text" class="form-control ps-4" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="First name, Last name, User name, Email..." aria-label="Search" aria-describedby="button-addon2" autocomplete="off">
+            <button class="btn btn-dark" type="submit" id="button-addon2">Search</button>
+        </div>
+    </div>
+</form>
 
 <br />
 
@@ -84,7 +96,7 @@
                                         <p>Are you sure you want to ban this user?</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <a class="btn btn-primary" asp-action="BanUser" asp-route-id="@user.Id" asp-route-role="@ViewData["role"]">Yes</a>
+                                        <a class="btn btn-primary" asp-action="BanUser" asp-route-id="@user.Id" asp-route-role="@TempData["role"]">Yes</a>
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                                     </div>
                                 </div>
@@ -109,7 +121,7 @@
                                         <p>Are you sure you want to unban this user?</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <a class="btn btn-primary" asp-action="UnbanUser" asp-route-id="@user.Id" asp-route-role="@ViewData["role"]">Yes</a>
+                                        <a class="btn btn-primary" asp-action="UnbanUser" asp-route-id="@user.Id" asp-route-role="@TempData["role"]">Yes</a>
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                                     </div>
                                 </div>

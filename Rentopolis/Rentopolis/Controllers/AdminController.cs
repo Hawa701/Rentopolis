@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Rentopolis.Models.Entitiy;
 using Rentopolis.Repositories.Interfaces;
-using System.Security.Claims;
 
 namespace Rentopolis.Controllers
 {
@@ -26,9 +25,10 @@ namespace Rentopolis.Controllers
 
         // Users List
         [HttpGet]
-        public async Task<IActionResult> AllUsers(string role)
+        public async Task<IActionResult> AllUsers(string role, string SearchString = null)
         {
-            var users = await _services.GetUsersByRole(role);
+            ViewData["CurrentFilter"] = SearchString;
+            var users = await _services.GetUsersByRole(role, SearchString);
             TempData["role"] = role;
             return View(users);
         }

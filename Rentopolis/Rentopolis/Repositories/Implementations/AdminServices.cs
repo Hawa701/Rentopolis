@@ -17,9 +17,19 @@ namespace Rentopolis.Repositories.Implementations
         }
 
         // Get users by their role (list)
-        public async Task<List<AppUser>> GetUsersByRole(string role)
+        public async Task<List<AppUser>> GetUsersByRole(string role, string searchString)
         {
             var userList = await userManager.GetUsersInRoleAsync(role);
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                userList = userList.Where(u =>
+                    u.FirstName.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    u.LastName.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    u.UserName.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    u.Email.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0
+                ).ToList();
+            }
 
             return userList.ToList();
         }

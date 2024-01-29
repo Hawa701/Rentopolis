@@ -23,14 +23,15 @@ namespace Rentopolis.Controllers
 
         // Users list
         [HttpGet]
-        public async Task<IActionResult> AllUsers(string role)
+        public async Task<IActionResult> AllUsers(string role, string SearchString = null)
         {
-            var users = await _services.GetUsersByRole(role);
+            ViewData["CurrentFilter"] = SearchString;
+            var users = await _services.GetUsersByRole(role, SearchString);
 
-            if (users == null)
-                return RedirectToAction("AccessDenied", "Account");
+            //if (users == null)
+            //    return RedirectToAction("AccessDenied", "Account");
             
-            ViewData["role"] = role;
+            TempData["role"] = role;
             return View(users);
         }
 

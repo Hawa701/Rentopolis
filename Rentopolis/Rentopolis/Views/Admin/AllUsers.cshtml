@@ -11,6 +11,7 @@
 
     @if (TempData["role"].ToString() == "Manager")
     {
+        @* new manager button *@
         <div class="d-flex flex-column">
             <a class="btn btn-outline-secondary d-flex justify-content-center align-items-center gap-2" asp-controller="Admin" asp-action="AddManager">
                 <i class="fa-solid fa-user-plus"></i>
@@ -20,6 +21,20 @@
     }
 </div>
 
+@* search form *@
+<form method="get" asp-action="AllUsers">
+    <div class="d-flex flex-column mt-4">
+        <h5>Search</h5>
+        <div class="input-group mb-3">
+            <input type="hidden" name="role" value="@TempData["role"]">
+            <input type="text" class="form-control ps-4" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="First name, Last name, User name, Email..." aria-label="Search" aria-describedby="button-addon2" autocomplete="off">
+            <button class="btn btn-dark" type="submit" id="button-addon2">Search</button>
+        </div>
+    </div>
+</form>
+
+
+@* errors displayed when deletion fails/succeeds *@
 @if (TempData["deletionErrors"] != null)
 {
     <div asp-validation-summary="All" class="text-danger">
@@ -27,9 +42,9 @@
     </div>
 }
 
-
 <br />
 
+@* if users are NOT available *@
 @if (Model.Count == 0)
 {
     <div class="d-flex justify-content-center" style="margin-top:100px">
@@ -37,6 +52,8 @@
     </div>
 }
 
+
+@* if users ARE available *@
 @if (Model.Count != 0)
 {
     <table class="table table-hover">
