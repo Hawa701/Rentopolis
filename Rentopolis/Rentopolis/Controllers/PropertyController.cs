@@ -54,9 +54,10 @@ namespace Rentopolis.Controllers
         // For listing all properties (for admin)
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> AllProperties()
+        public async Task<IActionResult> AllProperties(string SearchString = null)
         {
-            List<Property> propertyList = await _services.GetAllProperties();
+            ViewData["CurrentFilter"] = SearchString;
+            List<Property> propertyList = await _services.GetAllProperties(SearchString);
             return View(propertyList);
         }
 

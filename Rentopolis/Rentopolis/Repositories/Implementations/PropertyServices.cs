@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Rentopolis.Models.Data;
 using Rentopolis.Models.Entitiy;
 using Rentopolis.Repositories.Interfaces;
-using System.Net;
-using static NuGet.Packaging.PackagingConstants;
 
 namespace Rentopolis.Repositories.Implementations
 {
@@ -112,13 +110,29 @@ namespace Rentopolis.Repositories.Implementations
 
 
         // List all properties
-        public async Task<List<Property>> GetAllProperties()
+        public async Task<List<Property>> GetAllProperties(string searchString)
         {
             List<Property> properties = new List<Property>();
 
             try
             {
                 properties = await rentContext.Properties.ToListAsync();
+
+
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    searchString = searchString.ToLower();
+
+                    properties = properties.Where(p =>
+                        p.Address.ToLower().Contains(searchString) ||
+                        p.City.ToLower().Contains(searchString) ||
+                        p.Bedroom.ToString().Contains(searchString) ||
+                        p.Bathroom.ToString().Contains(searchString) ||
+                        p.Area.ToString().Contains(searchString) ||
+                        p.PricePerMonth.ToString().Contains(searchString)
+                    )
+                    .ToList();
+                }
             }
             catch (Exception ex)
             {

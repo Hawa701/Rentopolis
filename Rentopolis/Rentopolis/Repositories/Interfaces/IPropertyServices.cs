@@ -6,7 +6,7 @@ namespace Rentopolis.Repositories.Interfaces
     public interface IPropertyServices
     {
         Task<Status> AddNewProperty(NewPropertyViewModel model);
-        Task<List<Property>> GetAllProperties();
+        Task<List<Property>> GetAllProperties(string SearchString);
         Task<List<Property>> GetNonApprovedProperties();
         Task<List<Property>> GetOwnedProperties(string id);
         Task<List<Property>> GetApprovedProperties();
