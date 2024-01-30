@@ -58,7 +58,7 @@ namespace Rentopolis.Repositories.Implementations
                 City = model.City,
                 Features = model.Features,
                 Bedroom = model.Bedroom,
-                Bathroom = model.Bedroom,
+                Bathroom = model.Bathroom,
                 Area = model.Area,
                 PricePerMonth = model.PricePerMonth,
                 LandlordId = model.LandlordId,
@@ -118,7 +118,6 @@ namespace Rentopolis.Repositories.Implementations
             {
                 properties = await rentContext.Properties.ToListAsync();
 
-
                 if (!string.IsNullOrEmpty(searchString))
                 {
                     searchString = searchString.ToLower();
@@ -163,13 +162,28 @@ namespace Rentopolis.Repositories.Implementations
 
 
         // List owned properties
-        public async Task<List<Property>> GetOwnedProperties(string id)
+        public async Task<List<Property>> GetOwnedProperties(string id, string searchString)
         {
             List<Property> properties = new List<Property>();
 
             try
             {
                 properties = await rentContext.Properties.Where(p => p.LandlordId == id).ToListAsync();
+
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    searchString = searchString.ToLower();
+
+                    properties = properties.Where(p =>
+                        p.Address.ToLower().Contains(searchString) ||
+                        p.City.ToLower().Contains(searchString) ||
+                        p.Bedroom.ToString().Contains(searchString) ||
+                        p.Bathroom.ToString().Contains(searchString) ||
+                        p.Area.ToString().Contains(searchString) ||
+                        p.PricePerMonth.ToString().Contains(searchString)
+                    )
+                    .ToList();
+                }
             }
             catch (Exception ex)
             {
@@ -181,13 +195,28 @@ namespace Rentopolis.Repositories.Implementations
 
 
         // List approved properties
-        public async Task<List<Property>> GetApprovedProperties()
+        public async Task<List<Property>> GetApprovedProperties(string searchString)
         {
             List<Property> properties = new List<Property>();
 
             try
             {
                 properties = await rentContext.Properties.Where(p => p.IsApproved == true).ToListAsync();
+
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    searchString = searchString.ToLower();
+
+                    properties = properties.Where(p =>
+                        p.Address.ToLower().Contains(searchString) ||
+                        p.City.ToLower().Contains(searchString) ||
+                        p.Bedroom.ToString().Contains(searchString) ||
+                        p.Bathroom.ToString().Contains(searchString) ||
+                        p.Area.ToString().Contains(searchString) ||
+                        p.PricePerMonth.ToString().Contains(searchString)
+                    )
+                    .ToList();
+                }
             }
             catch (Exception ex)
             {
@@ -334,8 +363,8 @@ namespace Rentopolis.Repositories.Implementations
             property.Address = model.Address;
             property.City = model.City;
             property.Features = model.Features;
-            property.Bathroom = model.Bathroom;
             property.Bedroom = model.Bedroom;
+            property.Bathroom = model.Bathroom;
             property.Area = model.Area;
             property.PricePerMonth = model.PricePerMonth;
 

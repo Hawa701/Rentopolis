@@ -75,9 +75,10 @@ namespace Rentopolis.Controllers
         // For listing own properties (for landlords)
         [HttpGet]
         [Authorize(Roles = "Landlord")]
-        public async Task<IActionResult> MyProperties(string id)
+        public async Task<IActionResult> MyProperties(string id, string SearchString = null)
         {
-            List<Property> propertyList = await _services.GetOwnedProperties(id);
+            ViewData["CurrentFilter"] = SearchString;
+            List<Property> propertyList = await _services.GetOwnedProperties(id, SearchString);
             ViewBag.LandlordId = id;
             return View(propertyList);
         }
@@ -86,9 +87,10 @@ namespace Rentopolis.Controllers
         // For listing approved properties (for tenants)
         [HttpGet]
         [Authorize(Roles = "Tenant")]
-        public async Task<IActionResult> Listings()
+        public async Task<IActionResult> Listings(string SearchString = null)
         {
-            List<Property> propertyList = await _services.GetApprovedProperties();
+            ViewData["CurrentFilter"] = SearchString;
+            List<Property> propertyList = await _services.GetApprovedProperties(SearchString);
             return View(propertyList);
         }
 
@@ -187,9 +189,9 @@ namespace Rentopolis.Controllers
 
 
         // For deleting the property
-        [HttpGet]
-        [Authorize(Roles = "Landlord")]
-        public async Task<IActionResult> DeleteProperty(int id)
+        [HttpPost]
+        [Authorize(Roles = "Landlord, Admin")]
+        public async Task<IActionResult> DeleteProperty(int id, string role)
         {
             Status returnedStatus = await _services.DeletePropertyInfo(id);
 
@@ -202,7 +204,9 @@ namespace Rentopolis.Controllers
             else
             {
                 TempData["successMessage"] = "Deleted Succesfully!";
-                return RedirectToAction("MyProperties", "Property", new { id = User.FindFirstValue(ClaimTypes.NameIdentifier) });
+
+                if(role == "Landlord") return RedirectToAction("MyProperties", "Property", new { id = User.FindFirstValue(ClaimTypes.NameIdentifier) });
+                else return RedirectToAction("AllProperties", "Property");
             }
         }
     }

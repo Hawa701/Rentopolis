@@ -29,6 +29,7 @@ namespace Rentopolis.Models.Entitiy
         [Display(Name = "Price Per Month")]
         public decimal PricePerMonth { get; set; }
 
+        [Required]
         [Display(Name = "Cover Photo")]
         public IFormFile MainPhoto { get; set; }
         public string? MainPhotoUrl { get; set; } = "";

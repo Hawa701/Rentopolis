@@ -4,28 +4,37 @@
     string landlordId = ViewBag.LandlordId;
 }
 
-@* <h1>My Properties</h1>
-*@
+<div class="d-flex align-items-end">
 
-<div class="d-flex align-items-center">
-
-    <div class="d-flex flex-column flex-grow-1 mb-4">
+    <div class="d-flex flex-column flex-grow-1">
         <h1>My Properties</h1>
         <p>These is the list of properties you own!</p>
     </div>
 
-    @if (Model.Count != 0)
-    {
-        <div class="d-flex flex-column">
-            <a class="btn btn-primary" asp-controller="Property" asp-action="CreateProperty" asp-route-id="@landlordId">
-                <i class="fa-solid fa-plus me-1"></i>
-                New Property
-            </a> 
-        </div>
-    }
+    <div class="d-flex flex-column flex-grow-1">
+        @* search bar *@
+        <form method="get" asp-action="MyProperties">
+            <div class="input-group mb-3">
+                <input type="hidden" name="id" value="@landlordId">
+                <input type="text" class="form-control ps-4" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Address, Sub City, Price, Area, Bedroom, Bathroom..." aria-label="Search" aria-describedby="button-addon2" autocomplete="off" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);font-size:15px;">
+                <button class="btn btn-primary" type="submit" id="button-addon2" style="padding: 8px 20px;">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    @* add property button *@
+    <div class="d-flex flex-column ms-2 mb-3">
+        <a class="btn btn-primary d-flex justify-content-center align-items-center gap-2" asp-controller="Property" asp-action="CreateProperty" asp-route-id="@landlordId" title="Add New Property">
+            <i class="fa-solid fa-folder-plus"></i>
+        </a>
+    </div>
 </div>
 
+<br />
 
+@* if editing and deleting is successful *@
 @if (TempData.ContainsKey("successMessage"))
 {
     <div asp-validation-summary="All" class="alert alert-success">
@@ -35,16 +44,16 @@
 }
 
 
+@* if property is NOT available *@
 @if (Model.Count == 0)
 {
-    <div class="d-flex flex-column justify-content-center align-items-center" style="margin-top:100px">
-        <h5 class="mb-4">You dont have any properties yet!</h5>
-        <a class="btn btn-outline-primary w-25" asp-controller="Property" asp-action="CreateProperty" asp-route-id="@landlordId">
-            Create a new Property
-        </a>
+    <div class="d-flex justify-content-center" style="margin-top:140px">
+        <h4>No properties found!</h4>
     </div>
 }
 
+
+@* if property IS available *@
 @if (Model.Count != 0)
 {
     <div class="d-flex flex-column justify-content-center align-items-start ps-4 pe-4">

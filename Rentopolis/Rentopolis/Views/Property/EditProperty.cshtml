@@ -79,8 +79,25 @@
 
         @* button *@
         <div>
-            <input class="btn btn-primary" type="submit" />
+            <a class="btn btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#confirmationModal">Save Changes</a>
         </div>
 
+        <!-- Confirmation Modal -->
+        <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmationModalLabel">Confirm Action</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to save changes?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit">Yes</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
