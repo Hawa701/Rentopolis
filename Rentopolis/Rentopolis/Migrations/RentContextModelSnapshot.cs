@@ -316,6 +316,30 @@ namespace Rentopolis.Migrations
                     b.ToTable("PropertyGallery");
                 });
 
+            modelBuilder.Entity("Rentopolis.Models.Data.SavedProperties", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("PropertyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PropertyId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("SavedProperties");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -376,6 +400,30 @@ namespace Rentopolis.Migrations
                         .IsRequired();
 
                     b.Navigation("Property");
+                });
+
+            modelBuilder.Entity("Rentopolis.Models.Data.SavedProperties", b =>
+                {
+                    b.HasOne("Rentopolis.Models.Data.Property", "Property")
+                        .WithMany()
+                        .HasForeignKey("PropertyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Rentopolis.Models.Data.AppUser", "Tenant")
+                        .WithMany("SavedProperties")
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Property");
+
+                    b.Navigation("Tenant");
+                });
+
+            modelBuilder.Entity("Rentopolis.Models.Data.AppUser", b =>
+                {
+                    b.Navigation("SavedProperties");
                 });
 
             modelBuilder.Entity("Rentopolis.Models.Data.Property", b =>

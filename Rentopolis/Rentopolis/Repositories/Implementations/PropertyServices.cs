@@ -411,5 +411,57 @@ namespace Rentopolis.Repositories.Implementations
 
             return status;
         }
+
+
+        // Check if Property is already saved or not
+        public async Task<SavedProperties> IsAreadySaved(int propertyId, string tenantId)
+        {
+            var savedProperty = await rentContext.SavedProperties
+                        .FirstOrDefaultAsync(sp => sp.PropertyId == propertyId && sp.TenantId == tenantId);
+
+            return savedProperty;
+        }
+
+        // Save Property
+        public async Task<Status> SaveOrUnsaveToSavedProperties(int propertyId, string tenantId)
+        {
+            Status status = new Status();
+
+            try
+            {
+                var result = await IsAreadySaved(propertyId, tenantId);
+
+                if (result != null)
+                {
+                    // Property is already saved, so unsave it
+                    rentContext.SavedProperties.Remove(result);
+                    await rentContext.SaveChangesAsync();
+                    status.StatusCode = 1;
+                    status.StatusMessage = "Property removed from Favorites!";
+                }
+                else
+                {
+                    // Property is not saved, so save it
+                    result = new SavedProperties
+                    {
+                        PropertyId = propertyId,
+                        TenantId = tenantId
+                    };
+
+                    rentContext.SavedProperties.Add(result);
+                    await rentContext.SaveChangesAsync();
+                    status.StatusCode = 1;
+                    status.StatusMessage = "Property saved to Favorites!";
+                }
+            }
+            catch (Exception ex)
+            {
+                status.StatusCode = 0;
+                status.StatusMessage = ex.Message;
+            }
+
+            return status;
+        }
+
     }
 }

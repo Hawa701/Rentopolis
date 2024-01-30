@@ -37,7 +37,10 @@ body {
 .btn-danger,
 .btn-dark,
 .btn-outline-primary,
-.btn-outline-secondary {
+.btn-outline-secondary,
+.btn-outline-success,
+.btn-outline-danger,
+.btn-outline-dark {
     padding: 12px 20px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);
 }

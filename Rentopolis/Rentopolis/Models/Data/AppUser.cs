@@ -7,5 +7,6 @@ namespace Rentopolis.Models.Data
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? ProfilePicture { get; set; }
+        public ICollection<SavedProperties> SavedProperties { get; set; }
     }
 }

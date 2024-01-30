@@ -2,16 +2,7 @@
 
 @{
     var propertyGalleryList = Model.propertyGallery.ToList();
-}
-
-@if (ViewBag.Success == false)
-{
-    <div asp-validation-summary="All" class="alert alert-danger">
-        @if (ViewBag.Message != null)
-        {
-            <ul> <li>@ViewBag.Message</li> </ul>
-        }
-    </div>
+    bool IsSaved = ViewBag.IsSaved;
 }
 
 @if (TempData.ContainsKey("successMessage"))
@@ -20,6 +11,14 @@
         <li>@TempData["successMessage"]</li>
     </div>
     TempData.Remove("successMessage");
+}
+
+@if (TempData.ContainsKey("failureMessage"))
+{
+    <div asp-validation-summary="All" class="alert alert-success">
+        <li>@TempData["failureMessage"]</li>
+    </div>
+    TempData.Remove("failureMessage");
 }
 
 <div class="d-flex flex-column gap-3">
@@ -174,8 +173,10 @@
                     </div>
                 </div>
 
-                @* Landlord *@
                 <div class="row">
+                @* Landlord *@
+                @if (!User.IsInRole("Landlord"))
+                {
                 <div class="col-md-6">
                     <h6>
                         <a asp-controller="Account" asp-action="UserProfile" asp-route-id="@Model.LandlordId">
@@ -184,6 +185,7 @@
                         </a>
                     </h6>
                 </div>
+                }
 
                 @* Tenant *@
                 @if (!string.IsNullOrEmpty(Model.TenantId) && (User.IsInRole("Admin") || User.IsInRole("Landlord")))
@@ -288,8 +290,27 @@
 
                         @if (User.IsInRole("Tenant"))
                         {
-                            <a class="btn btn-danger" asp-action="" asp-route-id="@Model.Id">Save</a>
-                            <a class="btn btn-success" asp-action="" asp-route-id="@Model.Id">Rent</a>
+                            <form method="post" asp-action="SaveUnsaveProperty" asp-route-propertyId="@Model.Id" asp-route-view="Detail">
+                                @if(IsSaved){
+                                    <button class="btn btn-danger" type="submit" style="width:90px;">
+                                        <i class="fa-solid fa-heart fs-5"></i>
+                                        <p class="m-0" style="font-size:12px;">Saved</p>
+                                    </button>
+                                }
+                                @if(!IsSaved){
+                                    <button class="btn btn-outline-danger" type="submit" style="width:90px;">
+                                        <i class="fa-regular fa-heart fs-5"></i>
+                                        <p class="m-0" style="font-size:12px;">Save</p>
+                                    </button>
+                                }
+                            </form>
+                            @* <a class="btn btn-success" asp-action="" asp-route-id="@Model.Id"> *@
+                            <button class="btn btn-outline-success" style="width:90px;">
+                                <i class="fa-solid fa-house-circle-check fs-5"></i>
+                                <p class="m-0" style="font-size:12px;">Request</p>
+                            </button>
+                                
+                            @* </a> *@
                         }
                     </div>
                     

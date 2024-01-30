@@ -101,6 +101,14 @@ namespace Rentopolis.Controllers
         {
             Property propDetail = await _services.GetPropertyDetail(id);
 
+            string tenantId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var result = await _services.IsAreadySaved(id,tenantId);
+
+            if (result != null)
+                ViewBag.IsSaved = true;
+            else
+                ViewBag.IsSaved = false;
+
             return View(propDetail);
         }
 
@@ -209,5 +217,24 @@ namespace Rentopolis.Controllers
                 else return RedirectToAction("AllProperties", "Property");
             }
         }
+
+
+        // For saving a property
+        [HttpPost]
+        [Authorize(Roles = "Tenant")]
+        public async Task<IActionResult> SaveUnsaveProperty(int propertyId, string view)
+        {
+            string tenantId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            Status returnedStatus = await _services.SaveOrUnsaveToSavedProperties(propertyId, tenantId);
+
+            if (returnedStatus.StatusCode == 1)
+                TempData["successMessage"] = returnedStatus.StatusMessage;
+            else
+                TempData["failureMessage"] = returnedStatus.StatusMessage;
+
+            return RedirectToAction(view, "Property", new { id = propertyId });
+        }
+
     }
 }
