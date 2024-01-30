@@ -202,8 +202,8 @@ namespace Rentopolis.Controllers
             Status returnedStatus = await _services.DeleteUserProfile(id);
             if (returnedStatus.StatusCode == 0)
             {
-                TempData["errorMessage"] = returnedStatus.StatusMessage;
-                return RedirectToAction("EditProfile", "Account", new { Id = User.FindFirstValue(ClaimTypes.NameIdentifier) });
+                TempData["deletionError"] = returnedStatus.StatusMessage;
+                return RedirectToAction("MyProfile", "Account", new { Id = User.FindFirstValue(ClaimTypes.NameIdentifier) });
             } 
             return await Logout();
         }

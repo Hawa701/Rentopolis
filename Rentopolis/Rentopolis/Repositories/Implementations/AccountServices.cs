@@ -224,6 +224,14 @@ namespace Rentopolis.Repositories.Implementations
                 return status;
             }
 
+            // if user is locked out
+            if (await userManager.IsLockedOutAsync(user))
+            {
+                status.StatusCode = 0;
+                status.StatusMessage = "You can't make changes because you have been banned!";
+                return status;
+            }
+
             // are any fields empty?
             if (
                 string.IsNullOrEmpty(model.FirstName) || string.IsNullOrEmpty(model.LastName) ||
@@ -290,6 +298,14 @@ namespace Rentopolis.Repositories.Implementations
                 return status;
             }
 
+            // if user is locked out
+            if (await userManager.IsLockedOutAsync(user))
+            {
+                status.StatusCode = 0;
+                status.StatusMessage = "You can't make changes because you have been banned!";
+                return status;
+            }
+
             // if old password doesn't match
             if (!await userManager.CheckPasswordAsync(user, model.OldPassword))
             {
@@ -330,6 +346,14 @@ namespace Rentopolis.Repositories.Implementations
             {
                 status.StatusCode = 0;
                 status.StatusMessage = "A user with this Id doesn't exist!";
+                return status;
+            }
+
+            // if user is locked out
+            if (await userManager.IsLockedOutAsync(user))
+            {
+                status.StatusCode = 0;
+                status.StatusMessage = "You can't terminate your account because you have been banned!";
                 return status;
             }
 

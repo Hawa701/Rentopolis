@@ -17,6 +17,7 @@ namespace Rentopolis.Repositories.Implementations
             this.rentContext = rentContext;
         }
 
+
         // Add new property
         public async Task<Status> AddNewProperty(NewPropertyViewModel model)
         {
@@ -48,8 +49,6 @@ namespace Rentopolis.Repositories.Implementations
                     };
                     model.Gallery.Add(gallery);
                 }
-
-                
             }
 
             Property newProperty = new Property
