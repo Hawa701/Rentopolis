@@ -422,6 +422,7 @@ namespace Rentopolis.Repositories.Implementations
             return savedProperty;
         }
 
+
         // Save Property
         public async Task<Status> SaveOrUnsaveToSavedProperties(int propertyId, string tenantId)
         {
@@ -463,5 +464,29 @@ namespace Rentopolis.Repositories.Implementations
             return status;
         }
 
+
+        // Get Saved Properties
+        public async Task<List<Property>> GetSavedProperties(string tenantId)
+        {
+            List<Property> savedProperties = new List<Property>();
+
+            try
+            {
+                var savedPropertyIds = await rentContext.SavedProperties
+                    .Where(sp => sp.TenantId == tenantId)
+                    .Select(sp => sp.PropertyId)
+                    .ToListAsync();
+
+                savedProperties = await rentContext.Properties
+                    .Where(p => savedPropertyIds.Contains(p.Id))
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred while retrieving saved properties: " + ex.Message);
+            }
+
+            return savedProperties;
+        }
     }
 }

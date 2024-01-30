@@ -59,7 +59,7 @@
                     {
                         <a class="nav-link" aria-current="page" asp-controller="Tenant" asp-action="Home">Home</a>
                         <a class="nav-link" asp-controller="Property" asp-action="Listings">Listings</a>
-                        <a class="nav-link" asp-controller="Tenant" asp-action="">Favorites</a>
+                        <a class="nav-link" asp-controller="Property" asp-action="Favorites" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)"> Favorites</a>
                         <a class="nav-link me-5" asp-controller="Tenant" asp-action="">Messages</a>
                     }
                     @if (!isAuthenticated)

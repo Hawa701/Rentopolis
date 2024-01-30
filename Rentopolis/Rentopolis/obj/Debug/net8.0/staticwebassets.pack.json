@@ -21,8 +21,20 @@
       "PackagePath": "staticwebassets\\Images\\Assets\\suitcase.png"
     },
     {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Gallery\\08124b73-1680-4875-882a-ba6d1395848b_aaa4.jpg",
+      "PackagePath": "staticwebassets\\Images\\Property Images\\Gallery\\08124b73-1680-4875-882a-ba6d1395848b_aaa4.jpg"
+    },
+    {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Gallery\\21c3b474-3717-4df7-8e70-7e17275986f9_harri-nieminen-sw93fB4sRQA-unsplash.jpg",
+      "PackagePath": "staticwebassets\\Images\\Property Images\\Gallery\\21c3b474-3717-4df7-8e70-7e17275986f9_harri-nieminen-sw93fB4sRQA-unsplash.jpg"
+    },
+    {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Gallery\\3e1be013-1022-47a2-81d7-2b3c4e07c4dc_aaa3.jpg",
       "PackagePath": "staticwebassets\\Images\\Property Images\\Gallery\\3e1be013-1022-47a2-81d7-2b3c4e07c4dc_aaa3.jpg"
+    },
+    {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Gallery\\4513df80-89b9-4d86-befa-080350ff9522_aaa3.jpg",
+      "PackagePath": "staticwebassets\\Images\\Property Images\\Gallery\\4513df80-89b9-4d86-befa-080350ff9522_aaa3.jpg"
     },
     {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Gallery\\47a19db1-480b-4a07-9b4e-cef48edf0175_aaa3.jpg",
@@ -37,6 +49,10 @@
       "PackagePath": "staticwebassets\\Images\\Property Images\\Gallery\\49deeb4a-10d2-46ce-9736-fac0d99931bb_aaa2.jpg"
     },
     {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Gallery\\50b19cea-c365-4d69-9962-57809c6efcb7_aaa2.jpg",
+      "PackagePath": "staticwebassets\\Images\\Property Images\\Gallery\\50b19cea-c365-4d69-9962-57809c6efcb7_aaa2.jpg"
+    },
+    {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Gallery\\597fbd98-c4a0-4e59-976b-2d03f2e657ac_aaa2.jpg",
       "PackagePath": "staticwebassets\\Images\\Property Images\\Gallery\\597fbd98-c4a0-4e59-976b-2d03f2e657ac_aaa2.jpg"
     },
@@ -47,6 +63,10 @@
     {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Gallery\\64dd3e6f-224e-4f47-8a4c-6a99f86c13cc_aaa.jpg",
       "PackagePath": "staticwebassets\\Images\\Property Images\\Gallery\\64dd3e6f-224e-4f47-8a4c-6a99f86c13cc_aaa.jpg"
+    },
+    {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Gallery\\6cfb2f2e-25ad-4a3b-bbac-bbc8c0133420_aaa3.jpg",
+      "PackagePath": "staticwebassets\\Images\\Property Images\\Gallery\\6cfb2f2e-25ad-4a3b-bbac-bbc8c0133420_aaa3.jpg"
     },
     {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Gallery\\8290e05f-f178-4003-9392-a9d3e9f2fa02_aaa.jpg",
@@ -63,6 +83,10 @@
     {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Gallery\\9e6f6a1a-db00-4941-869c-1cf070a9ec2e_aaa3.jpg",
       "PackagePath": "staticwebassets\\Images\\Property Images\\Gallery\\9e6f6a1a-db00-4941-869c-1cf070a9ec2e_aaa3.jpg"
+    },
+    {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Gallery\\ae104652-239a-4fba-9843-5309fefc28dd_aaa.jpg",
+      "PackagePath": "staticwebassets\\Images\\Property Images\\Gallery\\ae104652-239a-4fba-9843-5309fefc28dd_aaa.jpg"
     },
     {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Gallery\\bb54e56c-455b-40b4-87fd-30efc26b19c5_aaa3.jpg",
@@ -97,8 +121,16 @@
       "PackagePath": "staticwebassets\\Images\\Property Images\\Main\\a0911b12-87dd-4779-afc4-be6cb1d8fda8_harri-nieminen-sw93fB4sRQA-unsplash.jpg"
     },
     {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Main\\a1012029-4c5d-447a-901c-3512ca6d3725_harri-nieminen-sw93fB4sRQA-unsplash.jpg",
+      "PackagePath": "staticwebassets\\Images\\Property Images\\Main\\a1012029-4c5d-447a-901c-3512ca6d3725_harri-nieminen-sw93fB4sRQA-unsplash.jpg"
+    },
+    {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Main\\b9b24706-b2a1-443f-b752-588b1176e8e2_aaa.jpg",
       "PackagePath": "staticwebassets\\Images\\Property Images\\Main\\b9b24706-b2a1-443f-b752-588b1176e8e2_aaa.jpg"
+    },
+    {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Main\\c4734ab7-0d89-41f6-ace1-cd6bdea80800_aaa5.jpg",
+      "PackagePath": "staticwebassets\\Images\\Property Images\\Main\\c4734ab7-0d89-41f6-ace1-cd6bdea80800_aaa5.jpg"
     },
     {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Property Images\\Main\\cae0c7f7-c4c4-4b2b-94ac-eca2fd35be8e_aaa.jpg",

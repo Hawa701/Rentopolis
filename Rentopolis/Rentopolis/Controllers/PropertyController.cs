@@ -236,5 +236,14 @@ namespace Rentopolis.Controllers
             return RedirectToAction(view, "Property", new { id = propertyId });
         }
 
+
+        // For displaying saved propeties
+        [HttpGet]
+        [Authorize(Roles = "Tenant")]
+        public async Task<IActionResult> Favorites(string id)
+        {
+            List<Property> savedList = await _services.GetSavedProperties(id);
+            return View(savedList);
+        }
     }
 }
