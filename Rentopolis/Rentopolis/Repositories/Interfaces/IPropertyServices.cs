@@ -17,7 +17,10 @@ namespace Rentopolis.Repositories.Interfaces
         Task<Status> EditPropertyInfo(UpdatePropertyInfoViewModel model);
         Task<Status> DeletePropertyInfo(int id);
         Task<SavedProperties> IsAreadySaved(int propertyId, string tenantId);
-        Task<Status> SaveOrUnsaveToSavedProperties(int propertyId, string tenantId);
+        Task<Status> HandleSaveRequest(int propertyId, string tenantId);
         Task<List<Property>> GetSavedProperties(string tenantId);
+        Task<RentRequests> IsAreadyRequested(int propertyId, string tenantId);
+        Task<Status> HandleRentalRequest(int propertyId, string tenantId);
+        Task<List<Property>> GetRequestedProperties(string tenantId);
     }
 }

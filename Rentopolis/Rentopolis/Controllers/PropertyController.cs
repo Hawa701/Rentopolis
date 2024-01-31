@@ -102,12 +102,14 @@ namespace Rentopolis.Controllers
             Property propDetail = await _services.GetPropertyDetail(id);
 
             string tenantId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var result = await _services.IsAreadySaved(id,tenantId);
+            var savedResult = await _services.IsAreadySaved(id,tenantId);
+            var requestResult = await _services.IsAreadyRequested(id,tenantId);
 
-            if (result != null)
-                ViewBag.IsSaved = true;
-            else
-                ViewBag.IsSaved = false;
+            if (savedResult != null) ViewBag.IsSaved = true;
+            else ViewBag.IsSaved = false;
+
+            if (requestResult != null) ViewBag.IsRequested = true;
+            else ViewBag.IsRequested = false;
 
             return View(propDetail);
         }
@@ -226,7 +228,7 @@ namespace Rentopolis.Controllers
         {
             string tenantId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            Status returnedStatus = await _services.SaveOrUnsaveToSavedProperties(propertyId, tenantId);
+            Status returnedStatus = await _services.HandleSaveRequest(propertyId, tenantId);
 
             if (returnedStatus.StatusCode == 1)
                 TempData["successMessage"] = returnedStatus.StatusMessage;
@@ -244,6 +246,34 @@ namespace Rentopolis.Controllers
         {
             List<Property> savedList = await _services.GetSavedProperties(id);
             return View(savedList);
+        }
+
+
+        // For requesting a rent
+        [HttpPost]
+        [Authorize(Roles = "Tenant")]
+        public async Task<IActionResult> RequestRent(int propertyId)
+        {
+            string tenantId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            Status returnedStatus = await _services.HandleRentalRequest(propertyId, tenantId);
+
+            if (returnedStatus.StatusCode == 1)
+                TempData["successMessage"] = returnedStatus.StatusMessage;
+            else
+                TempData["failureMessage"] = returnedStatus.StatusMessage;
+
+            return RedirectToAction("Detail", "Property", new { id = propertyId });
+        }
+
+
+        // For displaying requested propeties
+        [HttpGet]
+        [Authorize(Roles = "Tenant")]
+        public async Task<IActionResult> Requests(string id)
+        {
+            List<Property> requestedList = await _services.GetRequestedProperties(id);
+            return View(requestedList);
         }
     }
 }

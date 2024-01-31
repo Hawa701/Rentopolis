@@ -3,6 +3,7 @@
 @{
     var propertyGalleryList = Model.propertyGallery.ToList();
     bool IsSaved = ViewBag.IsSaved;
+    bool IsRequested = ViewBag.IsRequested;
 }
 
 @if (TempData.ContainsKey("successMessage"))
@@ -290,6 +291,7 @@
 
                         @if (User.IsInRole("Tenant"))
                         {
+                            @* save button *@
                             <form method="post" asp-action="SaveUnsaveProperty" asp-route-propertyId="@Model.Id" asp-route-view="Detail">
                                 @if(IsSaved){
                                     <button class="btn btn-danger" type="submit" style="width:90px;">
@@ -304,13 +306,23 @@
                                     </button>
                                 }
                             </form>
-                            @* <a class="btn btn-success" asp-action="" asp-route-id="@Model.Id"> *@
-                            <button class="btn btn-outline-success" style="width:90px;">
-                                <i class="fa-solid fa-house-circle-check fs-5"></i>
-                                <p class="m-0" style="font-size:12px;">Request</p>
-                            </button>
-                                
-                            @* </a> *@
+
+                            @* request button *@
+                            <form method="post" asp-action="RequestRent" asp-route-propertyId="@Model.Id">
+                                @if (IsRequested){
+                                    <button class="btn btn-dark" style="width:90px;">
+                                        <i class="fa-solid fa-house-medical-circle-xmark fs-5"></i>
+                                        <p class="m-0" style="font-size:12px;">Cancel</p>
+                                    </button>
+                                }
+                                @if (!IsRequested)
+                                {
+                                    <button class="btn btn-outline-success" style="width:90px;">
+                                        <i class="fa-solid fa-house-circle-check fs-5"></i>
+                                        <p class="m-0" style="font-size:12px;">Request</p>
+                                    </button>
+                                }
+                            </form>
                         }
                     </div>
                     

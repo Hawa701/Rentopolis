@@ -1,0 +1,55 @@
+﻿@model List<Rentopolis.Models.Data.Property>
+
+<div class="d-flex align-items-end">
+
+    <div class="d-flex flex-column flex-grow-1">
+        <h1>Requestes</h1>
+        <p>These is the list of properties you requested!</p>
+    </div>
+
+    <div class="d-flex flex-column flex-grow-1">
+        @* search bar *@
+        @* <form method="get" asp-action="Favorites">
+        <div class="input-group mb-3">
+        <input type="text" class="form-control ps-4" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Address, Sub City, Price, Area, Bedroom, Bathroom..." aria-label="Search" aria-describedby="button-addon2" autocomplete="off" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);font-size:15px;">
+        <button class="btn btn-primary" type="submit" id="button-addon2" style="padding: 8px 20px;">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+        </div>
+        </form> *@
+    </div>
+</div>
+
+<br />
+
+@* if properties are NOT available *@
+@if (Model.Count == 0)
+{
+    <div class="d-flex justify-content-center" style="margin-top:140px">
+        <h4>No requested properties yet!</h4>
+    </div>
+}
+
+@* if properties ARE available *@
+@if (Model.Count != 0)
+{
+    @foreach (var property in Model)
+    {
+        <a asp-controller="Property" asp-action="Detail" asp-route-id="@property.Id" style="text-decoration:none; color:black;">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="@property.ImageUrl" class="img-fluid rounded-start" alt="@property.Address's image">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">@property.Address</h5>
+                            <p class="card-text">@property.Features</p>
+                            <p class="card-text"><small class="text-muted">Added on: @property.AddedDate</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    }
+}

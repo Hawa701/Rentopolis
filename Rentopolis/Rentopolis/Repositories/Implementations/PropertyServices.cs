@@ -423,8 +423,8 @@ namespace Rentopolis.Repositories.Implementations
         }
 
 
-        // Save Property
-        public async Task<Status> SaveOrUnsaveToSavedProperties(int propertyId, string tenantId)
+        // Save or Unsave Property
+        public async Task<Status> HandleSaveRequest(int propertyId, string tenantId)
         {
             Status status = new Status();
 
@@ -487,6 +487,83 @@ namespace Rentopolis.Repositories.Implementations
             }
 
             return savedProperties;
+        }
+
+
+        // Check if Property is already saved or not
+        public async Task<RentRequests> IsAreadyRequested(int propertyId, string tenantId)
+        {
+            var requestedProperties = await rentContext.RentalRequests
+                        .FirstOrDefaultAsync(sp => sp.PropertyId == propertyId && sp.TenantId == tenantId);
+
+            return requestedProperties;
+        }
+
+
+        // Send or cancel Rental request
+        public async Task<Status> HandleRentalRequest(int propertyId, string tenantId)
+        {
+            Status status = new Status();
+
+            try
+            {
+                var result = await IsAreadyRequested(propertyId, tenantId);
+
+                if (result != null)
+                {
+                    // Rent is already requested, so cancel it
+                    rentContext.RentalRequests.Remove(result);
+                    await rentContext.SaveChangesAsync();
+                    status.StatusCode = 1;
+                    status.StatusMessage = "Rental request canceled!";
+                }
+                else
+                {
+                    // Rent is not requested, so make a request
+                    result = new RentRequests()
+                    {
+                        PropertyId = propertyId,
+                        TenantId = tenantId
+                    };
+
+                    rentContext.RentalRequests.Add(result);
+                    await rentContext.SaveChangesAsync();
+                    status.StatusCode = 1;
+                    status.StatusMessage = "Rental request sent!";
+                }
+            }
+            catch (Exception ex)
+            {
+                status.StatusCode = 0;
+                status.StatusMessage = ex.Message;
+            }
+
+            return status;
+        }
+
+
+        // Get Requested Properties
+        public async Task<List<Property>> GetRequestedProperties(string tenantId)
+        {
+            List<Property> requestedProperties = new List<Property>();
+
+            try
+            {
+                var requestedPropertyIds = await rentContext.RentalRequests
+                    .Where(rp => rp.TenantId == tenantId)
+                    .Select(rp => rp.PropertyId)
+                    .ToListAsync();
+
+                requestedProperties = await rentContext.Properties
+                    .Where(p => requestedPropertyIds.Contains(p.Id))
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred while retrieving requested properties: " + ex.Message);
+            }
+
+            return requestedProperties;
         }
     }
 }
