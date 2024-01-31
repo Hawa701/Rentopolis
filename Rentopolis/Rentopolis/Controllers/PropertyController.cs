@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Rentopolis.Models.Data;
 using Rentopolis.Models.Entitiy;
 using Rentopolis.Repositories.Interfaces;
 using System.Security.Claims;
@@ -104,12 +106,15 @@ namespace Rentopolis.Controllers
             string tenantId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var savedResult = await _services.IsAreadySaved(id,tenantId);
             var requestResult = await _services.IsAreadyRequested(id,tenantId);
+            List<AppUser> applicantList = await _services.GetApplicants(id);
 
             if (savedResult != null) ViewBag.IsSaved = true;
             else ViewBag.IsSaved = false;
 
             if (requestResult != null) ViewBag.IsRequested = true;
             else ViewBag.IsRequested = false;
+            
+            ViewBag.ApplicantCount = applicantList.Count;
 
             return View(propDetail);
         }
@@ -274,6 +279,16 @@ namespace Rentopolis.Controllers
         {
             List<Property> requestedList = await _services.GetRequestedProperties(id);
             return View(requestedList);
+        }
+
+
+        // For displaying property requestors
+        [HttpGet]
+        [Authorize(Roles = "Landlord, Admin")]
+        public async Task<IActionResult> Applicants(int propertyId)
+        {
+            List<AppUser> applicantList = await _services.GetApplicants(propertyId);
+            return View(applicantList);
         }
     }
 }

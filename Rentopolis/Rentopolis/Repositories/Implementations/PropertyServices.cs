@@ -565,5 +565,30 @@ namespace Rentopolis.Repositories.Implementations
 
             return requestedProperties;
         }
+
+
+        // Get Applicant List
+        public async Task<List<AppUser>> GetApplicants(int propertyId)
+        {
+            List<AppUser> applicants = new List<AppUser>();
+
+            try
+            {
+                var applicantIds = await rentContext.RentalRequests
+                    .Where(rp => rp.PropertyId == propertyId)
+                    .Select(rp => rp.TenantId)
+                    .ToListAsync();
+
+                applicants = await rentContext.Users
+                    .Where(u => applicantIds.Contains(u.Id))
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred while retrieving applicants: " + ex.Message);
+            }
+
+            return applicants;
+        }
     }
 }

@@ -4,6 +4,7 @@
     var propertyGalleryList = Model.propertyGallery.ToList();
     bool IsSaved = ViewBag.IsSaved;
     bool IsRequested = ViewBag.IsRequested;
+    int ApplicantCount = ViewBag.ApplicantCount;
 }
 
 @if (TempData.ContainsKey("successMessage"))
@@ -175,29 +176,45 @@
                 </div>
 
                 <div class="row">
-                @* Landlord *@
                 @if (!User.IsInRole("Landlord"))
                 {
-                <div class="col-md-6">
-                    <h6>
-                        <a asp-controller="Account" asp-action="UserProfile" asp-route-id="@Model.LandlordId">
+                @* Landlord *@
+                <div class="col-md-4">
+                    <p class="mb-2 text-muted" style="font-size:13px;">Landlord</p>
+                    <p class="m-0">
+                        <a class="btn btn-outline-dark" asp-controller="Account" asp-action="UserProfile" asp-route-id="@Model.LandlordId" style="font-size:14px;">
                             Owner Information
                             <i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
                         </a>
-                    </h6>
+                    </p>
+                </div>
+                }
+
+                @if (User.IsInRole("Admin") || User.IsInRole("Landlord"))
+                {
+                @* applicant list *@
+                <div class="col-md-4">
+                    <p class="mb-2 text-muted" style="font-size:13px;">Applicants (@ApplicantCount)</p>
+                    <p class="m-0">
+                        <a class="btn btn-outline-dark @((ApplicantCount == 0) ? "disabled" : "")" asp-controller="Property" asp-action="Applicants" asp-route-propertyId="@Model.Id" style="font-size:14px;">
+                            View Applicant List
+                            <i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                        </a>
+                    </p>
                 </div>
                 }
 
                 @* Tenant *@
-                @if (!string.IsNullOrEmpty(Model.TenantId) && (User.IsInRole("Admin") || User.IsInRole("Landlord")))
+                @if (User.IsInRole("Admin") || User.IsInRole("Landlord"))
                 {
-                    <div class="col-md-6">
-                        <h6>
-                            <a asp-controller="Account" asp-action="UserProfile" asp-route-id="@Model.TenantId">
+                    <div class="col-md-4">
+                        <p class="mb-2 text-muted" style="font-size:13px;">Tenant</p>
+                        <p class="m-0">
+                                <a class="btn btn-outline-dark @((Model.TenantId == null)? "disabled": "")" asp-controller="Account" asp-action="UserProfile" asp-route-id="@Model.TenantId" style="font-size:14px;">
                                 Tenant Information
                                 <i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
                             </a>
-                        </h6>
+                        </p>
                     </div>
                 }
                 </div>

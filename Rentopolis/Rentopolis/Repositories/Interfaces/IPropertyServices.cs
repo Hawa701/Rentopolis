@@ -22,5 +22,6 @@ namespace Rentopolis.Repositories.Interfaces
         Task<RentRequests> IsAreadyRequested(int propertyId, string tenantId);
         Task<Status> HandleRentalRequest(int propertyId, string tenantId);
         Task<List<Property>> GetRequestedProperties(string tenantId);
+        Task<List<AppUser>> GetApplicants(int propertyId);
     }
 }
