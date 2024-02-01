@@ -282,6 +282,9 @@ namespace Rentopolis.Migrations
                     b.Property<decimal>("PricePerMonth")
                         .HasColumnType("decimal(18, 2)");
 
+                    b.Property<DateTime?>("RentedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("TenantId")
                         .HasColumnType("nvarchar(max)");
 
@@ -342,6 +345,29 @@ namespace Rentopolis.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("RentalRequests");
+                });
+
+            modelBuilder.Entity("Rentopolis.Models.Data.ReportedUsers", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ReportedUsers");
                 });
 
             modelBuilder.Entity("Rentopolis.Models.Data.SavedProperties", b =>
@@ -447,6 +473,17 @@ namespace Rentopolis.Migrations
                     b.Navigation("Property");
 
                     b.Navigation("Tenant");
+                });
+
+            modelBuilder.Entity("Rentopolis.Models.Data.ReportedUsers", b =>
+                {
+                    b.HasOne("Rentopolis.Models.Data.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Rentopolis.Models.Data.SavedProperties", b =>

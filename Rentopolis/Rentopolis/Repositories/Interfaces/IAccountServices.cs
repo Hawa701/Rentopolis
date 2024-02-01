@@ -1,4 +1,5 @@
-﻿using Rentopolis.Models.Entitiy;
+﻿using Rentopolis.Models.Data;
+using Rentopolis.Models.Entitiy;
 
 namespace Rentopolis.Repositories.Interfaces
 {
@@ -13,5 +14,8 @@ namespace Rentopolis.Repositories.Interfaces
         Task<Status> EditUserProfile(UpdateUserInfoViewModel model);
         Task<Status> ChangeUserPassword(PasswordViewModel model);
         Task<Status> DeleteUserProfile(string id);
+        Task<Status> ReportUser(string id, string message);
+        //Task<int> GetReportCountByUserId(string userId);
+        Task<List<ReportedUsers>> GetReportsByUserId(string userId);
     }
 }

@@ -639,6 +639,7 @@ namespace Rentopolis.Repositories.Implementations
                 // Update the property's tenantId
                 Property property = await rentContext.Properties.FindAsync(propertyId);
                 property.TenantId = tenantId;
+                property.RentedDate = DateTime.Now;
                 await rentContext.SaveChangesAsync();
                 
                 status.StatusCode = 1;
@@ -693,6 +694,7 @@ namespace Rentopolis.Repositories.Implementations
                 // Update the property's tenantId
                 Property property = await rentContext.Properties.FindAsync(propertyId);
                 property.TenantId = tenantId;
+                property.RentedDate = null;
                 await rentContext.SaveChangesAsync();
                 
                 status.StatusCode = 1;

@@ -24,6 +24,7 @@ namespace Rentopolis.Models.Data
         public bool IsDeleted { get; set; }
         public DateTime AddedDate { get; set; }
         public DateTime? ApprovedDate { get; set; }
+        public DateTime? RentedDate { get; set; }
         public ICollection<PropertyGallery> propertyGallery { get; set; }
     }
 }

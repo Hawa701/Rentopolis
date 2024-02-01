@@ -23,13 +23,10 @@ namespace Rentopolis.Controllers
 
         // Users list
         [HttpGet]
-        public async Task<IActionResult> AllUsers(string role, string SearchString = null)
+        public async Task<IActionResult> ReportedUsers(string role, string SearchString = null)
         {
             ViewData["CurrentFilter"] = SearchString;
-            var users = await _services.GetUsersByRole(role, SearchString);
-
-            //if (users == null)
-            //    return RedirectToAction("AccessDenied", "Account");
+            var users = await _services.GetReportedUsersByRole(role, SearchString);
             
             TempData["role"] = role;
             return View(users);
@@ -49,7 +46,7 @@ namespace Rentopolis.Controllers
             }
             else ViewBag.Success = true;
 
-            return RedirectToAction("AllUsers", "Manager", new { role = role });
+            return RedirectToAction("ReportedUsers", "Manager", new { role = role });
         }
         
 
@@ -66,7 +63,7 @@ namespace Rentopolis.Controllers
             }
             else ViewBag.Success = true;
 
-            return RedirectToAction("AllUsers", "Manager", new { role = role });
+            return RedirectToAction("ReportedUsers", "Manager", new { role = role });
         }
     }
 }

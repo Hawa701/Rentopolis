@@ -13,5 +13,6 @@ namespace Rentopolis.Models.Data
         public DbSet<PropertyGallery> PropertyGallery { get; set; }
         public DbSet<SavedProperties> SavedProperties { get; set; }
         public DbSet<RentRequests> RentalRequests { get; set; }
+        public DbSet<ReportedUsers> ReportedUsers { get; set; }
     }
 }

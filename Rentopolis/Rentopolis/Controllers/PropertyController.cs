@@ -299,10 +299,12 @@ namespace Rentopolis.Controllers
         {
             List<AppUser> applicantList = await _services.GetApplicants(propertyId);
 
+            Dictionary<string, string> userIds = new Dictionary<string, string>();
             Dictionary<string, string> userStatuses = new Dictionary<string, string>();
 
             foreach (var applicant in applicantList)
             {
+                userIds[applicant.Id] = applicant.Id;
                 var acceptedResult = await _services.IsAccepted(propertyId, applicant.Id);
                 var rejectedResult = await _services.IsRejected(propertyId, applicant.Id);
 
@@ -314,6 +316,7 @@ namespace Rentopolis.Controllers
                     userStatuses[applicant.Id] = "Waiting";
             }
 
+            ViewBag.UserIds = userIds;
             ViewBag.UserStatuses = userStatuses;
 
             ViewBag.PropertyId = propertyId;

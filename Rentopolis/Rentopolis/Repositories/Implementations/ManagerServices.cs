@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Rentopolis.Models.Data;
 using Rentopolis.Models.Entitiy;
 using Rentopolis.Repositories.Interfaces;
@@ -8,16 +9,22 @@ namespace Rentopolis.Repositories.Implementations
     public class ManagerServices : IManagerServices
     {
         private readonly UserManager<AppUser> userManager;
+        private readonly RentContext rentContext;
 
-        public ManagerServices(UserManager<AppUser> userManager)
+        public ManagerServices(UserManager<AppUser> userManager, RentContext rentContext)
         {
             this.userManager = userManager;
+            this.rentContext = rentContext;
         }
 
         // Get user list by their role
-        public async Task<List<AppUser>> GetUsersByRole(string role, string searchString)
+        public async Task<List<AppUser>> GetReportedUsersByRole(string role, string searchString)
         {
             var userList = await userManager.GetUsersInRoleAsync(role);
+
+            // Filtering out reported users id
+            var reportedUserIds = await rentContext.ReportedUsers.Select(r => r.UserId).ToListAsync();
+            userList = userList.Where(u => reportedUserIds.Contains(u.Id)).ToList();
 
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -31,6 +38,7 @@ namespace Rentopolis.Repositories.Implementations
 
             return userList.ToList();
         }
+
 
         // Ban user
         public async Task<Status> BanUser (string id)

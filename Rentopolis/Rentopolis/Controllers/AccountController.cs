@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Rentopolis.Models.Data;
 using Rentopolis.Models.Entitiy;
 using Rentopolis.Repositories.Interfaces;
 using System.Security.Claims;
@@ -102,6 +103,10 @@ namespace Rentopolis.Controllers
         public async Task<IActionResult> MyProfile(string id)
         {
             FullInfoViewModel user = await _services.GetUserByIdForView(id);
+
+            List<ReportedUsers> reportsOnUser = await _services.GetReportsByUserId(user.Id);
+            ViewBag.Reports = reportsOnUser;
+
             return View(user);
         }
 
@@ -112,6 +117,10 @@ namespace Rentopolis.Controllers
         public async Task<IActionResult> UserProfile(string id)
         {
             FullInfoViewModel user = await _services.GetUserByIdForView(id);
+
+            List<ReportedUsers> reportsOnUser = await _services.GetReportsByUserId(user.Id);
+            ViewBag.Reports = reportsOnUser;
+
             return View(user);
         }
 
@@ -216,6 +225,21 @@ namespace Rentopolis.Controllers
             return View();
         }
 
+
+        // Reporting a user
+        [HttpPost]
+        [Authorize(Roles = "Landlord,Tenant")]
+        public async Task<IActionResult> ReportUser(string userId, string message, int propertyId)
+        {
+            Status returnedStatus = await _services.ReportUser(userId, message);
+
+            if (returnedStatus.StatusCode == 1)
+                TempData["successMessage"] = returnedStatus.StatusMessage;
+            else
+                TempData["failureMessage"] = returnedStatus.StatusMessage;
+
+            return RedirectToAction("Applicants", "Property", new { propertyId = propertyId });
+        }
 
         // For registering the admin
 

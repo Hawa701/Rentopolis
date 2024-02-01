@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Rentopolis.Models.Data;
 using Rentopolis.Models.Entitiy;
 using Rentopolis.Repositories.Interfaces;
@@ -12,13 +13,15 @@ namespace Rentopolis.Repositories.Implementations
         private readonly SignInManager<AppUser> signInManager;
         private readonly UserManager<AppUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly RentContext rentContext;
         private readonly IWebHostEnvironment webHostEnvironment;
 
-        public AccountServices(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, IWebHostEnvironment webHostEnvironment)
+        public AccountServices(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, RentContext rentContext, IWebHostEnvironment webHostEnvironment)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.rentContext = rentContext;
             this.webHostEnvironment = webHostEnvironment;
         }
 
@@ -370,5 +373,56 @@ namespace Rentopolis.Repositories.Implementations
             }
             return status;
         }
+
+
+        // For reporting a user
+        public async Task<Status> ReportUser(string id, string message)
+        {
+            Status status = new Status();
+
+            ReportedUsers reportedUser = new ReportedUsers
+            {
+                UserId = id,
+                Message = message
+            };
+
+            try
+            {
+                rentContext.ReportedUsers.Add(reportedUser);
+                await rentContext.SaveChangesAsync();
+
+                status.StatusCode = 1;
+                status.StatusMessage = "User reported successfully!";
+            }
+            catch (Exception ex)
+            {
+                status.StatusCode=0;
+                status.StatusMessage = ex.Message;
+            }
+
+            return status;
+        }
+
+
+        // For getting a users report count
+        //public async Task<int> GetReportCountByUserId(string userId)
+        //{
+        //    var reportCount = await rentContext.ReportedUsers
+        //        .CountAsync(r => r.UserId == userId);
+
+        //    return reportCount;
+        //}
+
+
+        // For getting reports made on a user
+        public async Task<List<ReportedUsers>> GetReportsByUserId(string userId)
+        {
+            var reports = await rentContext.ReportedUsers
+                .Where(r => r.UserId == userId)
+                .ToListAsync();
+
+            return reports;
+        }
+
     }
 }
