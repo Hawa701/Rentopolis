@@ -97,10 +97,37 @@
                             @* if no one was accepted *@
                             @if (ViewBag.UserStatuses[user.Id] != "Accepted" && ViewBag.UserStatuses[user.Id] != "Rejected")
                             {
-                                <a class="btn btn-outline-success d-flex flex-column justify-content-center" asp-action="AcceptRequest" asp-route-propertyId="@propertyId" asp-route-tenantId="@user.Id">
+                                <a class="btn btn-outline-success d-flex flex-column justify-content-center" data-bs-toggle="modal" data-bs-target="#acceptConfirmationModal">
                                     <i class="fa-solid fa-thumbs-up fs-5"></i>
                                     <p class="m-0" style="font-size:10px;">Accept</p>
                                 </a>
+
+                                <!-- Accept Confirmation Modal -->
+                                <div class="modal fade" id="acceptConfirmationModal" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="acceptConfirmationModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="acceptConfirmationModalLabel">Terms and Agreement for Landlords Accepting Rental Requests</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>By accepting a rental request from a tenant, you (the "Landlord") agree to the following terms and conditions:</p>
+                                                <ol>
+                                                    <li>Commitment and Honesty: As a Landlord, you are expected to honor your commitment to rent the property to the tenant once the rental request has been accepted. Going back on your words without a valid reason is considered a breach of trust and may result in consequences, including being reported and potentially facing a ban from the rental platform or application.</li>
+                                                    <li>Exclusive Rental: Once the property is rented to a tenant through the platform or application, you are not allowed to rent the same property to another tenant outside of the system. Renting the property to an unknown tenant while it is already occupied by an existing tenant is strictly prohibited. Any attempts to do so may result in being reported and facing potential penalties, including a ban from the platform or application.</li>
+                                                    <li>Compliance with Terms and Policies: As a Landlord, you are expected to comply with the terms, policies, and guidelines set by the rental platform or application. This includes maintaining accurate and up-to-date property listings, providing necessary information to tenants, and adhering to any rental regulations and obligations.</li>
+                                                    <li>Timely Communication and Support: It is essential to maintain timely and effective communication with the tenant throughout the rental process. Responding to inquiries, addressing concerns, and providing necessary support are crucial aspects of maintaining a positive landlord-tenant relationship.</li>
+                                                    <li>Property Maintenance and Safety: As a Landlord, you are responsible for ensuring the proper maintenance and safety of the rented property. This includes addressing any necessary repairs promptly, complying with applicable building codes and safety regulations, and providing a habitable and secure living environment for the tenant.</li>
+                                                    <li>Termination and Eviction: The rental agreement may be terminated or eviction may be initiated according to the terms specified in the agreement or as permitted by law. However, any terminations or evictions should be carried out in a fair and legal manner, following the due process and laws applicable to your jurisdiction.</li>
+                                                </ol>
+                                                <p>Please carefully read and understand the terms and conditions outlined above before accepting any rental request from a tenant. By proceeding with the acceptance, you acknowledge and agree to be bound by these terms and conditions.</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a class="btn btn-primary" asp-action="AcceptRequest" asp-route-propertyId="@propertyId" asp-route-tenantId="@user.Id">Accept</a>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Decline</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             }
                             @if (ViewBag.UserStatuses[user.Id] == "Accepted")
                             {
@@ -108,14 +135,62 @@
                                     <i class="fa-solid fa-thumbs-up fs-5"></i>
                                     <p class="m-0" style="font-size:10px;">Accepted</p>
                                 </a>
-                                <a class="btn btn-outline-danger d-flex flex-column justify-content-center" asp-action="RevertRequest" asp-route-propertyId="@propertyId" asp-route-tenantId="@user.Id" style="padding:12px;">
+                                <a class="btn btn-outline-danger d-flex flex-column justify-content-center" style="padding:12px;" data-bs-toggle="modal" data-bs-target="#cancelConfirmationModal">
                                     <i class="fa-solid fa-xmark fs-5"></i>
                                     <p class="m-0" style="font-size:10px;">Cancel</p>
                                 </a>
-                                <a class="btn btn-outline-dark d-flex flex-column justify-content-center" href="#" style="padding:14px;">
+                                <!-- Cancel Confirmation Modal -->
+                                <div class="modal fade" id="cancelConfirmationModal" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="cancelConfirmationModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="cancelConfirmationModalLabel">Terms and Agreement for Landlords Cancelling Accepted Rental Requests</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>By cancelling an already accepted rental request, you (the "Landlord") agree to the following terms and conditions:</p>
+                                                <ol>
+                                                    <li>Valid Reason for Cancellation: As a Landlord, you must have a valid reason for cancelling an already accepted rental request. Cancellation should not be done arbitrarily or based on personal preferences. Valid reasons may include unforeseen circumstances, property unavailability, or significant changes in the rental conditions. It is important to provide a clear and reasonable explanation for the cancellation.</li>
+                                                    <li>Notification and Timely Communication: If you need to cancel an already accepted rental request, it is crucial to notify the tenant as soon as possible. Timely communication is essential to minimize inconvenience for the tenant and allow them to explore alternative options. Provide a clear explanation for the cancellation, including the reason and any relevant details.</li>
+                                                    <li>Updated Applicant List: Upon cancelling an accepted rental request, you agree that the applicant list will be updated accordingly. All previously rejected requests should be changed to a "Waiting" state, indicating that the applicants are once again eligible for consideration. This ensures fairness and transparency in the rental process.</li>
+                                                    <li>Good Faith and Fair Treatment: Even in case of cancellation, it is important to act in good faith and treat all applicants with fairness and respect. Avoid discriminatory practices or favoritism when considering alternative rental options or reevaluating applications.</li>
+                                                    <li>Consideration of Tenant's Situation: While cancelling an accepted rental request, take into consideration the situation and any inconvenience caused to the tenant. If possible, offer assistance or suggestions to help the tenant find an alternative housing solution.</li>
+                                                </ol>
+                                                <p>Please carefully read and understand the terms and conditions outlined above before cancelling any accepted rental request. By proceeding with the cancellation, you acknowledge and agree to be bound by these terms and conditions.</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a class="btn btn-primary" asp-action="RevertRequest" asp-route-propertyId="@propertyId" asp-route-tenantId="@user.Id">Agree</a>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Decline</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <a class="btn btn-outline-dark d-flex flex-column justify-content-center" href="#" data-bs-toggle="modal" data-bs-target="#reportModal" style="padding:14px;">
                                     <i class="fa-solid fa-flag fs-5"></i>
                                     <p class="m-0" style="font-size:10px;">Report</p>
                                 </a>
+                                <!-- Report Modal -->
+                                <div class="modal fade" id="reportModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="reportModalLabel">Report tenant</h5>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form>
+                                                    <div class="mb-3">
+                                                        <label for="report-text" class="col-form-label">Message:</label>
+                                                        <textarea class="form-control" id="report-text"></textarea>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-dark">Send</button>
+                                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             }
                             @if (ViewBag.UserStatuses[user.Id] == "Rejected")
                             {
