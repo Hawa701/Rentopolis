@@ -1,5 +1,9 @@
 ﻿@model List<Rentopolis.Models.Data.AppUser>
 
+@{
+    int propertyId = ViewBag.PropertyId;
+}
+
 <div class="d-flex align-items-end">
 
     <div class="d-flex flex-column flex-grow-1">
@@ -8,21 +12,25 @@
     </div>
 
     <div class="d-flex flex-column flex-grow-1">
-        @* search bar *@
-        @* <form method="get" asp-action="AllUsers">
-            <div class="input-group mb-3">
-                <input type="hidden" name="role" value="@TempData["role"]">
-                <input type="text" class="form-control ps-4" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="First name, Last name, User name, Email..." aria-label="Search" aria-describedby="button-addon2" autocomplete="off" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);font-size:15px;">
-                <button class="btn btn-dark" type="submit" id="button-addon2" style="padding: 8px 20px;">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
+        @if (TempData.ContainsKey("successMessage"))
+        {
+            <div asp-validation-summary="All" class="alert alert-success">
+                <li>@TempData["successMessage"]</li>
             </div>
-        </form> *@
+            TempData.Remove("successMessage");
+        }
+
+        @if (TempData.ContainsKey("failureMessage"))
+        {
+            <div asp-validation-summary="All" class="alert alert-success">
+                <li>@TempData["failureMessage"]</li>
+            </div>
+            TempData.Remove("failureMessage");
+        }
     </div>
 </div>
 
 <br />
-
 
 @* if requests have NOT been made *@
 @if (Model.Count == 0)
@@ -41,34 +49,115 @@
             <th>User</th>
             <th>Full Name</th>
             <th>Email</th>
+            @if (User.IsInRole("Landlord")){ <th></th> }
+            @if (User.IsInRole("Admin")){ <th>Status</th> }
         </tr>
         @foreach (var user in Model)
         {
             <tr>
-                @* user id *@
+                    @* user id *@
                 <td>
-                    <p class="fw-light" style="font-size:13px">@user.Id</p>
+                    <a asp-controller="Account" asp-action="UserProfile" asp-route-id="@user.Id" style="text-decoration:none; color:black;">
+                        <p class="fw-light" style="font-size:13px">@user.Id</p>
+                    </a>
                 </td>
 
                 @* profile *@
                 <td>
-                    <div class="d-flex justify-content-start align-items-center gap-2">
-                        <img src="@user.ProfilePicture" alt="profile pic" style="width:35px; height:35px; border-radius:50%;" />
-                        @user.UserName
-                    </div>
+                    <a asp-controller="Account" asp-action="UserProfile" asp-route-id="@user.Id" style="text-decoration:none; color:black;">
+                        <div class="d-flex justify-content-start align-items-center gap-2">
+                            <img src="@user.ProfilePicture" alt="profile pic" style="width:35px; height:35px; border-radius:50%;" />
+                            @user.UserName
+                        </div>
+                    </a>
                 </td>
 
                 @* full name *@
                 <td>
-                    <div class="d-flex justify-content-start align-items-center gap-1">
-                        <p>@user.FirstName</p>
-                        <p>@user.LastName</p>
-                    </div>
+                    <a asp-controller="Account" asp-action="UserProfile" asp-route-id="@user.Id" style="text-decoration:none; color:black;">
+                        <div class="d-flex justify-content-start align-items-center gap-1">
+                            <p>@user.FirstName</p>
+                            <p>@user.LastName</p>
+                        </div>
+                    </a>
                 </td>
 
                 @* email *@
-                <td>@user.Email</td>
+                    <td>
+                    <a asp-controller="Account" asp-action="UserProfile" asp-route-id="@user.Id" style="text-decoration:none; color:black;">
+                            @user.Email
+                        </a>
+                    </td>
+
+                @* button *@
+                @if (User.IsInRole("Landlord"))
+                {
+                    <td>
+                        <div class="d-flex justify-content-end gap-2 me-2">
+                            @* if no one was accepted *@
+                            @if (ViewBag.UserStatuses[user.Id] != "Accepted" && ViewBag.UserStatuses[user.Id] != "Rejected")
+                            {
+                                <a class="btn btn-outline-success d-flex flex-column justify-content-center" asp-action="AcceptRequest" asp-route-propertyId="@propertyId" asp-route-tenantId="@user.Id">
+                                    <i class="fa-solid fa-thumbs-up fs-5"></i>
+                                    <p class="m-0" style="font-size:10px;">Accept</p>
+                                </a>
+                            }
+                            @if (ViewBag.UserStatuses[user.Id] == "Accepted")
+                            {
+                                <a class="btn btn-success d-flex flex-column justify-content-center disabled" href="#">
+                                    <i class="fa-solid fa-thumbs-up fs-5"></i>
+                                    <p class="m-0" style="font-size:10px;">Accepted</p>
+                                </a>
+                                <a class="btn btn-outline-danger d-flex flex-column justify-content-center" asp-action="RevertRequest" asp-route-propertyId="@propertyId" asp-route-tenantId="@user.Id" style="padding:12px;">
+                                    <i class="fa-solid fa-xmark fs-5"></i>
+                                    <p class="m-0" style="font-size:10px;">Cancel</p>
+                                </a>
+                                <a class="btn btn-outline-dark d-flex flex-column justify-content-center" href="#" style="padding:14px;">
+                                    <i class="fa-solid fa-flag fs-5"></i>
+                                    <p class="m-0" style="font-size:10px;">Report</p>
+                                </a>
+                            }
+                            @if (ViewBag.UserStatuses[user.Id] == "Rejected")
+                            {
+                                <a class="btn btn-danger d-flex flex-column justify-content-center disabled" href="#">
+                                    <i class="fa-solid fa-thumbs-down fs-5"></i>
+                                    <p class="m-0" style="font-size:10px;">Rejected</p>
+                                </a>
+                            }
+                        </div>
+                    </td>
+                }
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        @if (ViewBag.UserStatuses[user.Id] == "Accepted")
+                        {
+                            <a class="btn btn-success d-flex flex-column justify-content-center disabled" href="#">
+                                <i class="fa-solid fa-thumbs-up fs-5"></i>
+                                <p class="m-0" style="font-size:10px;">Accepted</p>
+                            </a>
+                        }
+                        @if (ViewBag.UserStatuses[user.Id] == "Rejected")
+                        {
+                            <a class="btn btn-danger d-flex flex-column justify-content-center disabled" href="#">
+                                <i class="fa-solid fa-thumbs-down fs-5"></i>
+                                <p class="m-0" style="font-size:10px;">Rejected</p>
+                            </a>
+                        }
+                        @if (ViewBag.UserStatuses[user.Id] == "Waiting")
+                        {
+                            <a class="btn btn-dark d-flex flex-column justify-content-center disabled" href="#">
+                                <i class="fa-solid fa-hourglass-half fs-5"></i>
+                                <p class="m-0" style="font-size:10px;">Waiting</p>
+                            </a>
+                        }
+                    </td>
+                }
             </tr>
         }
     </table>
 }
+
+@* <a class="btn" asp-controller="" asp-action="" asp-route-id="@user.Id">
+    <i class="fa-solid fa-circle-info fs-5" style="color: black;" onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';"></i>
+</a> *@

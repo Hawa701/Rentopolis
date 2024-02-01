@@ -327,6 +327,10 @@ namespace Rentopolis.Migrations
                     b.Property<int>("PropertyId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TenantId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");

@@ -490,7 +490,7 @@ namespace Rentopolis.Repositories.Implementations
         }
 
 
-        // Check if Property is already saved or not
+        // Check if Property is already requested or not
         public async Task<RentRequests> IsAreadyRequested(int propertyId, string tenantId)
         {
             var requestedProperties = await rentContext.RentalRequests
@@ -523,7 +523,8 @@ namespace Rentopolis.Repositories.Implementations
                     result = new RentRequests()
                     {
                         PropertyId = propertyId,
-                        TenantId = tenantId
+                        TenantId = tenantId,
+                        Status = "Waiting"
                     };
 
                     rentContext.RentalRequests.Add(result);
@@ -589,6 +590,141 @@ namespace Rentopolis.Repositories.Implementations
             }
 
             return applicants;
+        }
+    
+        
+        // Accept Applicants request
+        public async Task<Status> AcceptApplicantsRequest(int propertyId, string tenantId)
+        {
+            Status status = new Status();
+
+            // Retrieve the rent request based on the propertyId and tenantId
+            RentRequests rentRequest = await rentContext.RentalRequests
+                .Include(rr => rr.Property)
+                .Include(rr => rr.Tenant)
+                .FirstOrDefaultAsync(rr => rr.PropertyId == propertyId && rr.TenantId == tenantId);
+
+            // Rent request not found
+            if (rentRequest == null)
+            {
+                status.StatusCode = 0;
+                status.StatusMessage = "Rent request was not found!";
+                return status;
+            }
+
+            // Check if the rent request is already accepted or rejected
+            if (rentRequest.Status == "Accepted" || rentRequest.Status == "Rejected")
+            {
+                status.StatusCode = 0;
+                status.StatusMessage = "Rent request is already processed.";
+                return status;
+            }
+
+            // Reject all other requests for the same property
+            List<RentRequests> otherRequests = await rentContext.RentalRequests
+                .Where(rr => rr.PropertyId == propertyId && rr.TenantId != tenantId && rr.Status != "Rejected")
+                .ToListAsync();
+
+            foreach (var request in otherRequests)
+                request.Status = "Rejected";
+
+            // Update the rent request status to "Accepted"
+            rentRequest.Status = "Accepted";
+
+            try
+            {
+                // Save the changes to the database
+                await rentContext.SaveChangesAsync();
+
+                // Update the property's tenantId
+                Property property = await rentContext.Properties.FindAsync(propertyId);
+                property.TenantId = tenantId;
+                await rentContext.SaveChangesAsync();
+                
+                status.StatusCode = 1;
+                status.StatusMessage = "Rent request accepted successfully!";
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception if there is an error while saving changes
+                status.StatusCode = 0;
+                status.StatusMessage = "An error occurred while accepting the rent request: " + ex.Message;
+            }
+
+            return status;
+        }
+
+
+        // Reverting the accepted request of the applicant
+        public async Task<Status> UndoApplicantsRequest(int propertyId, string tenantId)
+        {
+            Status status = new Status();
+
+            // Retrieve the rent request based on the propertyId and tenantId
+            RentRequests rentRequest = await rentContext.RentalRequests
+                .Include(rr => rr.Property)
+                .Include(rr => rr.Tenant)
+                .FirstOrDefaultAsync(rr => rr.PropertyId == propertyId && rr.TenantId == tenantId);
+
+            // Rent request not found
+            if (rentRequest == null)
+            {
+                status.StatusCode = 0;
+                status.StatusMessage = "Rent request was not found!";
+                return status;
+            }
+
+            // Change all other requests for the same property to "Waiting"
+            List<RentRequests> otherRequests = await rentContext.RentalRequests
+                .Where(rr => rr.PropertyId == propertyId && rr.TenantId != tenantId && rr.Status == "Rejected")
+                .ToListAsync();
+
+            foreach (var request in otherRequests)
+                request.Status = "Waiting";
+
+            // Update the rent request status to "Waiting"
+            rentRequest.Status = "Waiting";
+
+            try
+            {
+                // Save the changes to the database
+                await rentContext.SaveChangesAsync();
+
+                // Update the property's tenantId
+                Property property = await rentContext.Properties.FindAsync(propertyId);
+                property.TenantId = tenantId;
+                await rentContext.SaveChangesAsync();
+                
+                status.StatusCode = 1;
+                status.StatusMessage = "Undoing rent request successful!";
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception if there is an error while saving changes
+                status.StatusCode = 0;
+                status.StatusMessage = "An error occurred while accepting the rent request: " + ex.Message;
+            }
+
+            return status;
+        }
+
+
+        // Check if Property is accepted
+        public async Task<RentRequests> IsAccepted(int propertyId, string tenantId)
+        {
+            var acceptedRequest = await rentContext.RentalRequests
+                        .FirstOrDefaultAsync(ar => ar.PropertyId == propertyId && ar.TenantId == tenantId && ar.Status == "Accepted");
+
+            return acceptedRequest;
+        }
+
+        // Check if Property is rejected
+        public async Task<RentRequests> IsRejected(int propertyId, string tenantId)
+        {
+            var rejectedRequest = await rentContext.RentalRequests
+                        .FirstOrDefaultAsync(rr => rr.PropertyId == propertyId && rr.TenantId == tenantId && rr.Status == "Rejected");
+
+            return rejectedRequest;
         }
     }
 }

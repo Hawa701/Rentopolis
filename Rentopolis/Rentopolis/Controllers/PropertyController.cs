@@ -103,18 +103,28 @@ namespace Rentopolis.Controllers
         {
             Property propDetail = await _services.GetPropertyDetail(id);
 
-            string tenantId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var savedResult = await _services.IsAreadySaved(id,tenantId);
-            var requestResult = await _services.IsAreadyRequested(id,tenantId);
-            List<AppUser> applicantList = await _services.GetApplicants(id);
+            string tenantId = User.FindFirstValue(ClaimTypes.NameIdentifier);   //getting signed in tenant id
+
+            var savedResult = await _services.IsAreadySaved(id,tenantId);       //checking if property is already saved or not
+            var requestResult = await _services.IsAreadyRequested(id,tenantId); //checking if property is already requested or not
+            var acceptedResult = await _services.IsAccepted(id,tenantId);       //checking if the property is accepted or not
+            var rejectedResult = await _services.IsRejected(id,tenantId);       //checking if the property is rejected or not
+            
+            List<AppUser> applicantList = await _services.GetApplicants(id);    //getting all the applicants that applied
+            ViewBag.ApplicantCount = applicantList.Count;
 
             if (savedResult != null) ViewBag.IsSaved = true;
             else ViewBag.IsSaved = false;
 
             if (requestResult != null) ViewBag.IsRequested = true;
             else ViewBag.IsRequested = false;
-            
-            ViewBag.ApplicantCount = applicantList.Count;
+
+            if (acceptedResult != null) ViewBag.IsAccepted = true;
+            else ViewBag.IsAccepted = false;
+
+            if (rejectedResult != null) ViewBag.IsRejeceted = true;
+            else ViewBag.IsRejeceted = false;
+
 
             return View(propDetail);
         }
@@ -288,7 +298,57 @@ namespace Rentopolis.Controllers
         public async Task<IActionResult> Applicants(int propertyId)
         {
             List<AppUser> applicantList = await _services.GetApplicants(propertyId);
+
+            Dictionary<string, string> userStatuses = new Dictionary<string, string>();
+
+            foreach (var applicant in applicantList)
+            {
+                var acceptedResult = await _services.IsAccepted(propertyId, applicant.Id);
+                var rejectedResult = await _services.IsRejected(propertyId, applicant.Id);
+
+                if (acceptedResult != null && rejectedResult == null)
+                    userStatuses[applicant.Id] = "Accepted";
+                else if (rejectedResult != null && acceptedResult == null)
+                    userStatuses[applicant.Id] = "Rejected";
+                else
+                    userStatuses[applicant.Id] = "Waiting";
+            }
+
+            ViewBag.UserStatuses = userStatuses;
+
+            ViewBag.PropertyId = propertyId;
             return View(applicantList);
+        }
+
+
+        // For accepting tenants request
+        [HttpGet]
+        [Authorize(Roles = "Landlord")]
+        public async Task<IActionResult> AcceptRequest(int propertyId, string tenantId)
+        {
+            Status returnedStatus = await _services.AcceptApplicantsRequest(propertyId, tenantId);
+
+            if (returnedStatus.StatusCode == 1)
+                TempData["successMessage"] = returnedStatus.StatusMessage;
+            else
+                TempData["failureMessage"] = returnedStatus.StatusMessage;
+
+            return RedirectToAction("Applicants", "Property", new { propertyId = propertyId });
+        }
+
+        // For accepting tenants request
+        [HttpGet]
+        [Authorize(Roles = "Landlord")]
+        public async Task<IActionResult> RevertRequest(int propertyId, string tenantId)
+        {
+            Status returnedStatus = await _services.UndoApplicantsRequest(propertyId, tenantId);
+
+            if (returnedStatus.StatusCode == 1)
+                TempData["successMessage"] = returnedStatus.StatusMessage;
+            else
+                TempData["failureMessage"] = returnedStatus.StatusMessage;
+
+            return RedirectToAction("Applicants", "Property", new { propertyId = propertyId });
         }
     }
 }

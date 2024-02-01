@@ -2,9 +2,11 @@
 
 @{
     var propertyGalleryList = Model.propertyGallery.ToList();
+    int ApplicantCount = ViewBag.ApplicantCount;
     bool IsSaved = ViewBag.IsSaved;
     bool IsRequested = ViewBag.IsRequested;
-    int ApplicantCount = ViewBag.ApplicantCount;
+    bool IsAccepted = ViewBag.IsAccepted;
+    bool IsRejeceted = ViewBag.IsRejeceted;
 }
 
 @if (TempData.ContainsKey("successMessage"))
@@ -324,22 +326,46 @@
                                 }
                             </form>
 
-                            @* request button *@
-                            <form method="post" asp-action="RequestRent" asp-route-propertyId="@Model.Id">
-                                @if (IsRequested){
-                                    <button class="btn btn-dark" style="width:90px;">
-                                        <i class="fa-solid fa-house-medical-circle-xmark fs-5"></i>
-                                        <p class="m-0" style="font-size:12px;">Cancel</p>
-                                    </button>
-                                }
-                                @if (!IsRequested)
-                                {
-                                    <button class="btn btn-outline-success" style="width:90px;">
-                                        <i class="fa-solid fa-house-circle-check fs-5"></i>
-                                        <p class="m-0" style="font-size:12px;">Request</p>
-                                    </button>
-                                }
-                            </form>
+                            @* REQUEST STATUS AND BUTTONS *@
+                            @* if accepted *@
+                            @if(IsAccepted && !IsRejeceted){
+                                <div class="btn btn-success" style="width:300px;">
+                                    <i class="fa-regular fa-face-smile-beam fs-5"></i>
+                                    <p class="m-0" style="font-size:12px;"><strong>Congratulations!</strong> Your request was accepted!</p>
+                                </div>
+                            }
+
+                            @* if rejected *@
+                            @if(IsRejeceted && !IsAccepted){
+                                <div class="btn btn-danger" style="width:250px;">
+                                    <i class="fa-regular fa-face-frown-open fs-3"></i>
+                                    <p class="m-0" style="font-size:12px;"><strong>Sorry!</strong> Your request was rejected!</p>
+                                </div>
+                            }
+
+                            @* if not accepted or rejected *@
+                            @if (!IsAccepted && !IsRejeceted)
+                            {
+                                <form method="post" asp-action="RequestRent" asp-route-propertyId="@Model.Id">
+                                    @* if waiting *@
+                                    @if (IsRequested)
+                                    {
+                                        <button class="btn btn-dark" style="width:90px;">
+                                            <i class="fa-solid fa-house-medical-circle-xmark fs-5"></i>
+                                            <p class="m-0" style="font-size:12px;">Cancel</p>
+                                        </button>
+                                    }
+
+                                    @* if not applied yet *@
+                                    @if (!IsRequested)
+                                    {
+                                        <button class="btn btn-outline-success" style="width:90px;">
+                                            <i class="fa-solid fa-house-circle-check fs-5"></i>
+                                            <p class="m-0" style="font-size:12px;">Request</p>
+                                        </button>
+                                    }
+                                </form>
+                             }
                         }
                     </div>
                     

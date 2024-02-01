@@ -23,5 +23,9 @@ namespace Rentopolis.Repositories.Interfaces
         Task<Status> HandleRentalRequest(int propertyId, string tenantId);
         Task<List<Property>> GetRequestedProperties(string tenantId);
         Task<List<AppUser>> GetApplicants(int propertyId);
+        Task<Status> AcceptApplicantsRequest(int propertyId, string tenantId);
+        Task<Status> UndoApplicantsRequest(int propertyId, string tenantId);
+        Task<RentRequests> IsAccepted(int propertyId, string tenantId);
+        Task<RentRequests> IsRejected(int propertyId, string tenantId);
     }
 }
