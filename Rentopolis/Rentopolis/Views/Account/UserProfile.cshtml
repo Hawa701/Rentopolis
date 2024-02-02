@@ -6,7 +6,7 @@
 
     <h1>User Profile</h1>
 
-    <div class="container d-flex justify-content-center align-items-center gap-5 p-4" style="height: 50vh;">
+    <div class="container d-flex justify-content-center align-items-center gap-5 p-4">
         @* pic *@
         <div>
             <img src="@Model.ProfilePicUrl" alt="@Model.FirstName @Model.LastName's profile picture" style="width:250px; height: 250px; border-radius: 50%;" />
@@ -48,7 +48,7 @@
             </div>
 
             @* reports *@
-            <div class="d-flex justify-content-start align-items-center gap-2 mb-5">
+            <div class="d-flex justify-content-start align-items-start gap-2 mb-5">
                 @if (ViewBag.Reports != null && ((List<ReportedUsers>)ViewBag.Reports).Count > 0)
                 {
                     <p>Reports: </p>
@@ -90,6 +90,39 @@
                                 <a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteManager" asp-route-id="@Model.Id">Yes</a>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (User.IsInRole("Tenant"))
+            {
+                <div class="d-flex justify-content-end">
+                    <a class="btn btn-outline-dark d-flex flex-column justify-content-center w-25" href="#" data-bs-toggle="modal" data-bs-target="#reportModal" style="padding:14px;">
+                        <i class="fa-solid fa-flag fs-5"></i>
+                        <p class="m-0" style="font-size:10px;">Report</p>
+                    </a>
+                </div>
+                <!-- Report Modal -->
+                <div class="modal fade" id="reportModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <form method="post" asp-controller="Account" asp-action="ReportUser" asp-route-userId="@Model.Id" asp-route-propertyId="-1">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="reportModalLabel">Report Landlord</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="text-muted fst-italic" style="font-size:12px;">Even though the identity is concealed when reporting, we kindly request that all individuals involved maintain a sense of responsibility and professionalism by providing honest comments without resorting to rudeness or disrespectful behavior.</p>
+                                    <div class="mb-3">
+                                        <label for="report-text" class="col-form-label">Message:</label>
+                                        <textarea class="form-control" id="report-text" name="message"></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-dark">Send</button>
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

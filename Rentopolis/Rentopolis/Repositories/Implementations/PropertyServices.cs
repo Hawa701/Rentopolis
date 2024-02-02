@@ -268,6 +268,7 @@ namespace Rentopolis.Repositories.Implementations
                 {
                     await rentContext.SaveChangesAsync();
                     status.StatusCode = 1;
+                    status.StatusMessage = "Property is approved successfully!";
                 }
                 catch (Exception ex)
                 {
@@ -302,6 +303,7 @@ namespace Rentopolis.Repositories.Implementations
                 {
                     await rentContext.SaveChangesAsync();
                     status.StatusCode = 1;
+                    status.StatusMessage = "Property is rejected successfully!";
                 }
                 catch (Exception ex)
                 {
@@ -402,6 +404,7 @@ namespace Rentopolis.Repositories.Implementations
                 rentContext.Properties.Remove(property);
                 await rentContext.SaveChangesAsync();
                 status.StatusCode = 1;
+                status.StatusMessage = "Property deleted successfully";
             }
             catch (Exception ex)
             {

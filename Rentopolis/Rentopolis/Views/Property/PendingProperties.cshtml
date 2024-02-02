@@ -1,64 +1,89 @@
 ﻿@model List<Rentopolis.Models.Data.Property>
 
-<div class="d-flex flex-column mb-4">
-    <h1>Approval List</h1>
-    <p>These are all the properties that needs approval!</p>
+@* page title*@
+<div class="d-flex flex-column mt-5">
+    <h3>Approval List</h3>
+    <p style="font-size:14px;">These are all the properties that need approval!</p>
 </div>
 
+
+@* displaying success message *@
+@if (TempData.ContainsKey("successMessage"))
+{
+    <div class="alert alert-success fade show position-fixed bottom-0 end-0 border-2" role="alert" style="margin-bottom: 40px; margin-right: 40px;" id="fadingAlert">
+        <p class="m-0 py-2 px-3">
+            <i class="fa-solid fa-circle-check"></i>
+            @TempData["successMessage"]
+        </p>
+    </div>
+
+    TempData.Remove("successMessage");
+}
+
+
+<br />
+
+
+@* if properties are NOT available *@
 @if (Model.Count == 0)
 {
-    <div class="d-flex justify-content-center" style="margin-top:100px">
+    <div class="d-flex flex-column justify-content-center align-items-center">
+        <img src="/Images/Assets/empty.png" alt="empty-image" class="w-25" />
         <h4>No properties available!</h4>
+        <p style="font-size:14px;">There are no properties that need approval right now.</p>
     </div>
 }
 
+
+@* if properties ARE available *@
 @if (Model.Count != 0)
 {
     <table class="table table-hover">
-        <tr class="table-dark" style="height:50px">
-            <th>Id</th>
-            <th>Address</th>
-            <th>Sub-City</th>
-            <th>Bedroom</th>
-            <th>Bathroom</th>
-            <th>Area</th>
-            <th>Added Date</th>
+
+        <tr style="height:50px; font-size:14px; background-color: dimgray; color:white;">
+            <th class="align-middle ps-4">Id</th>
+            <th class="align-middle">Address</th>
+            <th class="align-middle">Sub-City</th>
+            <th class="align-middle">Bedroom</th>
+            <th class="align-middle">Bathroom</th>
+            <th class="align-middle">Area</th>
+            <th class="align-middle">Added Date</th>
             <th></th>
         </tr>
 
         @foreach (var property in Model)
         {
-            <tr>
+            <tr style="font-size:15px">
 
                 @* id *@
-                <td>@property.Id</td>
+                <td class="align-middle ps-4">@property.Id</td>
 
                 @* address *@
-                <td>@property.Address</td>
+                <td class="align-middle">@property.Address</td>
 
                 @* sub city *@
-                <td>@property.City</td>
+                <td class="align-middle">@property.City</td>
 
                 @* bedroom *@
-                <td>
+                <td class="align-middle">
                     <a>@property.Bedroom</a>
                 </td>
 
                 @* bathroom *@
-                <td>
+                <td class="align-middle">
                     <a>@property.Bathroom</a>
                 </td>
 
                 @* area *@
-                <td>
+                <td class="align-middle">
                     <a>@property.Area</a>
                 </td>
 
                 @* added date *@
-                <td>@property.AddedDate</td>
+                <td class="align-middle">@property.AddedDate</td>
 
                 @* detail button *@
-                <td>
+                <td class="align-middle">
                     <div class="d-flex justify-content-end gap-2 me-3">
                         <a class="btn" asp-action="Detail" asp-route-id="@property.Id">
                             <i class="fa-solid fa-circle-info fs-5" style="color: black;" onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';"></i>

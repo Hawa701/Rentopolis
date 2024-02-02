@@ -144,7 +144,7 @@ namespace Rentopolis.Controllers
             }
             else
             {
-                TempData["successMessage"] = "Success";
+                TempData["successMessage"] = returnedStatus.StatusMessage;
                 return RedirectToAction("PendingProperties", "Property");
             }
         }
@@ -164,7 +164,7 @@ namespace Rentopolis.Controllers
             }
             else
             {
-                TempData["successMessage"] = "Success";
+                TempData["successMessage"] = returnedStatus.StatusMessage;
                 return RedirectToAction("PendingProperties", "Property");
             }
         }
@@ -224,14 +224,18 @@ namespace Rentopolis.Controllers
             {
                 ViewBag.Success = 0;
                 ViewBag.Message = returnedStatus.StatusMessage;
+                TempData["deletionError"] = returnedStatus.StatusMessage;
+
                 return RedirectToAction("Detail", "Property", new { id = id });
             }
             else
             {
-                TempData["successMessage"] = "Deleted Succesfully!";
+                TempData["successMessage"] = returnedStatus.StatusMessage;
 
-                if(role == "Landlord") return RedirectToAction("MyProperties", "Property", new { id = User.FindFirstValue(ClaimTypes.NameIdentifier) });
-                else return RedirectToAction("AllProperties", "Property");
+                if(role == "Landlord") 
+                    return RedirectToAction("MyProperties", "Property", new { id = User.FindFirstValue(ClaimTypes.NameIdentifier) });
+                else 
+                    return RedirectToAction("AllProperties", "Property");
             }
         }
 

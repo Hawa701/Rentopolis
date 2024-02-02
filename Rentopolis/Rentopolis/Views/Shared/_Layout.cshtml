@@ -1,7 +1,22 @@
 ﻿@using System.Security.Claims
 @{
     bool isAuthenticated = User.Identity.IsAuthenticated;
-    // string selectedPage = "";
+
+    string selectedPage = "";
+
+    // var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+    var action = ViewContext.RouteData.Values["action"]?.ToString();
+    // var role = ViewContext.RouteData.Values["role"]?.ToString();
+
+    // if (controller == "Admin" && action == "Home") selectedPage = "Dashboard";
+    // else if (controller == "Admin" && action == "AllUsers")
+    // {
+    //     // var role = ViewContext.RouteData.Values["role"]?.ToString();
+    //     if (role == "Manager") selectedPage = "Managers";
+    //     else if (role == "Landlord") selectedPage = "Landlords";
+    //     else if (role == "Tenant") selectedPage = "Tenants";
+    // }
+    // else if (controller == "Property" && action == "AllProperties") selectedPage = "Properties";
 }
 
 <!DOCTYPE html>
@@ -17,13 +32,13 @@
 </head>
 <body>
     <!-- HEADER -->
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <nav class="navbar navbar-expand-lg navbar-light @(action=="Index"?"":"shadow rounded")">
         <div class="container">
 
             <!-- Logo -->
             <a class="navbar-brand fs-4" asp-controller="Home" asp-action="Index">
-                @* <i class="fa-solid fa-cubes fs-4 me-1"></i> *@
-                <i class="fa-solid fa-fan fs-4 me-1"></i>
+                <i class="fa-solid fa-cubes fs-4 me-1"></i>
+                @* <i class="fa-solid fa-fan fs-4 me-1"></i> *@
                 Rentopolis
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,32 +50,31 @@
                 <div class="navbar-nav ms-auto">
                     @if (User.IsInRole("Admin"))
                     {
-                        <a class="nav-link" aria-current="page" asp-controller="Admin" asp-action="Home">Dashboard</a>
-                        <a class="nav-link" asp-controller="Admin" asp-action="AllUsers" asp-route-role="Manager">Managers</a>
-                        <a class="nav-link" asp-controller="Admin" asp-action="AllUsers" asp-route-role="Landlord">Landlords</a>
-                        <a class="nav-link" asp-controller="Admin" asp-action="AllUsers" asp-route-role="Tenant">Tenants</a>
-                        <a class="nav-link me-5" asp-controller="Property" asp-action="AllProperties">Properties</a>
+                        <a class="nav-link @(selectedPage == "admin_dashboard" ? "active" : "")" aria-current="page" asp-controller="Admin" asp-action="Home">Dashboard</a>
+                        <a class="nav-link @(selectedPage == "all_managers" ? "active" : "")" asp-controller="Admin" asp-action="AllUsers" asp-route-role="Manager">Managers</a>
+                        <a class="nav-link @(selectedPage == "all_landlords" ? "active" : "")" asp-controller="Admin" asp-action="AllUsers" asp-route-role="Landlord">Landlords</a>
+                        <a class="nav-link @(selectedPage == "all_tenants" ? "active" : "")" asp-controller="Admin" asp-action="AllUsers" asp-route-role="Tenant">Tenants</a>
+                        <a class="nav-link @(selectedPage == "all_properties" ? "active" : "") me-5" asp-controller="Property" asp-action="AllProperties">Properties</a>
                     }
                     @if (User.IsInRole("Manager"))
                     {
-                        <a class="nav-link" aria-current="page" asp-controller="Manager" asp-action="Home">Dashboard</a>
-                        <a class="nav-link" asp-controller="Property" asp-action="PendingProperties">Pending Approvals</a>
-                        <a class="nav-link" asp-controller="Manager" asp-action="ReportedUsers" asp-route-role="Landlord">Landlords</a>
-                        <a class="nav-link me-5" asp-controller="Manager" asp-action="ReportedUsers" asp-route-role="Tenant">Tenants</a>
+                        <a class="nav-link @(selectedPage == "manager_dashboard" ? "active" : "")" aria-current="page" asp-controller="Manager" asp-action="Home">Dashboard</a>
+                        <a class="nav-link @(selectedPage == "property_approval" ? "active" : "")" asp-controller="Property" asp-action="PendingProperties">Pending Approvals</a>
+                        <a class="nav-link @(selectedPage == "reported_managers" ? "active" : "")" asp-controller="Manager" asp-action="ReportedUsers" asp-route-role="Landlord">Landlords</a>
+                        <a class="nav-link @(selectedPage == "reported_tenants" ? "active" : "") me-5" asp-controller="Manager" asp-action="ReportedUsers" asp-route-role="Tenant">Tenants</a>
                     }
                     @if (User.IsInRole("Landlord"))
                     {
-                        <a class="nav-link" aria-current="page" asp-controller="Landlord" asp-action="Home">Home</a>
-                        <a class="nav-link" asp-controller="Property" asp-action="MyProperties" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">My Property</a>
-                        @* <a class="nav-link" asp-controller="Landlord" asp-action=""></a> *@
+                        <a class="nav-link @(selectedPage == "landlord_dashboard" ? "active" : "")" aria-current="page" asp-controller="Landlord" asp-action="Home">Home</a>
+                        <a class="nav-link @(selectedPage == "owned_properties" ? "active" : "")" asp-controller="Property" asp-action="MyProperties" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">My Property</a>
                         <a class="nav-link me-5" asp-controller="Landlord" asp-action="">Messages</a>
                     }
                     @if (User.IsInRole("Tenant"))
                     {
-                        <a class="nav-link" aria-current="page" asp-controller="Tenant" asp-action="Home">Home</a>
-                        <a class="nav-link" asp-controller="Property" asp-action="Listings">Listings</a>
-                        <a class="nav-link" asp-controller="Property" asp-action="Favorites" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)"> Favorites</a>
-                        <a class="nav-link me-5" asp-controller="Property" asp-action="Requests" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">Requests</a>
+                        <a class="nav-link @(selectedPage == "tenant_dashboard" ? "active" : "")" aria-current="page" asp-controller="Tenant" asp-action="Home">Home</a>
+                        <a class="nav-link @(selectedPage == "property_listing" ? "active" : "")" asp-controller="Property" asp-action="Listings">Listings</a>
+                        <a class="nav-link @(selectedPage == "favorite_properties" ? "active" : "")" asp-controller="Property" asp-action="Favorites" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)"> Favorites</a>
+                        <a class="nav-link @(selectedPage == "requested_properties" ? "active" : "") me-5" asp-controller="Property" asp-action="Requests" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">Requests</a>
                     }
                     @if (!isAuthenticated)
                     {
@@ -152,6 +166,11 @@
             event.preventDefault(); // Prevent form submission
             $('#cancelConfirmationModal').modal('show');
         }
+        $(document).ready(function () {
+            setTimeout(function () {
+                $("#fadingAlert").alert('close');
+            }, 3500);
+        });
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

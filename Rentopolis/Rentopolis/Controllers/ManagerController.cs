@@ -14,6 +14,7 @@ namespace Rentopolis.Controllers
             this._services = managerServices;
         }
 
+
         // Home page
         public IActionResult Home()
         {
@@ -39,12 +40,8 @@ namespace Rentopolis.Controllers
         {
             Status returnedStatus = await _services.BanUser(id);
 
-            if (returnedStatus.StatusCode == 0)
-            {
-                ViewBag.Success = false;
-                ViewBag.Message = returnedStatus.StatusMessage;
-            }
-            else ViewBag.Success = true;
+            if (returnedStatus.StatusCode == 0) TempData["deletionErrors"] = returnedStatus.StatusMessage;
+            if (returnedStatus.StatusCode == 1) TempData["successMessage"] = returnedStatus.StatusMessage;
 
             return RedirectToAction("ReportedUsers", "Manager", new { role = role });
         }
@@ -56,12 +53,8 @@ namespace Rentopolis.Controllers
         {
             Status returnedStatus = await _services.UnbanUser(id);
 
-            if (returnedStatus.StatusCode == 0)
-            {
-                ViewBag.Success = false;
-                ViewBag.Message = returnedStatus.StatusMessage;
-            }
-            else ViewBag.Success = true;
+            if (returnedStatus.StatusCode == 0) TempData["deletionErrors"] = returnedStatus.StatusMessage;
+            if (returnedStatus.StatusCode == 1) TempData["successMessage"] = returnedStatus.StatusMessage;
 
             return RedirectToAction("ReportedUsers", "Manager", new { role = role });
         }

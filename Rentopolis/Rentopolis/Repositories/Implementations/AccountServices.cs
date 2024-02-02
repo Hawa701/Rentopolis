@@ -319,7 +319,11 @@ namespace Rentopolis.Repositories.Implementations
 
             // Update the password
             var changePasswordResult = await userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
-            if (changePasswordResult.Succeeded) status.StatusCode = 1;
+            if (changePasswordResult.Succeeded)
+            {
+                status.StatusCode = 1;
+                status.StatusMessage = "Password changed successfully!";
+            }
             else
             {
                 status.StatusCode = 0;

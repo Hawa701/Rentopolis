@@ -1,10 +1,11 @@
 ﻿@model List<Rentopolis.Models.Data.Property>
 
-<div class="d-flex align-items-end">
+@* page title + search bar *@
+<div class="d-flex align-items-center mt-5">
 
     <div class="d-flex flex-column flex-grow-1">
-        <h1>Properties</h1>
-        <p>This is the list of all the properties available in your system!</p>
+        <h3>Property List</h3>
+        <p style="font-size:14px;">This is the list of all the properties available in the system!</p>
     </div>
 
     <div class="d-flex flex-column flex-grow-1">
@@ -18,59 +19,96 @@
             </div>
         </form>
     </div>
+
 </div>
 
-@* if users are NOT available *@
-@if (Model.Count == 0)
+
+@* displaying success message *@
+@if (TempData.ContainsKey("successMessage"))
 {
-    <div class="d-flex justify-content-center" style="margin-top:100px">
-        <h4>No properties found!</h4>
+    <div class="alert alert-success fade show position-fixed bottom-0 end-0 border-2" role="alert" style="margin-bottom: 40px; margin-right: 40px;" id="fadingAlert">
+        <p class="m-0 py-2 px-3">
+            <i class="fa-solid fa-circle-check"></i>
+            @TempData["successMessage"]
+        </p>
     </div>
+
+    TempData.Remove("successMessage");
 }
 
-@* if users ARE available *@
+
+<br />
+
+
+@* if properties are NOT available *@
+@if (Model.Count == 0)
+{
+    // just empty
+    @if (@ViewData["CurrentFilter"] == null)
+    {
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <img src="/Images/Assets/empty.png" alt="empty-image" class="w-25" />
+            <h4>No properties available!</h4>
+            <p style="font-size:14px;">There are no registered properties so far.</p>
+        </div>
+    }
+
+    // searched
+    @if (@ViewData["CurrentFilter"] != null)
+    {
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <img src="/Images/Assets/no-result.png" alt="no-result-image" class="w-25" />
+            <h4>No result found!</h4>
+            <p style="font-size:14px;">There are no properties matching the keyword "@ViewData["CurrentFilter"]".</p>
+        </div>
+    }
+}
+
+
+@* if properties ARE available *@
 @if (Model.Count != 0)
 {
-    <table class="table table-hover mt-4">
-        <tr class="table-dark" style="height:50px">
-            <th>Id</th>
-            <th>Address</th>
-            <th>Sub-City</th>
-            <th>Added Date</th>
-            <th>Approval Status</th>
+    <table class="table table-hover">
+
+        <tr class="table-dark" style="height:50px; font-size:14px;">
+            <th class="align-middle ps-4">Id</th>
+            <th class="align-middle">Address</th>
+            <th class="align-middle">Sub-City</th>
+            <th class="align-middle">Approval Status</th>
+            <th class="align-middle">Posted Date</th>
             <th></th>
         </tr>
     
         @foreach (var property in Model)
         {
-            <tr>
+            <tr style="font-size:15px">
 
                 @* id *@
-                <td>@property.Id</td>
+                <td class="align-middle ps-4">@property.Id</td>
 
                 @* address *@
-                <td>@property.Address</td>
+                <td class="align-middle">@property.Address</td>
 
                 @* sub city *@
-                <td>@property.City</td>
-                
-                @* added date *@
-                <td>@property.AddedDate</td>
+                <td class="align-middle">@property.City</td>
                 
                 @* status *@
-                <td>
+                <td class="align-middle">
                     @if (property.IsApproved == true && property.IsDeleted == false)
                     {
-                        <p>Approved</p>
+                        <p class="mb-0 text-success">Approved</p>
                     }
                     @if (property.IsApproved == false && property.IsDeleted == false)
                     {
-                        <p>Waiting</p>
+                        <p class="mb-0">Waiting</p>
                     }@if (property.IsApproved == false && property.IsDeleted == true)
                     {
-                        <p>Rejected</p>
+                        <p class="mb-0 text-danger">Rejected</p>
                     }
                 </td>
+
+                @* posted date *@
+                <td class="align-middle text-muted" style="font-size:13px;">@property.AddedDate</td>
 
                 @* detail button *@
                 <td>
@@ -80,7 +118,9 @@
                         </a>
                     </div>
                 </td>
+
             </tr>
         }
+
     </table>
 }

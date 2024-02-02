@@ -13,8 +13,16 @@
       "PackagePath": "staticwebassets\\Images\\Assets\\denied.png"
     },
     {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\empty.png",
+      "PackagePath": "staticwebassets\\Images\\Assets\\empty.png"
+    },
+    {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\login.jpg",
       "PackagePath": "staticwebassets\\Images\\Assets\\login.jpg"
+    },
+    {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\no-result.png",
+      "PackagePath": "staticwebassets\\Images\\Assets\\no-result.png"
     },
     {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\suitcase.png",

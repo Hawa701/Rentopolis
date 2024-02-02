@@ -54,7 +54,7 @@ namespace Rentopolis.Controllers
 
             if (returnedStatus.StatusCode == 1)
             {
-                //TempData["successMessage"] = "Success";
+                TempData["successMessage"] = returnedStatus.StatusMessage;
                 return RedirectToAction("AllUsers", "Admin", new { role = "Manager" });
             }
             else
@@ -71,7 +71,10 @@ namespace Rentopolis.Controllers
         public async Task<IActionResult> DeleteManager(string id)
         {
             Status returnedStatus = await _services.DeleteManager(id);
+
             if (returnedStatus.StatusCode == 0) TempData["deletionErrors"] = returnedStatus.StatusMessage;
+            if (returnedStatus.StatusCode == 1) TempData["successMessage"] = returnedStatus.StatusMessage;
+
             return RedirectToAction("AllUsers", "Admin", new { role = "Manager" });
         }
     }

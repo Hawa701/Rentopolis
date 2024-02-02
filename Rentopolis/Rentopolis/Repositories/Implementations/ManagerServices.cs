@@ -63,12 +63,14 @@ namespace Rentopolis.Repositories.Implementations
             }
 
             IdentityResult result = await userManager.SetLockoutEndDateAsync(user, DateTimeOffset.MaxValue);
-            if(result.Succeeded)
+            if (result.Succeeded) { 
                 status.StatusCode = 1;
+                status.StatusMessage = "User banned successfully!";
+            }
             else
             {
                 status.StatusCode = 0;
-                status.StatusMessage = "Failed to lockout the user!";
+                status.StatusMessage = "Failed to ban the user!";
             }
 
             return status;
@@ -97,8 +99,11 @@ namespace Rentopolis.Repositories.Implementations
             }
 
             IdentityResult result = await userManager.SetLockoutEndDateAsync(user, null);
-            if(result.Succeeded)
+            if (result.Succeeded)
+            {
                 status.StatusCode = 1;
+                status.StatusMessage = "User unbanned successfully!";
+            }
             else
             {
                 status.StatusCode = 0;

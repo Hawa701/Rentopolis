@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "J0EN0oALuUFnTrUiIDZwTuK3YZH4yxpBw/nMTP4RZB0=",
+  "Hash": "ikgDjB+4Rw4jz3I/6bpdN7jwScfd772/ZUV32Oqej/4=",
   "Source": "Rentopolis",
   "BasePath": "_content/Rentopolis",
   "Mode": "Default",
@@ -207,6 +207,25 @@
       "OriginalItemSpec": "wwwroot\\Images\\Assets\\denied.png"
     },
     {
+      "Identity": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\empty.png",
+      "SourceId": "Rentopolis",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\",
+      "BasePath": "_content/Rentopolis",
+      "RelativePath": "Images/Assets/empty.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\Assets\\empty.png"
+    },
+    {
       "Identity": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\login.jpg",
       "SourceId": "Rentopolis",
       "SourceType": "Discovered",
@@ -224,6 +243,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\Assets\\login.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\no-result.png",
+      "SourceId": "Rentopolis",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\",
+      "BasePath": "_content/Rentopolis",
+      "RelativePath": "Images/Assets/no-result.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\Assets\\no-result.png"
     },
     {
       "Identity": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\suitcase.png",

@@ -3,107 +3,56 @@
 @model Rentopolis.Models.Entitiy.FullInfoViewModel
 
 
-<div class="p-5 mb-5 rounded" style="box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.23);">
+<div class="p-5 my-5 rounded border border-1" style="box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.23); margin-left:120px; margin-right:120px;">
 
-    @* if there is any error *@
-    @if (TempData.ContainsKey("deletionError"))
-    {
-        <div asp-validation-summary="All" class="alert alert-danger">
-                <li class="m-0">@TempData["deletionError"] </li>
-        </div>
-        TempData.Remove("deletionError");
-    }
-
-    @* if edit or delete are successful *@
+    @* displaying success messages *@
     @if (TempData.ContainsKey("successMessage"))
     {
-        <div asp-validation-summary="All" class="alert alert-success">
-            <li>Updated successfully!</li>
+        <div class="alert alert-success fade show px-4" role="alert" style="font-size:14px;" id="fadingAlert">
+            <p class="m-0">
+                <i class="fa-solid fa-circle-check"></i>
+                @TempData["successMessage"]
+            </p>
         </div>
+
         TempData.Remove("successMessage");
     }
 
-    <h1>My Profile</h1>
-
-    <div class="container d-flex justify-content-center align-items-center gap-5 p-4">
-        @* pic *@
-        <div>
-            <img src="@Model.ProfilePicUrl" alt="@Model.FirstName @Model.LastName's profile picture" style="width:250px; height: 250px; border-radius: 50%;" />
+    @* displaying errors messages *@
+    @if (TempData.ContainsKey("deletionError"))
+    {
+        <div class="alert alert-danger alert-dismissible fade show px-4" role="alert" style="font-size:14px;">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <p class="m-0">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                @TempData["deletionError"]
+            </p>
         </div>
-        
-        @* info *@
-        <div class="flex-grow-1">
 
-            @* id *@
-            <div>
-                <p class="fw-light fst-italic" style="font-size: 13px;">User Id = @Model.Id</p>
-            </div>
+        TempData.Remove("deletionError");
+    }
 
-            @* full name *@
-            <div class="d-flex justify-content-start align-items-center gap-2">
-                <p>Full Name:  </p>
-                <p class="fw-bold fs-5">@Model.FirstName @Model.LastName </p>
-            </div>
 
-            @* username *@
-            <div class ="d-flex justify-content-start align-items-center gap-2">
-                <p>User Name: </p>
-                <p class="fw-bold fs-5">@Model.UserName</p>
-            </div>
+    <div class="d-flex justify-content-center align-items-start gap-5 px-4">
 
-            @* email *@
-            <div class="d-flex justify-content-start align-items-center gap-2">
-                <p>Email: </p>
-                <p class="fw-bold fs-5">@Model.Email</p>
-            </div>
+        @* pic *@
+        <div class="col-md-4">
+            <img src="@Model.ProfilePicUrl" alt="@Model.FirstName @Model.LastName's profile picture" style="width:240px; height: 240px; border-radius: 50%;" class="mb-3" />
+            <p class="text-muted" style="font-size: 10px;">
+                <i class="fa-solid fa-id-card-clip me-1"></i>
+                @Model.Id
+            </p>
 
-            @* registered as *@
-            <div class="d-flex justify-content-start align-items-center gap-2">
-                <p>Registered as: </p>
-                <p class="fw-bold fs-5">@User.FindFirstValue(ClaimTypes.Role)</p>
-            </div>
-
-            @if (!User.IsInRole("Admin") && !User.IsInRole("Manager"))
-            {
-                <hr />
-
-                @* report count *@
-                <div class="d-flex justify-content-end align-items-center gap-2">
-                    <p class="text-muted" style="font-size:14px;">
-                        Total Reports(@((ViewBag.Reports)?.Count ?? 0))
-                    </p>
-                </div>
-
-                @* reports *@
-                <div class="d-flex justify-content-start align-items-center gap-2 mb-5">
-                    @if (ViewBag.Reports != null && ((List<ReportedUsers>)ViewBag.Reports).Count > 0)
-                    {
-                        <p>Reports: </p>
-                        <ul>   
-                            @foreach (var report in ViewBag.Reports)
-                            {
-                                <li>@report.Message</li>
-                            }
-                        </ul>
-                    }
-                    else
-                    {
-                        <p class="text-center w-100">No reports yet!</p>
-                    }
-                </div>
-
-                <hr />
-            }
-
-            @* edit button *@
-            <div class="d-flex justify-content-end gap-3">
-                <a class="btn btn-outline-primary" asp-controller="Account" asp-action="EditProfile" asp-route-id="@Model.Id">
+            <div class="d-flex flex-column justify-content-center align-items-center gap-3">
+                @* edit button *@
+                <a class="btn btn-outline-primary" asp-controller="Account" asp-action="EditProfile" asp-route-id="@Model.Id" style="font-size:14px">
                     <i class="fa-solid fa-pen me-2"></i>
                     Edit Profile
                 </a>
                 @if (User.IsInRole("Landlord") || User.IsInRole("Tenant"))
                 {
-                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#terminateAccountModal">
+                    @* delete button *@
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#terminateAccountModal" style="font-size:14px">
                         <i class="fa-solid fa-user-xmark me-2"></i>
                         Terminate
                     </button>
@@ -127,9 +76,116 @@
                     </div>
                 }
             </div>
+        </div>
+        
+        @* info *@
+        <div class="col-md-8">
+
+            <h3 class="mb-4 fw-bold">My Profile</h3>
+
+            <hr />
+
+            @* first + last name*@
+            <div class="d-flex mb-2">
+                <div class="flex-grow-1">
+                    <p class="text-muted mb-0" style="font-size: 12px;">First Name</p>
+                    <h6>@Model.FirstName</h6>
+                </div>
+
+                <div class="flex-grow-1">
+                    <p class="text-muted mb-0" style="font-size: 12px;">Last Name</p>
+                    <h6>@Model.LastName</h6>
+                </div>
+            </div>
+
+            @* email *@
+            <div class="mb-3">
+                <p class="text-muted mb-0" style="font-size: 12px;">Email Address</p>
+                <h6>@Model.Email</h6>
+            </div>
+
+            @* username *@
+            <div class="mb-4">
+                <p class="text-muted mb-0" style="font-size: 12px;">User Name</p>
+                <h6>@Model.UserName</h6>
+            </div>
+
+            <hr />
+
+            @* registered as *@
+            <div class="mb-3">
+                <p class="text-muted mb-0" style="font-size: 12px;">Registered as</p>
+                <h6>@User.FindFirstValue(ClaimTypes.Role)</h6>
+            </div>
+
+            @* user roles *@
+            <div class="mb-4">
+                <p class="text-muted mb-0" style="font-size: 12px;">User Permissions</p>
+                <ul style="font-size:13px">
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>View all Information</li>
+                        <li>Create and Delete Managers</li>
+                        <li>Delete Landlords</li>
+                        <li>Delete Tenants</li>
+                        <li>Delete Properties</li>
+                    }
+                    @if (User.IsInRole("Manager"))
+                    {
+                        <li>View Reported Users</li>
+                        <li>Ban / Unban Reported Users</li>
+                        <li>Approve / Reject Properties</li>
+                    }
+                    @if (User.IsInRole("Landlord"))
+                    {
+                        <li>Post a Property</li>
+                        <li>Accept / Reject Rental Requests</li>
+                        <li>Report Tenants</li>
+                    }
+                    @if (User.IsInRole("Tenant"))
+                    {
+                        <li>Search Properties</li>
+                        <li>View Property Details</li>
+                        <li>Send Rental Requests</li>
+                        <li>Report Landlords</li>
+                    }
+                </ul>
+            </div>
+
+
+            @if (!User.IsInRole("Admin") && !User.IsInRole("Manager"))
+            {
+                <hr />
+
+                @* report count *@
+                <div class="d-flex justify-content-end align-items-center gap-2">
+                    <p class="text-muted" style="font-size:12px;">
+                        Total Reports(@((ViewBag.Reports)?.Count ?? 0))
+                    </p>
+                </div>
+
+                @* reports *@
+                <div class="mb-4">
+                    <p class="text-muted mb-0" style="font-size: 12px;">Complaints on user</p>
+                        @if (ViewBag.Reports != null && ((List<ReportedUsers>)ViewBag.Reports).Count > 0)
+                        {
+                            <ul style="font-size:13px">
+                                @foreach (var report in ViewBag.Reports)
+                                {
+                                    <li>@report.Message</li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p class="text-center w-100" style="font-size: 14px;"s>No reports found on user!</p>
+                        }
+                </div>
+
+                <hr />
+            }
 
         </div>
-
 
     </div>
 

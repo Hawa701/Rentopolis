@@ -155,7 +155,7 @@ namespace Rentopolis.Controllers
 
             if (returnedStatus.StatusCode == 1)
             {
-                TempData["successMessage"] = "Success";
+                TempData["successMessage"] = returnedStatus.StatusMessage;
                 return RedirectToAction("MyProfile", "Account", new { Id = User.FindFirstValue(ClaimTypes.NameIdentifier) });
             }
             else
@@ -190,9 +190,8 @@ namespace Rentopolis.Controllers
 
             if (returnedStatus.StatusCode == 1)
             {
-                string role = User.FindFirstValue(ClaimTypes.Role);
-                TempData["successMessage"] = "Success";
-                return RedirectToAction("Home", role);
+                TempData["successMessage"] = returnedStatus.StatusMessage;
+                return RedirectToAction("MyProfile", new { Id = User.FindFirstValue(ClaimTypes.NameIdentifier) });
             }
             else
             {
@@ -238,7 +237,11 @@ namespace Rentopolis.Controllers
             else
                 TempData["failureMessage"] = returnedStatus.StatusMessage;
 
-            return RedirectToAction("Applicants", "Property", new { propertyId = propertyId });
+            if(propertyId == -1)
+                return RedirectToAction("UserProfile", "Account", new { id = userId });
+            else
+                return RedirectToAction("Applicants", "Property", new { propertyId = propertyId });
+                
         }
 
         // For registering the admin

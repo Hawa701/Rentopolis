@@ -45,7 +45,7 @@ namespace Rentopolis.Repositories.Implementations
             if (result != null)
             {
                 status.StatusCode = 0;
-                status.StatusMessage = "A user with that username already exists! Please try another one.";
+                status.StatusMessage = "A user with that username already exists. Please try another!";
                 return status;
             }
 
@@ -54,7 +54,7 @@ namespace Rentopolis.Repositories.Implementations
             if (result2 != null)
             {
                 status.StatusCode = 0;
-                status.StatusMessage = "A user with that email already exists! Please try another one.";
+                status.StatusMessage = "A user with that email already exists. Please try another!";
                 return status;
             }
 
@@ -86,6 +86,8 @@ namespace Rentopolis.Repositories.Implementations
             if (!roleExists) await roleManager.CreateAsync(new IdentityRole(model.Role));
 
             status.StatusCode = 1;
+            status.StatusMessage = "Manager profile created successfully!";
+
             return status;
         }
 

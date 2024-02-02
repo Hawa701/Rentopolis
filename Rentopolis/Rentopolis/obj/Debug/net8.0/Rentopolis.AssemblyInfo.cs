@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Rentopolis")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2896763c4f98e611899687f9f3f9ed41ead16ee4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+64ff9f7aa8ea1166730e40cb58ab9f5117479f9a")]
 [assembly: System.Reflection.AssemblyProductAttribute("Rentopolis")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Rentopolis")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
