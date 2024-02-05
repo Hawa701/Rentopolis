@@ -161,7 +161,7 @@ namespace Rentopolis.Controllers
             else
             {
                 ViewBag.Success = false;
-                ViewBag.Message = returnedStatus.StatusMessage;
+                TempData["editError"] = returnedStatus.StatusMessage;
                 return View(model);
             }
         }
@@ -196,7 +196,7 @@ namespace Rentopolis.Controllers
             else
             {
                 ViewBag.Success = false;
-                ViewBag.Message = returnedStatus.StatusMessage;
+                TempData["changeError"] = returnedStatus.StatusMessage;
                 return View(model);
             }
         }

@@ -45,7 +45,7 @@
 
             <div class="d-flex flex-column justify-content-center align-items-center gap-3">
                 @* edit button *@
-                <a class="btn btn-outline-primary" asp-controller="Account" asp-action="EditProfile" asp-route-id="@Model.Id" style="font-size:14px">
+                <a class="btn btn-outline-primary" asp-controller="Account" asp-action="EditProfile" asp-route-id="@Model.Id">
                     <i class="fa-solid fa-pen me-2"></i>
                     Edit Profile
                 </a>
@@ -81,7 +81,10 @@
         @* info *@
         <div class="col-md-8">
 
-            <h3 class="mb-4 fw-bold">My Profile</h3>
+            <h3 class="mb-4 fw-bold">
+                <i class="fa-solid fa-user me-1"></i>
+                My Profile
+            </h3>
 
             <hr />
 
@@ -178,7 +181,7 @@
                         }
                         else
                         {
-                            <p class="text-center w-100" style="font-size: 14px;"s>No reports found on user!</p>
+                            <p class="text-center w-100" style="font-size: 14px;"s>No reports found your profile!</p>
                         }
                 </div>
 

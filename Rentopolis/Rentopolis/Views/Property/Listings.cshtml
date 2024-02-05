@@ -1,10 +1,16 @@
 ﻿@model List<Rentopolis.Models.Data.Property>
 
-<div class="d-flex align-items-end">
+@{
+    string user = ViewBag.SignedInUsername;
+    int totalApproved = ViewBag.ApprovedCount;
+}
+
+@* page title + search bar *@
+<div class="d-flex align-items-center mt-5">
 
     <div class="d-flex flex-column flex-grow-1">
-        <h1>Property Listing</h1>
-        <p>These is the list of properties available!</p>
+        <h3 class="fw-bold">Property Listing</h3>
+        <p style="font-size:14px;">This is the list of available properties!</p>
     </div>
 
     <div class="d-flex flex-column flex-grow-1">
@@ -12,7 +18,7 @@
         <form method="get" asp-action="Listings">
             <div class="input-group mb-3">
                 <input type="text" class="form-control ps-4" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Address, Sub City, Price, Area, Bedroom, Bathroom..." aria-label="Search" aria-describedby="button-addon2" autocomplete="off" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);font-size:15px;">
-                <button class="btn btn-primary" type="submit" id="button-addon2" style="padding: 8px 20px;">
+                <button class="btn btn-success" type="submit" id="button-addon2" style="padding: 8px 20px;">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </div>
@@ -20,36 +26,122 @@
     </div>
 </div>
 
+
 <br />
 
-@* if properties are NOT available *@
-@if (Model.Count == 0)
-{
-    <div class="d-flex justify-content-center" style="margin-top:140px">
-        <h4>No properties found!</h4>
-    </div>
-}
 
-@* if properties ARE available *@
-@if (Model.Count != 0)
-{
-    @foreach (var property in Model)
-    {
-        <a asp-controller="Property" asp-action="Detail" asp-route-id="@property.Id" style="text-decoration:none; color:black;">
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="@property.ImageUrl" class="img-fluid rounded-start" alt="@property.Address's image">
+<div class="d-flex gap-4">
+
+    @* info tab *@
+    <div class="col-md-3" style="height:60vh; border-radius:5px;">
+        @* title *@
+
+        @* text *@
+        <div class="bg-success text-white h-50 ps-1 mb-4" style="border-radius:5px;">
+            <h6 class="fw-bold mb-3 mx-2 ps-1 pt-3" style="font-size:15px;">Hi @user!</h6>
+            <p class="mx-2 mb-0" style="font-size:12px;">
+                Welcome to Rentopolis, your convenient hub for accessing and managing property details as a tenant. 
+                Simplify your renting experience by effortlessly browsing, searching, and reviewing property information in a user-friendly interface.
+            </p>
+        </div>
+
+        @* pic *@
+        <div class="ps-1">
+            <p class="text-center mx-2 mb-0" style="font-size:13px;">
+                <i class="fa-solid fa-house me-1"></i>
+                Total available properties
+            </p>
+            <p class="text-center mx-2 mb-2" style="font-size:20px;">@totalApproved</p>
+        </div>
+    </div>
+
+    @* property tab *@
+    <div class="col-md-9 border border-1" style="box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.23); height:60vh; border-radius:5px;">
+        @* title *@
+        <p class="text-muted m-2 ps-2" style="font-size:15px;">Properties (@Model.Count)</p>
+
+        <div class="d-flex flex-column px-2" style="overflow-y:scroll; height:87%;">
+            @* if properties are NOT available *@
+            @if (Model.Count == 0)
+            {
+                // just empty
+                @if (@ViewData["CurrentFilter"] == null)
+                {
+                    <div class="d-flex flex-column justify-content-center align-items-center" style="height:100%">
+                        <img src="/Images/Assets/empty.png" alt="empty-image" class="w-25" />
+                        <h4>No properties available!</h4>
+                        <p style="font-size:14px;">You haven't registered any properties yet.</p>
                     </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">@property.Address</h5>
-                            <p class="card-text">@property.Features</p>
-                            <p class="card-text"><small class="text-muted">Added on: @property.AddedDate</small></p>
+                }
+
+                // searched
+                @if (@ViewData["CurrentFilter"] != null)
+                {
+                    <div class="d-flex flex-column justify-content-center align-items-center" style="height:100%">
+                        <img src="/Images/Assets/no-result.png" alt="no-result-image" class="w-25" />
+                        <h4>No result found!</h4>
+                        <p style="font-size:14px;">You don't have properties matching the keyword "@ViewData["CurrentFilter"]".</p>
+                    </div>
+                }
+            }
+
+            @* if there ARE properties *@
+            @if (Model.Count != 0)
+            {
+                @foreach (var property in Model)
+                {
+                    <a asp-controller="Property" asp-action="Detail" asp-route-id="@property.Id" style="text-decoration:none; color:black" class="mb-2">
+
+                        <div class="card" style="max-width: 100%; max-height:180px;" id="hoverable-container">
+                            <div class="row g-0">
+                                <div class="col-md-2">
+                                    <img src="@property.ImageUrl" alt="@property.Address's image" class="img-fluid rounded-start" style="max-height:180px;width:140px;">
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="card-body">
+                                        @* address *@
+                                        <h6 class="fw-bold">@property.Address</h6>
+                                        @* subcity *@
+                                        <p class="card-text mb-1" style="font-size:15px">@property.City</p>
+                                        @* price *@
+                                        <p class="card-text text-success fst-italic mb-2" style="font-size:15px">@property.PricePerMonth ETB</p>
+                                        @* bedroom + bathroom + area *@
+                                        <div class="d-flex gap-3 text-muted" style="font-size:13px">
+
+                                            @* bedroom *@
+                                            <div class="d-flex flex-column">
+                                                <i class="fa-solid fa-bed"></i>
+                                                <p class="mb-2">@property.Bedroom</p>
+                                            </div>
+
+                                            <p>|</p>
+
+                                            @* bathroom *@
+                                            <div class="d-flex flex-column">
+                                                <i class="fa-solid fa-bath"></i>
+                                                <p class="mb-2">@property.Bathroom</p>
+                                            </div>
+
+                                            <p>|</p>
+
+                                            @* area *@
+                                            <div class="d-flex flex-column">
+                                                <i class="fa-solid fa-chart-area"></i>
+                                                <p class="mb-2">@property.Area</p>
+                                            </div>
+
+                                        </div>
+                                        @* posted date *@
+                                        <p class="card-text text-muted" style="font-size:11px;">Posted on: @property.AddedDate</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </a>
-    }
-}
+
+                    </a>
+                }
+            }
+        </div>
+    </div>
+
+</div>

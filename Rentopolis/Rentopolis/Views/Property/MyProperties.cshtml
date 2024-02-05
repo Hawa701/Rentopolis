@@ -2,13 +2,19 @@
 
 @{
     string landlordId = ViewBag.LandlordId;
+    int ownedPropertyCount = ViewBag.PropertyCount;
+    int totalApproved = ViewBag.ApprovedCount;
+    int totalWaiting = ViewBag.WaitingCount;
+    int totalRejected = ViewBag.RejectedCount;
+    string user = ViewBag.SignedInUsername;
 }
 
-<div class="d-flex align-items-end">
+@* page title + search bar *@
+<div class="d-flex align-items-center mt-5">
 
     <div class="d-flex flex-column flex-grow-1">
-        <h1>My Properties</h1>
-        <p>These is the list of properties you own!</p>
+        <h3 class="fw-bold">My Properties</h3>
+        <p style="font-size:14px;">This is the list of properties you own!</p>
     </div>
 
     <div class="d-flex flex-column flex-grow-1">
@@ -32,123 +38,197 @@
     </div>
 </div>
 
-<br />
 
-@* if editing and deleting is successful *@
+@* displaying success message *@
 @if (TempData.ContainsKey("successMessage"))
 {
-    <div asp-validation-summary="All" class="alert alert-success">
-        <li>@TempData["successMessage"]</li>
+    <div class="alert alert-success fade show position-fixed bottom-0 end-0 border-2" role="alert" style="margin-bottom: 40px; margin-right: 40px; z-index:100;" id="fadingAlert">
+        <p class="m-0 py-2 px-4">
+            <i class="fa-solid fa-circle-check"></i>
+            @TempData["successMessage"]
+        </p>
     </div>
+
     TempData.Remove("successMessage");
 }
 
 
-@* if property is NOT available *@
-@if (Model.Count == 0)
-{
-    <div class="d-flex justify-content-center" style="margin-top:140px">
-        <h4>No properties found!</h4>
+<br />
+
+
+<div class="d-flex gap-4">
+
+    @* info tab *@
+    <div class="col-md-3 bg-primary p-1" style="box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.23); height:60vh; border-radius:5px; color:white;">
+        @* title *@
+        <p class="mt-2 mx-2 mb-0 ps-1" style="font-size:15px;">Information</p>
+
+        <hr class="my-2"/>
+        
+        @* text *@
+        <div class="ps-1">
+            <p class="mx-2 mt-3 mb-0" style="font-size:12px;">
+                Hello, @user! Simplify your landlord experience by effortlessly managing your properties and accessing accurate information in a user-friendly interface.
+                Stay organized and make informed decisions, maintaining professionalism in your endeavors.
+            </p>
+        </div>
+
+        <hr class="my-3"/>
+
+        @* total property *@
+        <div class="ps-1">
+            <p class="text-center mx-2 mb-0" style="font-size:13px;">
+                <i class="fa-solid fa-house me-1"></i>
+                Total owned properties
+            </p>
+            <p class="text-center mx-2 mb-2" style="font-size:20px;">@ownedPropertyCount</p>
+        </div>
+
+        @* approved + waiting + rejected *@
+        <div class="d-flex align-items-center">
+            <div class="flex-grow-1">
+                <p class="text-center mx-2 mb-0" style="font-size:11px;">
+                    <i class="fa-regular fa-circle-check"></i>
+                    Approved
+                </p>
+                <p class="text-center mx-2 mb-0" style="font-size:15px;">@totalApproved</p>
+            </div>
+            <div class="flex-grow-1">
+                <p class="text-center mx-2 mb-0" style="font-size:11px;">
+                    <i class="fa-solid fa-hourglass-half"></i>
+                    Waiting
+                </p>
+                <p class="text-center mx-2 mb-0" style="font-size:15px;">@totalWaiting</p>
+            </div>
+            <div class="flex-grow-1">
+                <p class="text-center mx-2 mb-0" style="font-size:11px;">
+                    <i class="fa-regular fa-circle-xmark"></i>
+                    Rejected
+                </p>
+                <p class="text-center mx-2 mb-0" style="font-size:15px;">@totalRejected</p>
+            </div>
+        </div>
+
+        <hr />
+
+        <p class="text-center mb-0" style="font-size:11px;">Thank you for using our app!</p>
+
     </div>
-}
+        
+    @* property tab *@
+    <div class="col-md-9 border border-1" style="box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.23); height:60vh; border-radius:5px;">
+        @* title *@
+        <p class="text-muted m-2 ps-2" style="font-size:15px;">Properties (@Model.Count)</p>
 
-
-@* if property IS available *@
-@if (Model.Count != 0)
-{
-    <div class="d-flex flex-column justify-content-center align-items-start ps-4 pe-4">
-        @foreach (var property in Model)
-        {
-        <a asp-controller="Property" asp-action="Detail" asp-route-id="@property.Id" style="text-decoration:none; color:black">
-            <div class="card mb-3 shadow-lg p-3 mb-5 rounded" style="width:100%; height:250px;">
-                <div class="row g-0">
-
-                    @* image *@
-                    <div class="col-md-3">
-                            <img src="@property.ImageUrl" class="img-fluid rounded-start" alt="@property.Address's image" style="width:250px;height:220px;">
+        <div class="d-flex flex-column px-2" style="overflow-y:scroll; height:87%;">
+            @* if properties are NOT available *@
+            @if (Model.Count == 0)
+            {
+                // just empty
+                @if (@ViewData["CurrentFilter"] == null)
+                {
+                    <div class="d-flex flex-column justify-content-center align-items-center" style="height:100%">
+                        <img src="/Images/Assets/empty.png" alt="empty-image" class="w-25" />
+                        <h4>No properties available!</h4>
+                        <p style="font-size:14px;">You haven't registered any properties yet.</p>
                     </div>
+                }
 
-                    <div class="col-md-9">
-                        <div class="card-body">
+                // searched
+                @if (@ViewData["CurrentFilter"] != null)
+                {
+                    <div class="d-flex flex-column justify-content-center align-items-center" style="height:100%">
+                        <img src="/Images/Assets/no-result.png" alt="no-result-image" class="w-25" />
+                        <h4>No result found!</h4>
+                        <p style="font-size:14px;">You don't have properties matching the keyword "@ViewData["CurrentFilter"]".</p>
+                    </div>
+                }
+            }
 
-                            @* address *@
-                            <h5 class="card-title">@property.Address</h5>
+            @* if there ARE properties *@
+            @if (Model.Count != 0)
+            {
+                @foreach (var property in Model)
+                {
+                    <a asp-controller="Property" asp-action="Detail" asp-route-id="@property.Id" style="text-decoration:none; color:black" class="mb-2">
 
-                            @* features *@
-                            <p class="card-text">@property.Features</p>
-
-                            <div class="d-flex justify-content-between align-items-center">
-
-                                @* bedroom *@
-                                <div class="d-flex flex-column flex-grow-1 gap-2">
-                                    <i class="fa-solid fa-bed  fs-5"></i>
-                                    <p>@property.Bedroom</p>
+                        <div class="card" style="max-width: 100%; max-height:180px;" id="hoverable-container">
+                            <div class="row g-0">
+                                <div class="col-md-2">
+                                    <img src="@property.ImageUrl" alt="@property.Address's image" class="img-fluid rounded-start" style="max-height:180px;width:140px;">
                                 </div>
+                                <div class="col-md-10">
+                                    <div class="card-body">
+                                        @* address *@
+                                        <h6 class="fw-bold">@property.Address</h6>
+                                        @* subcity *@
+                                        <p class="card-text mb-1" style="font-size:15px">@property.City</p>
+                                        @* price *@
+                                        <p class="card-text text-success fst-italic mb-2" style="font-size:15px">@property.PricePerMonth ETB</p>
+                                        @* bedroom + bathroom + area *@
+                                        <div class="d-flex gap-3 text-muted" style="font-size:13px">
 
-                                @* bathroom *@
-                                <div class="d-flex flex-column flex-grow-1">
-                                    <i class="fa-solid fa-bath fs-5"></i>
-                                    <p>@property.Bathroom</p>
-                                </div>
+                                            @* bedroom *@
+                                            <div class="d-flex flex-column">
+                                                <i class="fa-solid fa-bed"></i>
+                                                <p class="mb-2">@property.Bedroom</p>
+                                            </div>
 
-                                @* area *@
-                                <div class="d-flex flex-column flex-grow-1">
-                                    <i class="fa-solid fa-chart-area  fs-5"></i>
-                                    <p>@property.Area</p>
-                                </div>
-                            </div>
+                                            <p>|</p>
 
-                            <div class="d-flex justify-content-between align-items-center">
+                                            @* bathroom *@
+                                            <div class="d-flex flex-column">
+                                                <i class="fa-solid fa-bath"></i>
+                                                <p class="mb-2">@property.Bathroom</p>
+                                            </div>
 
-                                @* added date *@
-                                <p class="card-text"><small class="text-muted">Posted on: @property.AddedDate</small></p>
-                                
-                                <div class="d-flex justify-content-center gap-3 w-50">
-                                    @* approval status *@
-                                    @if(property.IsApproved == true && property.IsDeleted == false)
-                                    {
-                                        <div class="d-flex justify-content-center align-items-center w-50 gap-2 rounded" style="background-color:green; color: white;">
-                                            <i class="fa-regular fa-circle-check"></i>
-                                            <h6 class="mt-2 mb-2">Approved</h6>
-                                        </div>
-                                    }
-                                    @if(property.IsApproved == false && property.IsDeleted == false)
-                                    {
-                                        <div class="d-flex justify-content-center align-items-center w-50 gap-2 rounded" style="background-color:dimgray; color: white;">
-                                            <i class="fa-regular fa-clock"></i>
-                                            <h6 class="mt-2 mb-2">Waiting</h6>
-                                        </div>
-                                    }
-                                    @if(property.IsApproved == false && property.IsDeleted == true)
-                                    {
-                                        <div class="d-flex justify-content-center align-items-center w-50 gap-2 rounded" style="background-color:red; color: white;">
-                                                <i class="fa-regular fa-circle-xmark"></i>
-                                            <h6 class="mt-2 mb-2">Rejected</h6>
-                                        </div>
-                                    }
+                                            <p>|</p>
 
-                                    @* rent status *@
-                                    @if(property.IsRented == true)
-                                    {
-                                        <div class="d-flex justify-content-center align-items-center w-50 gap-2 rounded" style="background-color:green; color: white;">
-                                            <i class="fa-regular fa-circle-check"></i>
-                                            <h6 class="mt-2 mb-2">Rented</h6>
+                                            @* area *@
+                                            <div class="d-flex flex-column">
+                                                <i class="fa-solid fa-chart-area"></i>
+                                                <p class="mb-2">@property.Area</p>
+                                            </div>
+
                                         </div>
-                                    }
-                                    @if(property.IsRented == false)
-                                    {
-                                        <div class="d-flex justify-content-center align-items-center w-50 gap-2 rounded" style="background-color:dimgray; color: white;">
-                                                <i class="fa-regular fa-circle-xmark"></i>
-                                            <h6 class="mt-2 mb-2">Not Rented</h6>
+                                        @* posted date + approval status *@
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            @* posted date *@
+                                            <div class="flex-grow-1">
+                                                <p class="card-text text-muted" style="font-size:11px;">Posted on: @property.AddedDate</p>
+                                            </div>
+
+                                            @* verified + approval status *@
+                                            <div class="d-flex justify-content-center align-items-center gap-1">
+                                                @* approved? *@
+                                                @if (property.IsApproved == true && property.IsDeleted == false)
+                                                {
+                                                    <i class="fa-regular fa-circle-check text-success"></i>
+                                                    <p class="text-success mb-0" style="font-size:14px;">Approved</p>
+                                                }
+                                                @* waiting? *@
+                                                @if (property.IsApproved == false && property.IsDeleted == false)
+                                                {
+                                                    <i class="fa-solid fa-hourglass-half text-secondary"></i>
+                                                    <p class="text-secondary mb-0" style="font-size:14px;">Waiting</p>
+                                                }
+                                                @* rejected? *@
+                                                @if (property.IsApproved == false && property.IsDeleted == true)
+                                                {
+                                                    <i class="fa-regular fa-circle-xmark text-danger"></i>
+                                                    <p class="text-danger  mb-0" style="font-size:14px;">Rejected</p>
+                                                }
+                                            </div>
                                         </div>
-                                    }
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </a>
-        }
+
+                    </a>
+                }
+            }
+        </div>
     </div>
-}
+
+</div>

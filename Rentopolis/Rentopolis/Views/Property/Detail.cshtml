@@ -9,25 +9,37 @@
     bool IsRejeceted = ViewBag.IsRejeceted;
 }
 
+@* displaying success message *@
 @if (TempData.ContainsKey("successMessage"))
 {
-    <div asp-validation-summary="All" class="alert alert-success">
-        <li>@TempData["successMessage"]</li>
+    <div class="alert alert-success fade show position-fixed bottom-0 end-0 border-2" role="alert" style="margin-bottom: 40px; margin-right: 40px;" id="fadingAlert">
+        <p class="m-0 py-2 px-3">
+            <i class="fa-solid fa-circle-check"></i>
+            @TempData["successMessage"]
+        </p>
     </div>
+
     TempData.Remove("successMessage");
 }
 
+@* displaying errors messages *@
 @if (TempData.ContainsKey("failureMessage"))
 {
-    <div asp-validation-summary="All" class="alert alert-success">
-        <li>@TempData["failureMessage"]</li>
+    <div class="alert alert-danger alert-dismissible fade show px-4" role="alert" style="font-size:14px;">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <p class="m-0">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            @TempData["failureMessage"]
+        </p>
     </div>
+
     TempData.Remove("failureMessage");
 }
 
-<div class="d-flex flex-column gap-3">
 
-    <h1>Property Details</h1>
+<div class="d-flex flex-column gap-3 my-5">
+
+    <h3 class="fw-bold">Property Details</h3>
 
     <div class="container">
         <div class="row">
@@ -68,76 +80,77 @@
             <div class="col-md-8">
                 @* address *@
                 <div class="mb-3">
-                    <p class="m-0 text-muted" style="font-size:13px;">
+                    <p class="m-0 text-muted" style="font-size:12px;">
                         <i class="fa-solid fa-map-location-dot me-1"></i>
                         Address
                     </p>
-                    <h4>@Model.Address</h4>
+                    <h5>@Model.Address</h5>
                 </div>
 
                 @* sub city *@
                 <div class="mb-3">
-                    <p class="m-0 text-muted" style="font-size:13px;">
+                    <p class="m-0 text-muted" style="font-size:12px;">
                         <i class="fa-solid fa-city me-1"></i>
                         Sub-City
                     </p>
-                    <h5>@Model.City</h5>
+                    <h6>@Model.City</h6>
                 </div>
 
                 @* Features *@
                 <div class="mb-4">
-                    <p class="m-0 text-muted" style="font-size:13px;">
+                    <p class="m-0 text-muted" style="font-size:12px;">
                         <i class="fa-solid fa-circle-info me-1"></i>
                         Features
                     </p>
-                    <p class="m-0">@Model.Features</p>
+                    <p class="m-0" style="font-size:15px;">@Model.Features</p>
                 </div>
 
                 @* #Bedroom, #Bathroom, Area, Price *@
                 <div class="row">
                     @* bedroom *@
                     <div class="col-md-3">
-                        <p class="m-0 text-muted" style="font-size:13px;">
+                        <p class="m-0 text-muted" style="font-size:12px;">
                             <i class="fa-solid fa-bed me-1"></i>
                             Bedroom
                         </p>
-                        <h5>@Model.Bedroom</h5>
+                        <h6>@Model.Bedroom</h6>
                     </div>
                     @* bathroom *@
                     <div class="col-md-3">
-                        <p class="m-0 text-muted" style="font-size:13px;">
+                        <p class="m-0 text-muted" style="font-size:12px;">
                             <i class="fa-solid fa-bath me-1"></i>
                             Bathroom
                         </p>
-                        <h5>@Model.Bathroom</h5>
+                        <h6>@Model.Bathroom</h6>
                     </div>
                     @* area *@
                     <div class="col-md-3">
-                        <p class="m-0 text-muted" style="font-size:13px;">
+                        <p class="m-0 text-muted" style="font-size:12px;">
                             <i class="fa-solid fa-chart-area me-1"></i>
                             Area
                         </p>
-                        <h5>@Model.Area sq km</h5>
+                        <h6>@Model.Area sq km</h6>
                     </div>
                     @* price *@
                     <div class="col-md-3">
-                        <p class="m-0 text-muted" style="font-size:13px;">
+                        <p class="m-0 text-muted" style="font-size:12px;">
                             <i class="fa-solid fa-dollar-sign me-1"></i>
                             Price
                         </p>
-                        <h5>@Model.PricePerMonth ETB</h5>
+                        <h6>@Model.PricePerMonth ETB</h6>
                     </div>
                 </div>
 
                 <hr class="my-3">
 
-                @* Approval Status *@
+                @* Approval + Rental *@
                 <div class="row mb-3">
+                    @* Approval Status *@
                     <div class="col-md-6">
-                        <p class="m-0 text-muted" style="font-size:13px;">Approval Status</p>
+                        <p class="m-0 text-muted" style="font-size:12px;">Approval Status</p>
                         @if(Model.IsApproved == false && Model.IsDeleted == false){
                             <h6 class="text-secondary">
-                                <i class="fa-regular fa-clock me-1"></i>
+                                <i class="fa-solid fa-hourglass-half me-1"></i>
                                 Waiting
                             </h6>
                         }
@@ -159,58 +172,60 @@
 
                     @* Rental status *@
                     <div class="col-md-6">
-                        <p class="m-0 text-muted" style="font-size:13px;">Rental Status</p>
+                        <p class="m-0 text-muted" style="font-size:12px;">Rental Status</p>
                         @if (Model.IsRented == false)
                         {
                             <h6 class="text-secondary">
-                                <i class="fa-regular fa-clock me-1"></i>
+                                <i class="fa-solid fa-person-circle-xmark me-1"></i>
                                 Not Rented
                             </h6>
                         }
                         @if (Model.IsRented == true)
                         {
                             <h6 class="text-success">
-                                <i class="fa-regular fa-circle-check me-1"></i>
+                                <i class="fa-solid fa-person-circle-check me-1"></i>
                                 Rented
                             </h6>
                         }
                     </div>
+
                 </div>
 
+                @* owner info + applicant list + tenant info *@
                 <div class="row">
+                @* owner info *@
                 @if (!User.IsInRole("Landlord"))
                 {
-                @* Landlord *@
-                <div class="col-md-4">
-                    <p class="mb-2 text-muted" style="font-size:13px;">Landlord</p>
-                    <p class="m-0">
-                        <a class="btn btn-outline-dark" asp-controller="Account" asp-action="UserProfile" asp-route-id="@Model.LandlordId" style="font-size:14px;">
-                            Owner Information
-                            <i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                        </a>
-                    </p>
-                </div>
+                    <div class="col-md-4">
+                        <p class="mb-2 text-muted" style="font-size:12px;">Landlord</p>
+                        <p class="m-0">
+                            <a class="btn btn-outline-dark" asp-controller="Account" asp-action="UserProfile" asp-route-id="@Model.LandlordId" style="font-size:14px;">
+                                Owner Information
+                                <i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                            </a>
+                        </p>
+                    </div>
                 }
 
-                @if (User.IsInRole("Admin") || User.IsInRole("Landlord"))
-                {
                 @* applicant list *@
-                <div class="col-md-4">
-                    <p class="mb-2 text-muted" style="font-size:13px;">Applicants (@ApplicantCount)</p>
-                    <p class="m-0">
-                        <a class="btn btn-outline-dark @((ApplicantCount == 0) ? "disabled" : "")" asp-controller="Property" asp-action="Applicants" asp-route-propertyId="@Model.Id" style="font-size:14px;">
-                            View Applicant List
-                            <i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
-                        </a>
-                    </p>
-                </div>
-                }
-
-                @* Tenant *@
                 @if (User.IsInRole("Admin") || User.IsInRole("Landlord"))
                 {
                     <div class="col-md-4">
-                        <p class="mb-2 text-muted" style="font-size:13px;">Tenant</p>
+                        <p class="mb-2 text-muted" style="font-size:12px;">Applicants (@ApplicantCount)</p>
+                        <p class="m-0">
+                            <a class="btn btn-outline-dark @((ApplicantCount == 0) ? "disabled" : "")" asp-controller="Property" asp-action="Applicants" asp-route-propertyId="@Model.Id" style="font-size:14px;">
+                                View Applicant List
+                                <i class="fa-solid fa-arrow-up-right-from-square ms-1"></i>
+                            </a>
+                        </p>
+                    </div>
+                }
+
+                @* tenant info *@
+                @if (User.IsInRole("Admin") || User.IsInRole("Landlord"))
+                {
+                    <div class="col-md-4">
+                        <p class="mb-2 text-muted" style="font-size:12px;">Tenant</p>
                         <p class="m-0">
                                 <a class="btn btn-outline-dark @((Model.TenantId == null)? "disabled": "")" asp-controller="Account" asp-action="UserProfile" asp-route-id="@Model.TenantId" style="font-size:14px;">
                                 Tenant Information
@@ -223,34 +238,40 @@
 
                 <hr class="my-3">
 
-                @* posted date, approved date, buttons *@
+                @* posted date + approved date + buttons *@
                 <div class="row mb-3">
 
+                    @* posted data + approved date *@
                     <div class="col-md-4">
                         @* posted date *@
-                        <p class="m-0 text-muted" style="font-size:13px;">
+                        <p class="m-0 text-muted" style="font-size:12px;">
                             <i class="fa-regular fa-calendar me-1"></i>
                             Posted date
                         </p>
-                        <p>@Model.AddedDate</p>
+                        <p style="font-size:13px;">@Model.AddedDate</p>
 
                         @* approved date *@
-                        <p class="m-0 text-muted" style="font-size:13px;">
+                        <p class="m-0 text-muted" style="font-size:12px;">
                             <i class="fa-regular fa-calendar-check me-1"></i>
                             Approved date
                         </p>
+
                         @if(Model.ApprovedDate != null)
                         {
-                            <p>@Model.ApprovedDate</p>
+                            @* if approved *@
+                            <p style="font-size:13px;">@Model.ApprovedDate</p>
                         }
                         @if (Model.ApprovedDate == null)
                         {
-                            <p>Not approved yet</p>
+                            @* if not approved yet *@
+                            <p style="font-size:13px;">Not approved yet</p>
                         }
                     </div>
 
                     @* buttons *@
                     <div class="col-md-8 d-flex justify-content-end align-self-end gap-3">
+
+                        @* delete property button for admin *@
                         @if (User.IsInRole("Admin"))
                         {
                             <a class="btn btn-danger" href="#" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">Delete</a>
@@ -276,12 +297,14 @@
                             </div>
                         }
 
+                        @* approve and reject property buttons for managers *@
                         @if (User.IsInRole("Manager"))
                         {
                             <a class="btn btn-success" asp-action="Approve" asp-route-id="@Model.Id">Approve</a>
                             <a class="btn btn-danger" asp-action="Reject" asp-route-id="@Model.Id">Reject</a>
                         }
 
+                        @* edit and delete buttons for landlord *@
                         @if (User.IsInRole("Landlord"))
                         {
                             <a class="btn btn-primary" asp-action="EditProperty" asp-route-id="@Model.Id">Edit</a>
@@ -308,9 +331,10 @@
                             </div>
                         }
 
+                        @* save/unsave and request/cancel request buttons for tenant *@
                         @if (User.IsInRole("Tenant"))
                         {
-                            @* save button *@
+                            @* SAVE BUTTON *@
                             <form method="post" asp-action="SaveUnsaveProperty" asp-route-propertyId="@Model.Id" asp-route-view="Detail">
                                 @if(IsSaved){
                                     <button class="btn btn-danger" type="submit" style="width:90px;">
@@ -393,7 +417,7 @@
                                                         <p>By submitting a request to rent the specified property, you (the "Tenant") agree to the following terms and conditions:</p>
                                                         <ol>
                                                             <li>Contact and Payment: Upon acceptance of your rental request by the landlord, you are required to contact the landlord and initiate the rental agreement process within one week. Failure to do so may result in the cancellation of your request and potential consequences, including being banned from future rental opportunities.</li>
-                                                            <li>Monthly Payment: As a Tenant, you are obligated to pay the specified amount of money, as agreed upon with the landlord, every month. The payment should be made in a timely manner, by the due date specified in the rental agreement.</li>
+                                                            <li>Monthly Payment: As a Tenant, you are obligated to pay <strong>@Model.PricePerMonth ETB</strong>, as agreed upon with the landlord, every month. The payment should be made in a timely manner, by the due date specified in the rental agreement.</li>
                                                             <li>Prohibition of Subletting: Under no circumstances are you allowed to sublet or re-rent the property to other individuals. The rental agreement is strictly between you and the landlord, and any unauthorized subletting can lead to immediate termination of the agreement and legal consequences.</li>
                                                             <li>Maintenance and Care: As a Tenant, you are responsible for the proper maintenance and care of the rented property. This includes keeping the property clean, reporting any damages or maintenance issues to the landlord promptly, and adhering to any rules and regulations specified by the landlord.</li>
                                                             <li>Compliance with Laws and Regulations: You are required to comply with all applicable laws, regulations, and homeowners' association rules while residing in the rented property. Any violations may result in termination of the rental agreement.</li>
@@ -410,8 +434,9 @@
                                         </div>
                                     }
                                 </form>
-                             }
+                            }
                         }
+                    
                     </div>
                     
                 </div>

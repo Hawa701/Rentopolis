@@ -4,19 +4,7 @@
 
     string selectedPage = "";
 
-    // var controller = ViewContext.RouteData.Values["controller"]?.ToString();
     var action = ViewContext.RouteData.Values["action"]?.ToString();
-    // var role = ViewContext.RouteData.Values["role"]?.ToString();
-
-    // if (controller == "Admin" && action == "Home") selectedPage = "Dashboard";
-    // else if (controller == "Admin" && action == "AllUsers")
-    // {
-    //     // var role = ViewContext.RouteData.Values["role"]?.ToString();
-    //     if (role == "Manager") selectedPage = "Managers";
-    //     else if (role == "Landlord") selectedPage = "Landlords";
-    //     else if (role == "Tenant") selectedPage = "Tenants";
-    // }
-    // else if (controller == "Property" && action == "AllProperties") selectedPage = "Properties";
 }
 
 <!DOCTYPE html>
@@ -66,8 +54,7 @@
                     @if (User.IsInRole("Landlord"))
                     {
                         <a class="nav-link @(selectedPage == "landlord_dashboard" ? "active" : "")" aria-current="page" asp-controller="Landlord" asp-action="Home">Home</a>
-                        <a class="nav-link @(selectedPage == "owned_properties" ? "active" : "")" asp-controller="Property" asp-action="MyProperties" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">My Property</a>
-                        <a class="nav-link me-5" asp-controller="Landlord" asp-action="">Messages</a>
+                        <a class="nav-link @(selectedPage == "owned_properties" ? "active" : "") me-5" asp-controller="Property" asp-action="MyProperties" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">My Property</a>
                     }
                     @if (User.IsInRole("Tenant"))
                     {
@@ -92,7 +79,7 @@
                 {
                     <!-- User Avatar -->
                     <div class="dropdown ml-auto">
-                        <a class="btn btn-outline-secondary dropdown-toggle" style="box-shadow: none;" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="box-shadow: none; font-size:16px; color:@(User.IsInRole("Admin")?"black":User.IsInRole("Manager")?"#09133A": User.IsInRole("Landlord")?"#4168C9":"green");">
                             @User.FindFirstValue(ClaimTypes.Name)
                         </a>
 

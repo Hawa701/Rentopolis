@@ -41,8 +41,8 @@ namespace Rentopolis.Controllers
 
             if (returnedStatus.StatusCode == 1)
             {
-                TempData["successMessage"] = "Success";
-                return RedirectToAction("Home", "Landlord");
+                TempData["successMessage"] = returnedStatus.StatusMessage;
+                return RedirectToAction("MyProperties", new { id = User.FindFirstValue(ClaimTypes.NameIdentifier) });
             }
             else
             {
@@ -81,7 +81,14 @@ namespace Rentopolis.Controllers
         {
             ViewData["CurrentFilter"] = SearchString;
             List<Property> propertyList = await _services.GetOwnedProperties(id, SearchString);
+
             ViewBag.LandlordId = id;
+            ViewBag.PropertyCount = await _services.GetNumberOfPropertiesOwned(id);
+            ViewBag.ApprovedCount = await _services.GetNumberOfOwnedPropertyStatus(id, "Approved");
+            ViewBag.RejectedCount = await _services.GetNumberOfOwnedPropertyStatus(id, "Rejected");
+            ViewBag.WaitingCount = await _services.GetNumberOfOwnedPropertyStatus(id, "Waiting");
+            ViewBag.SignedInUsername = @User.FindFirstValue(ClaimTypes.Name);
+
             return View(propertyList);
         }
 
@@ -93,6 +100,10 @@ namespace Rentopolis.Controllers
         {
             ViewData["CurrentFilter"] = SearchString;
             List<Property> propertyList = await _services.GetApprovedProperties(SearchString);
+
+            ViewBag.SignedInUsername = @User.FindFirstValue(ClaimTypes.Name);
+            ViewBag.ApprovedCount = await _services.GetApprovedPropertiesNumber();
+
             return View(propertyList);
         }
 

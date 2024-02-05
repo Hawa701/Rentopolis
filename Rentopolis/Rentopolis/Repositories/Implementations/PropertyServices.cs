@@ -85,6 +85,7 @@ namespace Rentopolis.Repositories.Implementations
                 await rentContext.SaveChangesAsync();
 
                 status.StatusCode = 1;
+                status.StatusMessage = "Property created successfully!";
             }
             catch (Exception ex)
             {
@@ -105,6 +106,54 @@ namespace Rentopolis.Repositories.Implementations
             await file.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
 
             return "/" + folderPath;
+        }
+
+
+        // Get total owned properties number
+        public async Task<int> GetNumberOfPropertiesOwned(string id)
+        {
+            List<Property> propList = new List<Property>();
+
+            try
+            {
+                propList = await rentContext.Properties.Where(p => p.LandlordId == id).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred while retrieving properties: " + ex.Message);
+            }
+
+            return propList.Count;
+        }
+
+
+        // Get number of properties (owned) based on the specified status
+        public async Task<int> GetNumberOfOwnedPropertyStatus(string id, string neededStatus)
+        {
+            List<Property> propList = new List<Property>();
+
+            try
+            {
+                propList = await rentContext.Properties.Where(p => p.LandlordId == id).ToListAsync();
+                if(neededStatus == "Approved")
+                {
+                    propList = propList.Where(p => p.IsApproved == true && p.IsDeleted == false).ToList();
+                }
+                else if(neededStatus == "Rejected")
+                {
+                    propList = propList.Where(p => p.IsApproved == false && p.IsDeleted == true).ToList();
+                }
+                else if (neededStatus == "Waiting")
+                {
+                    propList = propList.Where(p => p.IsApproved == false && p.IsDeleted == false).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred while retrieving properties: " + ex.Message);
+            }
+
+            return propList.Count;
         }
 
 
@@ -223,6 +272,25 @@ namespace Rentopolis.Repositories.Implementations
             }
 
             return properties;
+        }
+
+
+        // Get approved properties number
+        public async Task<int> GetApprovedPropertiesNumber()
+        {
+            List<Property> properties = new List<Property>();
+
+            try
+            {
+                properties = await rentContext.Properties.Where(p => p.IsApproved == true).ToListAsync();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred while retrieving properties: " + ex.Message);
+            }
+
+            return properties.Count;
         }
 
 
@@ -642,6 +710,7 @@ namespace Rentopolis.Repositories.Implementations
                 // Update the property's tenantId
                 Property property = await rentContext.Properties.FindAsync(propertyId);
                 property.TenantId = tenantId;
+                property.IsRented = true;
                 property.RentedDate = DateTime.Now;
                 await rentContext.SaveChangesAsync();
                 
@@ -697,6 +766,7 @@ namespace Rentopolis.Repositories.Implementations
                 // Update the property's tenantId
                 Property property = await rentContext.Properties.FindAsync(propertyId);
                 property.TenantId = tenantId;
+                property.IsRented = false;
                 property.RentedDate = null;
                 await rentContext.SaveChangesAsync();
                 

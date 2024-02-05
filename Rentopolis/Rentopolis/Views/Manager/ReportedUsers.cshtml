@@ -4,7 +4,7 @@
 <div class="d-flex align-items-center mt-5">
 
     <div class="d-flex flex-column flex-grow-1">
-        <h3>Reported @TempData["role"] List</h3>
+        <h4 class="fw-bold">Reported @TempData["role"]s List</h4>
         <p style="font-size:14px;">This is the list of @TempData["role"]s that have been reported!</p>
     </div>
 
@@ -14,7 +14,7 @@
             <div class="input-group mb-3">
                 <input type="hidden" name="role" value="@TempData["role"]">
                 <input type="text" class="form-control ps-4" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="First name, Last name, User name, Email..." aria-label="Search" aria-describedby="button-addon2" autocomplete="off" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);font-size:15px;">
-                <button class="btn" type="submit" id="button-addon2" style="padding: 8px 20px; background-color: dimgray; color:white;">
+                <button class="btn" type="submit" id="button-addon2" style="padding: 8px 20px; background-color: #09133A; color:white;">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </div>
@@ -85,7 +85,7 @@
 {
     <table class="table table-hover">
 
-        <tr style="height:50px; font-size:14px; background-color: dimgray; color:white;">
+        <tr style="height:50px; font-size:14px; background-color: #09133A; color:white;">
             <th class="align-middle ps-4">User Id</th>
             <th class="align-middle">User</th>
             <th class="align-middle">Full Name</th>
@@ -180,7 +180,7 @@
                 <td class="align-middle">
                     <div class="d-flex justify-content-end gap-2 me-3">
                         <a class="btn" asp-controller="Account" asp-action="UserProfile" asp-route-id="@Model[i].Id">
-                            <i class="fa-solid fa-circle-info fs-5" style="color: black;" onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';"></i>
+                            <i class="fa-solid fa-circle-info fs-5" style="color: #09133A;" onmouseover="this.style.color='black';" onmouseout="this.style.color='#09133A';"></i>
                         </a>
                     </div>
                 </td>
