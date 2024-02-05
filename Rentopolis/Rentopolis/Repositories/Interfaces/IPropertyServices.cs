@@ -21,10 +21,10 @@ namespace Rentopolis.Repositories.Interfaces
         Task<Status> DeletePropertyInfo(int id);
         Task<SavedProperties> IsAreadySaved(int propertyId, string tenantId);
         Task<Status> HandleSaveRequest(int propertyId, string tenantId);
-        Task<List<Property>> GetSavedProperties(string tenantId);
+        Task<List<Property>> GetSavedProperties(string tenantId, string searchString);
         Task<RentRequests> IsAreadyRequested(int propertyId, string tenantId);
         Task<Status> HandleRentalRequest(int propertyId, string tenantId);
-        Task<List<Property>> GetRequestedProperties(string tenantId);
+        Task<List<Property>> GetRequestedProperties(string tenantId, string searchString);
         Task<List<AppUser>> GetApplicants(int propertyId);
         Task<Status> AcceptApplicantsRequest(int propertyId, string tenantId);
         Task<Status> UndoApplicantsRequest(int propertyId, string tenantId);

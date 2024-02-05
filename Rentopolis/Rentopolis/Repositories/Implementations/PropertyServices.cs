@@ -537,7 +537,7 @@ namespace Rentopolis.Repositories.Implementations
 
 
         // Get Saved Properties
-        public async Task<List<Property>> GetSavedProperties(string tenantId)
+        public async Task<List<Property>> GetSavedProperties(string tenantId, string searchString)
         {
             List<Property> savedProperties = new List<Property>();
 
@@ -551,6 +551,21 @@ namespace Rentopolis.Repositories.Implementations
                 savedProperties = await rentContext.Properties
                     .Where(p => savedPropertyIds.Contains(p.Id))
                     .ToListAsync();
+
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    searchString = searchString.ToLower();
+
+                    savedProperties = savedProperties.Where(p =>
+                        p.Address.ToLower().Contains(searchString) ||
+                        p.City.ToLower().Contains(searchString) ||
+                        p.Bedroom.ToString().Contains(searchString) ||
+                        p.Bathroom.ToString().Contains(searchString) ||
+                        p.Area.ToString().Contains(searchString) ||
+                        p.PricePerMonth.ToString().Contains(searchString)
+                    )
+                    .ToList();
+                }
             }
             catch (Exception ex)
             {
@@ -615,7 +630,7 @@ namespace Rentopolis.Repositories.Implementations
 
 
         // Get Requested Properties
-        public async Task<List<Property>> GetRequestedProperties(string tenantId)
+        public async Task<List<Property>> GetRequestedProperties(string tenantId, string searchString)
         {
             List<Property> requestedProperties = new List<Property>();
 
@@ -629,6 +644,21 @@ namespace Rentopolis.Repositories.Implementations
                 requestedProperties = await rentContext.Properties
                     .Where(p => requestedPropertyIds.Contains(p.Id))
                     .ToListAsync();
+
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    searchString = searchString.ToLower();
+
+                    requestedProperties = requestedProperties.Where(p =>
+                        p.Address.ToLower().Contains(searchString) ||
+                        p.City.ToLower().Contains(searchString) ||
+                        p.Bedroom.ToString().Contains(searchString) ||
+                        p.Bathroom.ToString().Contains(searchString) ||
+                        p.Area.ToString().Contains(searchString) ||
+                        p.PricePerMonth.ToString().Contains(searchString)
+                    )
+                    .ToList();
+                }
             }
             catch (Exception ex)
             {

@@ -244,6 +244,7 @@ namespace Rentopolis.Controllers
                 
         }
 
+
         // For registering the admin
 
         //public async Task<IActionResult> regAdmin()

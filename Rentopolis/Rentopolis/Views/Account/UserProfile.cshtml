@@ -2,57 +2,166 @@
 @using Rentopolis.Models.Data
 @model Rentopolis.Models.Entitiy.FullInfoViewModel
 
-<div class="p-5 mb-5 rounded" style="box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.23);">
 
-    <h1>User Profile</h1>
+<div class="p-5 my-5 rounded border border-1" style="box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.23); margin-left:120px; margin-right:120px;">
 
-    <div class="container d-flex justify-content-center align-items-center gap-5 p-4">
-        @* pic *@
-        <div>
-            <img src="@Model.ProfilePicUrl" alt="@Model.FirstName @Model.LastName's profile picture" style="width:250px; height: 250px; border-radius: 50%;" />
+    @* displaying success messages *@
+    @if (TempData.ContainsKey("successMessage"))
+    {
+        <div class="alert alert-success fade show px-4" role="alert" style="font-size:14px;" id="fadingAlert">
+            <p class="m-0">
+                <i class="fa-solid fa-circle-check"></i>
+                @TempData["successMessage"]
+            </p>
         </div>
 
-        @* info *@
-        <div class="flex-grow-1">
+        TempData.Remove("successMessage");
+    }
+
+    @* displaying errors messages *@
+    @if (TempData.ContainsKey("failureMessage"))
+    {
+        <div class="alert alert-danger alert-dismissible fade show px-4" role="alert" style="font-size:14px;">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <p class="m-0">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                @TempData["failureMessage"]
+            </p>
+        </div>
+
+        TempData.Remove("failureMessage");
+    }
+
+
+    <div class="d-flex justify-content-center align-items-start gap-5 px-4">
+
+        @* left side *@
+        <div class="col-md-4">
+
+            @* pic *@
+            <img src="@Model.ProfilePicUrl" alt="@Model.FirstName @Model.LastName's profile picture" style="width:240px; height: 240px; border-radius: 50%;" class="mb-3" />
 
             @* id *@
-            <div>
-                <p class="fw-light fst-italic" style="font-size: 13px;">User Id = @Model.Id</p>
+            <p class="text-muted" style="font-size: 10px;"><i class="fa-solid fa-id-card-clip me-1"></i>@Model.Id</p>
+
+            @* buttons *@
+            <div class="d-flex flex-column justify-content-center align-items-center gap-3">
+
+                @* delete user button *@
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-danger" href="#" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+                        <i class="fa-solid fa-trash me-2"></i>
+                        Delete User
+                    </a>
+
+                    <!-- Confirmation Modal -->
+                    <div class="modal fade" id="confirmDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmation</h5>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete this user?
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteManager" asp-route-id="@Model.Id">Yes</a>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @* report user button *@
+                @if (User.IsInRole("Tenant"))
+                {
+                    <a class="btn btn-dark" href="#" data-bs-toggle="modal" data-bs-target="#reportModal">
+                        <i class="fa-solid fa-flag me-2"></i>
+                        Report User
+                    </a>
+
+                    <!-- Report Modal -->
+                    <div class="modal fade" id="reportModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <form method="post" asp-controller="Account" asp-action="ReportUser" asp-route-userId="@Model.Id" asp-route-propertyId="-1">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="reportModalLabel">Report Landlord</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="text-muted fst-italic" style="font-size:12px;">Even though the identity is concealed when reporting, we kindly request that all individuals involved maintain a sense of responsibility and professionalism by providing honest comments without resorting to rudeness or disrespectful behavior.</p>
+                                        <div class="mb-3">
+                                            <label for="report-text" class="col-form-label">Message:</label>
+                                            <textarea class="form-control" id="report-text" name="message"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-dark">Send</button>
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+                
             </div>
 
-            @* full name *@
-            <div class="d-flex justify-content-start align-items-center gap-2">
-                <p>Full Name:  </p>
-                <p class="fw-bold fs-5">@Model.FirstName @Model.LastName </p>
-            </div>
+        </div>
 
-            @* username *@
-            <div class="d-flex justify-content-start align-items-center gap-2">
-                <p>User Name: </p>
-                <p class="fw-bold fs-5">@Model.UserName</p>
+        @* right side *@
+        <div class="col-md-8">
+
+            @* header *@
+            <h3 class="mb-4 fw-bold"><i class="fa-regular fa-address-card me-2"></i></i>User Profile</h3>
+
+            <hr />
+
+            @* first + last name*@
+            <div class="d-flex mb-2">
+
+                @* first name *@
+                <div class="flex-grow-1">
+                    <p class="text-muted mb-0" style="font-size: 12px;">First Name</p>
+                    <h6>@Model.FirstName</h6>
+                </div>
+
+                @* last name *@
+                <div class="flex-grow-1">
+                    <p class="text-muted mb-0" style="font-size: 12px;">Last Name</p>
+                    <h6>@Model.LastName</h6>
+                </div>
             </div>
 
             @* email *@
-            <div class="d-flex justify-content-start align-items-center gap-2">
-                <p>Email: </p>
-                <p class="fw-bold fs-5">@Model.Email</p>
+            <div class="mb-3">
+                <p class="text-muted mb-0" style="font-size: 12px;">Email Address</p>
+                <h6>@Model.Email</h6>
             </div>
-            
+
+            @* username *@
+            <div class="mb-4">
+                <p class="text-muted mb-0" style="font-size: 12px;">User Name</p>
+                <h6>@Model.UserName</h6>
+            </div>
+
             <hr />
 
             @* report count *@
             <div class="d-flex justify-content-end align-items-center gap-2">
-                <p class="text-muted" style="font-size:14px;">
-                    Total Reports(@((ViewBag.Reports)?.Count ?? 0))
+                <p class="text-muted" style="font-size:12px;">
+                    Total Reports (@((ViewBag.Reports)?.Count ?? 0))
                 </p>
             </div>
 
             @* reports *@
-            <div class="d-flex justify-content-start align-items-start gap-2 mb-5">
+            <div class="mb-4">
+                <p class="text-muted mb-0" style="font-size: 12px;">Complaints on user</p>
                 @if (ViewBag.Reports != null && ((List<ReportedUsers>)ViewBag.Reports).Count > 0)
                 {
-                    <p>Reports: </p>
-                    <ul>
+                    <ul style="font-size:13px">
                         @foreach (var report in ViewBag.Reports)
                         {
                             <li>@report.Message</li>
@@ -61,76 +170,13 @@
                 }
                 else
                 {
-                    <p class="text-center w-100">No reports yet!</p>
+                    <p class="text-center w-100" style="font-size: 14px;" s>No reports found on user!</p>
                 }
             </div>
 
             <hr />
 
-            @if (User.IsInRole("Admin"))
-            {
-                <div class="d-flex justify-content-end">
-                    <a class="btn btn-danger" href="#" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
-                        <i class="fa-solid fa-trash fs-5 me-2"></i>
-                        Delete User
-                    </a>
-                </div>
-
-                <!-- Confirmation Modal -->
-                <div class="modal fade" id="confirmDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmation</h5>
-                            </div>
-                            <div class="modal-body">
-                                Are you sure you want to delete this user?
-                            </div>
-                            <div class="modal-footer">
-                                <a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteManager" asp-route-id="@Model.Id">Yes</a>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-
-            @if (User.IsInRole("Tenant"))
-            {
-                <div class="d-flex justify-content-end">
-                    <a class="btn btn-outline-dark d-flex flex-column justify-content-center w-25" href="#" data-bs-toggle="modal" data-bs-target="#reportModal" style="padding:14px;">
-                        <i class="fa-solid fa-flag fs-5"></i>
-                        <p class="m-0" style="font-size:10px;">Report</p>
-                    </a>
-                </div>
-                <!-- Report Modal -->
-                <div class="modal fade" id="reportModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <form method="post" asp-controller="Account" asp-action="ReportUser" asp-route-userId="@Model.Id" asp-route-propertyId="-1">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="reportModalLabel">Report Landlord</h5>
-                                </div>
-                                <div class="modal-body">
-                                    <p class="text-muted fst-italic" style="font-size:12px;">Even though the identity is concealed when reporting, we kindly request that all individuals involved maintain a sense of responsibility and professionalism by providing honest comments without resorting to rudeness or disrespectful behavior.</p>
-                                    <div class="mb-3">
-                                        <label for="report-text" class="col-form-label">Message:</label>
-                                        <textarea class="form-control" id="report-text" name="message"></textarea>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-dark">Send</button>
-                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            }
-
-
         </div>
-
 
     </div>
 

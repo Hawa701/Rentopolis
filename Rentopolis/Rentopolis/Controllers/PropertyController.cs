@@ -272,9 +272,10 @@ namespace Rentopolis.Controllers
         // For displaying saved propeties
         [HttpGet]
         [Authorize(Roles = "Tenant")]
-        public async Task<IActionResult> Favorites(string id)
+        public async Task<IActionResult> Favorites(string id, string SearchString = null)
         {
-            List<Property> savedList = await _services.GetSavedProperties(id);
+            ViewData["CurrentFilter"] = SearchString;
+            List<Property> savedList = await _services.GetSavedProperties(id, SearchString);
             return View(savedList);
         }
 
@@ -300,9 +301,10 @@ namespace Rentopolis.Controllers
         // For displaying requested propeties
         [HttpGet]
         [Authorize(Roles = "Tenant")]
-        public async Task<IActionResult> Requests(string id)
+        public async Task<IActionResult> Requests(string id, string SearchString = null)
         {
-            List<Property> requestedList = await _services.GetRequestedProperties(id);
+            ViewData["CurrentFilter"] = SearchString;
+            List<Property> requestedList = await _services.GetRequestedProperties(id, SearchString);
             return View(requestedList);
         }
 

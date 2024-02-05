@@ -241,7 +241,7 @@
                 @* posted date + approved date + buttons *@
                 <div class="row mb-3">
 
-                    @* posted data + approved date *@
+                    @* posted data + approved date + rented date *@
                     <div class="col-md-4">
                         @* posted date *@
                         <p class="m-0 text-muted" style="font-size:12px;">
@@ -255,7 +255,6 @@
                             <i class="fa-regular fa-calendar-check me-1"></i>
                             Approved date
                         </p>
-
                         @if(Model.ApprovedDate != null)
                         {
                             @* if approved *@
@@ -265,6 +264,16 @@
                         {
                             @* if not approved yet *@
                             <p style="font-size:13px;">Not approved yet</p>
+                        }
+                        
+                        @* rented date *@
+                        @if(Model.RentedDate != null)
+                        {
+                            <p class="m-0 text-muted" style="font-size:12px;">
+                                <i class="fa-regular fa-calendar-plus me-1"></i>
+                                Rented date
+                            </p>
+                            <p style="font-size:13px;">@Model.RentedDate</p>
                         }
                     </div>
 
@@ -352,7 +361,8 @@
 
                             @* REQUEST STATUS AND BUTTONS *@
                             @* if accepted *@
-                            @if(IsAccepted && !IsRejeceted){
+                            @if (IsAccepted && !IsRejeceted)
+                            {
                                 <div class="btn btn-success" style="width:300px;">
                                     <i class="fa-regular fa-face-smile-beam fs-5"></i>
                                     <p class="m-0" style="font-size:12px;"><strong>Congratulations!</strong> Your request was accepted!</p>
@@ -360,7 +370,8 @@
                             }
 
                             @* if rejected *@
-                            @if(IsRejeceted && !IsAccepted){
+                            @if (IsRejeceted && !IsAccepted)
+                            {
                                 <div class="btn btn-danger" style="width:250px;">
                                     <i class="fa-regular fa-face-frown-open fs-3"></i>
                                     <p class="m-0" style="font-size:12px;"><strong>Sorry!</strong> Your request was rejected!</p>
@@ -369,72 +380,72 @@
 
                             @* if not accepted or rejected *@
                             @if (!IsAccepted && !IsRejeceted)
-                            {
-                                <form method="post" asp-action="RequestRent" asp-route-propertyId="@Model.Id">
-                                    @* if waiting *@
-                                    @if (IsRequested)
-                                    {
-                                        <button class="btn btn-dark" style="width:90px;" onclick="showCancelConfirmationModal(event)">
-                                            <i class="fa-solid fa-house-medical-circle-xmark fs-5"></i>
-                                            <p class="m-0" style="font-size:12px;">Cancel</p>
-                                        </button>
+                                {
+                                    <form method="post" asp-action="RequestRent" asp-route-propertyId="@Model.Id">
+                                        @* if waiting *@
+                                        @if (IsRequested)
+                                        {
+                                            <button class="btn btn-dark" style="width:90px;" onclick="showCancelConfirmationModal(event)">
+                                                <i class="fa-solid fa-house-medical-circle-xmark fs-5"></i>
+                                                <p class="m-0" style="font-size:12px;">Cancel</p>
+                                            </button>
 
-                                        <!-- Cancel Confirmation Modal -->
-                                        <div class="modal fade" id="cancelConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="cancelConfirmationModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="cancelConfirmationModalLabel">Cancel conformation</h5>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Are you sure you want to cancel the request?</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button class="btn btn-primary" type="submit">Yes</button>
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                            <!-- Cancel Confirmation Modal -->
+                                            <div class="modal fade" id="cancelConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="cancelConfirmationModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="cancelConfirmationModalLabel">Cancel conformation</h5>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Are you sure you want to cancel the request?</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-primary" type="submit">Yes</button>
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    }
+                                        }
 
-                                    @* if not applied yet *@
-                                    @if (!IsRequested)
-                                    {
-                                        <button class="btn btn-outline-success" style="width:90px;" onclick="showRequestConfirmationModal(event)">
-                                            <i class="fa-solid fa-house-circle-check fs-5"></i>
-                                            <p class="m-0" style="font-size:12px;">Request</p>
-                                        </button>
+                                        @* if not applied yet *@
+                                        @if (!IsRequested)
+                                        {
+                                            <button class="btn btn-outline-success" style="width:90px;" onclick="showRequestConfirmationModal(event)">
+                                                <i class="fa-solid fa-house-circle-check fs-5"></i>
+                                                <p class="m-0" style="font-size:12px;">Request</p>
+                                            </button>
 
-                                        <!-- Request Confirmation Modal -->
-                                        <div class="modal fade" data-bs-backdrop="static" id="requestConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="requestConfirmationModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title" id="requestConfirmationModalLabel">Terms and Agreement for Renting Property</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>By submitting a request to rent the specified property, you (the "Tenant") agree to the following terms and conditions:</p>
-                                                        <ol>
-                                                            <li>Contact and Payment: Upon acceptance of your rental request by the landlord, you are required to contact the landlord and initiate the rental agreement process within one week. Failure to do so may result in the cancellation of your request and potential consequences, including being banned from future rental opportunities.</li>
-                                                            <li>Monthly Payment: As a Tenant, you are obligated to pay <strong>@Model.PricePerMonth ETB</strong>, as agreed upon with the landlord, every month. The payment should be made in a timely manner, by the due date specified in the rental agreement.</li>
-                                                            <li>Prohibition of Subletting: Under no circumstances are you allowed to sublet or re-rent the property to other individuals. The rental agreement is strictly between you and the landlord, and any unauthorized subletting can lead to immediate termination of the agreement and legal consequences.</li>
-                                                            <li>Maintenance and Care: As a Tenant, you are responsible for the proper maintenance and care of the rented property. This includes keeping the property clean, reporting any damages or maintenance issues to the landlord promptly, and adhering to any rules and regulations specified by the landlord.</li>
-                                                            <li>Compliance with Laws and Regulations: You are required to comply with all applicable laws, regulations, and homeowners' association rules while residing in the rented property. Any violations may result in termination of the rental agreement.</li>
-                                                            <li>Termination: The rental agreement may be terminated by either party according to the terms specified in the agreement or as permitted by law. In case of termination, you are required to vacate the property within the specified notice period and return the property in the same condition as received, subject to reasonable wear and tear.</li>
-                                                        </ol>
-                                                        <p>Please carefully read and understand the terms and conditions outlined above before submitting your rental request. By proceeding with the rental request, you acknowledge and agree to be bound by these terms and conditions.</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button class="btn btn-primary" type="submit">Agree</button>
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Decline</button>
+                                            <!-- Request Confirmation Modal -->
+                                            <div class="modal fade" data-bs-backdrop="static" id="requestConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="requestConfirmationModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title" id="requestConfirmationModalLabel">Terms and Agreement for Renting Property</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>By submitting a request to rent the specified property, you (the "Tenant") agree to the following terms and conditions:</p>
+                                                            <ol>
+                                                                <li>Contact and Payment: Upon acceptance of your rental request by the landlord, you are required to contact the landlord and initiate the rental agreement process within one week. Failure to do so may result in the cancellation of your request and potential consequences, including being banned from future rental opportunities.</li>
+                                                                <li>Monthly Payment: As a Tenant, you are obligated to pay <strong>@Model.PricePerMonth ETB</strong>, as agreed upon with the landlord, every month. The payment should be made in a timely manner, by the due date specified in the rental agreement.</li>
+                                                                <li>Prohibition of Subletting: Under no circumstances are you allowed to sublet or re-rent the property to other individuals. The rental agreement is strictly between you and the landlord, and any unauthorized subletting can lead to immediate termination of the agreement and legal consequences.</li>
+                                                                <li>Maintenance and Care: As a Tenant, you are responsible for the proper maintenance and care of the rented property. This includes keeping the property clean, reporting any damages or maintenance issues to the landlord promptly, and adhering to any rules and regulations specified by the landlord.</li>
+                                                                <li>Compliance with Laws and Regulations: You are required to comply with all applicable laws, regulations, and homeowners' association rules while residing in the rented property. Any violations may result in termination of the rental agreement.</li>
+                                                                <li>Termination: The rental agreement may be terminated by either party according to the terms specified in the agreement or as permitted by law. In case of termination, you are required to vacate the property within the specified notice period and return the property in the same condition as received, subject to reasonable wear and tear.</li>
+                                                            </ol>
+                                                            <p>Please carefully read and understand the terms and conditions outlined above before submitting your rental request. By proceeding with the rental request, you acknowledge and agree to be bound by these terms and conditions.</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-primary" type="submit">Agree</button>
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Decline</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    }
-                                </form>
-                            }
+                                        }
+                                    </form>
+                                }
                         }
                     
                     </div>

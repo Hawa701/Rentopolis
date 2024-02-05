@@ -35,15 +35,18 @@
 
     <div class="d-flex justify-content-center align-items-start gap-5 px-4">
 
-        @* pic *@
+        @* left side *@
         <div class="col-md-4">
-            <img src="@Model.ProfilePicUrl" alt="@Model.FirstName @Model.LastName's profile picture" style="width:240px; height: 240px; border-radius: 50%;" class="mb-3" />
-            <p class="text-muted" style="font-size: 10px;">
-                <i class="fa-solid fa-id-card-clip me-1"></i>
-                @Model.Id
-            </p>
 
+            @* pic *@
+            <img src="@Model.ProfilePicUrl" alt="@Model.FirstName @Model.LastName's profile picture" style="width:240px; height: 240px; border-radius: 50%;" class="mb-3" />
+
+            @* id *@
+            <p class="text-muted" style="font-size: 10px;"><i class="fa-solid fa-id-card-clip me-1"></i>@Model.Id</p>
+
+            @* buttons *@
             <div class="d-flex flex-column justify-content-center align-items-center gap-3">
+
                 @* edit button *@
                 <a class="btn btn-outline-primary" asp-controller="Account" asp-action="EditProfile" asp-route-id="@Model.Id">
                     <i class="fa-solid fa-pen me-2"></i>
@@ -51,7 +54,7 @@
                 </a>
                 @if (User.IsInRole("Landlord") || User.IsInRole("Tenant"))
                 {
-                    @* delete button *@
+                    @* terminate account button *@
                     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#terminateAccountModal" style="font-size:14px">
                         <i class="fa-solid fa-user-xmark me-2"></i>
                         Terminate
@@ -76,25 +79,27 @@
                     </div>
                 }
             </div>
+
         </div>
         
-        @* info *@
+        @* right side *@
         <div class="col-md-8">
 
-            <h3 class="mb-4 fw-bold">
-                <i class="fa-solid fa-user me-1"></i>
-                My Profile
-            </h3>
+            @* header *@
+            <h3 class="mb-4 fw-bold"><i class="fa-solid fa-user me-1"></i>My Profile</h3>
 
             <hr />
 
             @* first + last name*@
             <div class="d-flex mb-2">
+
+                @* first name *@
                 <div class="flex-grow-1">
                     <p class="text-muted mb-0" style="font-size: 12px;">First Name</p>
                     <h6>@Model.FirstName</h6>
                 </div>
 
+                @* last name *@
                 <div class="flex-grow-1">
                     <p class="text-muted mb-0" style="font-size: 12px;">Last Name</p>
                     <h6>@Model.LastName</h6>
@@ -181,7 +186,7 @@
                         }
                         else
                         {
-                            <p class="text-center w-100" style="font-size: 14px;"s>No reports found your profile!</p>
+                            <p class="text-center w-100" style="font-size: 14px;"s>No reports found on your profile!</p>
                         }
                 </div>
 

@@ -1,55 +1,91 @@
 ﻿@model List<Rentopolis.Models.Data.Property>
 
-<div class="d-flex align-items-end">
+@* page title + search bar *@
+<div class="d-flex align-items-center mt-5">
 
     <div class="d-flex flex-column flex-grow-1">
-        <h1>Favorites</h1>
-        <p>These is the list of your favorite properties!</p>
+        <h4 class="fw-bold">Favorites</h4>
+        <p style="font-size:14px;">This is the list of your favorite properties!</p>
     </div>
 
     <div class="d-flex flex-column flex-grow-1">
         @* search bar *@
-        @* <form method="get" asp-action="Favorites">
+        <form method="get" asp-action="Favorites">
             <div class="input-group mb-3">
                 <input type="text" class="form-control ps-4" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Address, Sub City, Price, Area, Bedroom, Bathroom..." aria-label="Search" aria-describedby="button-addon2" autocomplete="off" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);font-size:15px;">
-                <button class="btn btn-primary" type="submit" id="button-addon2" style="padding: 8px 20px;">
+                <button class="btn btn-success" type="submit" id="button-addon2" style="padding: 8px 20px;">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </div>
-        </form> *@
+        </form>
     </div>
 </div>
 
+
 <br />
+
 
 @* if properties are NOT available *@
 @if (Model.Count == 0)
 {
-    <div class="d-flex justify-content-center" style="margin-top:140px">
-        <h4>No saved properties yet!</h4>
-    </div>
+    // just empty
+    @if (@ViewData["CurrentFilter"] == null)
+    {
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <img src="/Images/Assets/empty.png" alt="empty-image" class="w-25" />
+            <h4>No favorite properties!</h4>
+            <p style="font-size:14px;">You haven't saved any properties yet!</p>
+        </div>
+    }
+
+    // searched
+    @if (@ViewData["CurrentFilter"] != null)
+    {
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <img src="/Images/Assets/no-result.png" alt="no-result-image" class="w-25" />
+            <h4>Property not found!</h4>
+            <p style="font-size:14px;">You don't have a favorite property matching the keyword "@ViewData["CurrentFilter"]".</p>
+        </div>
+    }
 }
+
 
 @* if properties ARE available *@
 @if (Model.Count != 0)
 {
-    @foreach (var property in Model)
-    {
-        <a asp-controller="Property" asp-action="Detail" asp-route-id="@property.Id" style="text-decoration:none; color:black;">
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="@property.ImageUrl" class="img-fluid rounded-start" alt="@property.Address's image">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">@property.Address</h5>
-                            <p class="card-text">@property.Features</p>
-                            <p class="card-text"><small class="text-muted">Added on: @property.AddedDate</small></p>
+    <div class="container">
+        <div class="row">
+            @foreach (var property in Model)
+            {
+                <div class="col-md-3 mb-3">
+                    <a asp-controller="Property" asp-action="Detail" asp-route-id="@property.Id" style="text-decoration:none; color:black;">
+
+                        @* card *@
+                        <div class="card" style="width: 16rem; height:21rem;">
+
+                            @* img *@
+                            <img src="@property.ImageUrl" alt="@property.Address's image" class="card-img-top" style="max-width:16rem; max-height:12rem;">
+
+                            @* info *@
+                            <div class="card-body">
+
+                                @* address *@
+                                <h6 class="card-title fw-bold">@property.Address</h6>
+
+                                @* sub-city *@
+                                <p class="card-text mb-0 ps-1" style="font-size:15px;">@property.City</p>
+
+                                @* price *@
+                                <div class="d-flex justify-content-end align-items-center" style="font-size:14px;">
+                                    <p class="text-success fst-italic mb-0">@property.PricePerMonth ETB</p>
+                                </div>
+
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
-            </div>
-        </a>
-    }
+
+            }
+        </div>
+    </div>
 }
