@@ -15,7 +15,7 @@ namespace Rentopolis.Repositories.Interfaces
         Task<Status> ChangeUserPassword(PasswordViewModel model);
         Task<Status> DeleteUserProfile(string id);
         Task<Status> ReportUser(string id, string message);
-        //Task<int> GetReportCountByUserId(string userId);
         Task<List<ReportedUsers>> GetReportsByUserId(string userId);
+        Task<Status> DeleteReport(int reportId);
     }
 }

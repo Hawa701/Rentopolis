@@ -316,10 +316,34 @@
                         @* edit and delete buttons for landlord *@
                         @if (User.IsInRole("Landlord"))
                         {
-                            <a class="btn btn-primary" asp-action="EditProperty" asp-route-id="@Model.Id">Edit</a>
-                            <a class="btn btn-danger" href="#" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">Delete</a>
+                            @if (Model.IsApproved == false && Model.IsDeleted == true)
+                            {
+                                <a class="btn btn-outline-success" href="#" data-bs-toggle="modal" data-bs-target="#resubmitConfirmationModal">Resubmit</a>
+                                <!-- Resubmit confirmation Modal -->
+                                <div class="modal fade" id="resubmitConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="resubmitConfirmationModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="resubmitConfirmationModalLabel">Confirm Resubmission</h5>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Are you sure you want to resubmit this property?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <form method="post" asp-action="ReapplyProperty" asp-route-propertyId="@Model.Id">
+                                                    <button type="submit" class="btn btn-success">Yes</button>
+                                                </form>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
 
-                            <!-- Confirmation Modal -->
+                            <a class="btn btn-primary" asp-action="EditProperty" asp-route-id="@Model.Id">Edit</a>
+
+                            <a class="btn btn-danger" href="#" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">Delete</a>
+                            <!-- Delete confirmation Modal -->
                             <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">

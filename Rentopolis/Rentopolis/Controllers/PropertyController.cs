@@ -224,6 +224,20 @@ namespace Rentopolis.Controllers
         }
 
 
+        // For resending a property for a manager again (for approval)
+        [HttpPost]
+        [Authorize(Roles = "Landlord")]
+        public async Task<IActionResult> ReapplyProperty(int propertyId)
+        {
+            Status returnedStatus = await _services.ReapplyRejectedProperty(propertyId);
+
+            if (returnedStatus.StatusCode == 0) TempData["failureMessage"] = returnedStatus.StatusMessage;
+            if (returnedStatus.StatusCode == 1) TempData["successMessage"] = returnedStatus.StatusMessage;
+
+            return RedirectToAction("Detail", "Property", new { id = propertyId }); ;
+        }
+
+
         // For deleting the property
         [HttpPost]
         [Authorize(Roles = "Landlord, Admin")]
@@ -356,6 +370,7 @@ namespace Rentopolis.Controllers
             return RedirectToAction("Applicants", "Property", new { propertyId = propertyId });
         }
 
+
         // For accepting tenants request
         [HttpGet]
         [Authorize(Roles = "Landlord")]
@@ -370,5 +385,7 @@ namespace Rentopolis.Controllers
 
             return RedirectToAction("Applicants", "Property", new { propertyId = propertyId });
         }
+        
+
     }
 }

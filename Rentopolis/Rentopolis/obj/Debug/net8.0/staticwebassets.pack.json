@@ -9,6 +9,18 @@
       "PackagePath": "staticwebassets\\Images\\Assets\\404.png"
     },
     {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\create property 2.png",
+      "PackagePath": "staticwebassets\\Images\\Assets\\create property 2.png"
+    },
+    {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\create property 3.png",
+      "PackagePath": "staticwebassets\\Images\\Assets\\create property 3.png"
+    },
+    {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\create property.png",
+      "PackagePath": "staticwebassets\\Images\\Assets\\create property.png"
+    },
+    {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\denied.png",
       "PackagePath": "staticwebassets\\Images\\Assets\\denied.png"
     },
@@ -19,6 +31,10 @@
     {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\login.jpg",
       "PackagePath": "staticwebassets\\Images\\Assets\\login.jpg"
+    },
+    {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\manager.png",
+      "PackagePath": "staticwebassets\\Images\\Assets\\manager.png"
     },
     {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\no-result.png",
@@ -241,6 +257,10 @@
       "PackagePath": "staticwebassets\\Images\\User Profiles\\257b2748-e1a8-4c6d-a7e5-389f04f92223_Pic1.jpg"
     },
     {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\User Profiles\\336a578c-25cf-46fa-bf85-bb60b596f1ec_jean kirschtein.jpg",
+      "PackagePath": "staticwebassets\\Images\\User Profiles\\336a578c-25cf-46fa-bf85-bb60b596f1ec_jean kirschtein.jpg"
+    },
+    {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\User Profiles\\46ab2224-1ffa-4d11-8796-d9397499943c_Pic1.jpg",
       "PackagePath": "staticwebassets\\Images\\User Profiles\\46ab2224-1ffa-4d11-8796-d9397499943c_Pic1.jpg"
     },
@@ -291,6 +311,10 @@
     {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\User Profiles\\f5ae8163-a843-43fe-a814-e45764797b5f_Eren Yeager.jpg",
       "PackagePath": "staticwebassets\\Images\\User Profiles\\f5ae8163-a843-43fe-a814-e45764797b5f_Eren Yeager.jpg"
+    },
+    {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\css\\addManagerStyles.css",
+      "PackagePath": "staticwebassets\\css\\addManagerStyles.css"
     },
     {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\css\\loginStyles.css",

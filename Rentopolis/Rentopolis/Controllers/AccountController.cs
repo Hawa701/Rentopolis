@@ -85,7 +85,7 @@ namespace Rentopolis.Controllers
 
             if (returnedStatus.StatusCode == 1)
             {
-                TempData["successMessage"] = "Success";
+                TempData["successMessage"] = returnedStatus.StatusMessage;
                 return RedirectToAction("Login");
             }
             else
@@ -242,6 +242,20 @@ namespace Rentopolis.Controllers
             else
                 return RedirectToAction("Applicants", "Property", new { propertyId = propertyId });
                 
+        }
+
+
+        // Deleting a report
+        [HttpPost]
+        [Authorize(Roles = "Admin,Manager")]
+        public async Task<IActionResult> DeleteReport(int reportId, string userId)
+        {
+            Status returnedStatus = await _services.DeleteReport(reportId);
+
+            if (returnedStatus.StatusCode == 0) TempData["failureMessage"] = returnedStatus.StatusMessage;
+            if (returnedStatus.StatusCode == 1) TempData["successMessage"] = returnedStatus.StatusMessage;
+
+            return RedirectToAction("UserProfile", new {id = userId});
         }
 
 

@@ -9,94 +9,103 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Register Manager</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/registerStyles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/addManagerStyles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <title>Register Manager</title>
 </head>
+
 <body>
-    <div class="wrapper">
-        <div class="containr">
-            <!-- Image -->
-            <div class="image-box">
-                <div class="text">
-                    <p>Add a new manager and let them join the family!</p>
-                    <p class="italic">
-                        <a asp-controller="Home" asp-action="Index">Rentopolis</a>
-                    </p>
-                </div>
-            </div>
+    <div class="d-flex w-100 h-100">
 
-            <!-- Form -->
-            <div class="form-box">
+        <!-- Image -->
+        <div class="d-flex flex-column justify-content-center align-items-center col-md-6">
 
-                <h1 class="header" style="margin-top:110px">Create Manager</h1>
+            <a class="text-dark align-self-baseline ms-5 mb-5" style="margin-top:-30px" asp-controller="Admin" asp-action="AllUsers" asp-route-role="Manager">
+                <i class="fa-solid fa-circle-left fs-1 me-1"></i>
+            </a>
 
-                @if (ViewBag.Success == false)
-                {
-                    <div asp-validation-summary="All" class="alert alert-danger">
-                        @if (ViewBag.Message != null)
-                        {
-                            <ul> <li>@ViewBag.Message</li> </ul>
-                        }
-                    </div>
-                }
+            <h3 class="fw-bold">Elevate Management</h3>
+            <p class="mb-0">Add a new manager and let them join the family!</p>
 
-                <form method="post" asp-action="AddManager">
+            <img src="/Images/Assets/manager.png" class="" style="width:550px;"/>
 
-                    @* first name and last name*@
-                    <div class="input-field-container">
-                        <div class="input-field">
-                            <label asp-for="FirstName"></label>
-                            <input asp-for="FirstName" class="input" type="text" />
-                        </div>
 
-                        <div class="input-field">
-                            <label asp-for="LastName"></label>
-                            <input asp-for="LastName" class="input" type="text" />
-                        </div>
-                    </div>
-
-                    @* user name *@
-                    <div class="input-field">
-                        <label asp-for="UserName"></label>
-                        <input asp-for="UserName" class="input" type="text" />
-                    </div>
-
-                    @* email *@
-                    <div class="input-field">
-                        <label asp-for="Email"></label>
-                        <input asp-for="Email" class="input" type="email" />
-                    </div>
-
-                    @* password *@
-                    <div class="input-field">
-                        <label asp-for="Password" hidden></label>
-                        <input asp-for="Password" class="input" type="text" value="Manager@123" hidden />
-                    </div>
-
-                    @* confirm password *@
-                    <div class="input-field">
-                        <label asp-for="ConfirmPassword" hidden></label>
-                        <input asp-for="ConfirmPassword" class="input" type="text" value="Manager@123" hidden />
-                    </div>
-
-                    @* role *@
-                    <div class="input-field">
-                        <label asp-for="Role" hidden></label>
-                        <input asp-for="Role" class="input" type="text" value="Manager" hidden/>
-                    </div>
-
-                    <br />
-
-                    @* button *@
-                    <div class="input-field">
-                        <button class="btn btn-primary" type="submit">Register</button>
-                    </div>
-
-                </form>
-
-            </div>
+            
         </div>
+
+        <!-- Form -->
+        <div class="d-flex flex-column justify-content-center align-items-center col-md-6 bg-dark">
+
+            <h1 class="fw-bold text-white mb-3">Create Manager</h1>
+
+            @if (ViewBag.Success == false)
+            {
+                <div asp-validation-summary="All" class="alert alert-danger">
+                    @if (ViewBag.Message != null)
+                    {
+                        <ul> <li>@ViewBag.Message</li> </ul>
+                    }
+                </div>
+            }
+
+            <form method="post" asp-action="AddManager" style="width:400px;">
+
+                @* first name and last name*@
+                <div class="input-field-container">
+                    <div class="input-field">
+                        <label asp-for="FirstName" class="text-muted" style="font-size:13px;"></label>
+                        <input asp-for="FirstName" class="input" type="text" />
+                    </div>
+
+                    <div class="input-field">
+                        <label asp-for="LastName" class="text-muted" style="font-size:13px;"></label>
+                        <input asp-for="LastName" class="input" type="text" />
+                    </div>
+                </div>
+
+                @* user name *@
+                <div class="input-field">
+                    <label asp-for="UserName" class="text-muted" style="font-size:13px;"></label>
+                    <input asp-for="UserName" class="input" type="text" />
+                </div>
+
+                @* email *@
+                <div class="input-field">
+                    <label asp-for="Email" class="text-muted" style="font-size:13px;"></label>
+                    <input asp-for="Email" class="input" type="email" />
+                </div>
+
+                @* password *@
+                <div class="input-field">
+                    <label asp-for="Password" hidden></label>
+                    <input asp-for="Password" class="input" type="text" value="Manager@123" hidden />
+                </div>
+
+                @* confirm password *@
+                <div class="input-field">
+                    <label asp-for="ConfirmPassword" hidden></label>
+                    <input asp-for="ConfirmPassword" class="input" type="text" value="Manager@123" hidden />
+                </div>
+
+                @* role *@
+                <div class="input-field">
+                    <label asp-for="Role" hidden></label>
+                    <input asp-for="Role" class="input" type="text" value="Manager" hidden/>
+                </div>
+
+                <br />
+
+                @* button *@
+                <div class="input-field">
+                    <button class="btn btn-outline-light" type="submit">Register</button>
+                </div>
+
+            </form>
+
+        </div>
+
     </div>
 
 </body>

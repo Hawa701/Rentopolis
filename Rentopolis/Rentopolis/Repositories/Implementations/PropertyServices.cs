@@ -442,6 +442,40 @@ namespace Rentopolis.Repositories.Implementations
             {
                 await rentContext.SaveChangesAsync();
                 status.StatusCode = 1;
+                status.StatusMessage = "Updated property successfully!";
+            }
+            catch (Exception ex)
+            {
+                status.StatusCode = 0;
+                status.StatusMessage = ex.Message;
+            }
+
+            return status;
+        }
+
+
+        //Reapply Property
+        public async Task<Status> ReapplyRejectedProperty(int propertyId)
+        {
+            Status status = new Status();
+            Property property = await GetPropertyDetail(propertyId);
+
+            // if property doesn't exist
+            if (property == null)
+            {
+                status.StatusCode = 0;
+                status.StatusMessage = "Couldn't find a property with this Id! Please try again!";
+                return status;
+            }
+
+            property.IsApproved = false;
+            property.IsDeleted = false;
+
+            try
+            {
+                await rentContext.SaveChangesAsync();
+                status.StatusCode = 1;
+                status.StatusMessage = "Property re-submittion successful!";
             }
             catch (Exception ex)
             {

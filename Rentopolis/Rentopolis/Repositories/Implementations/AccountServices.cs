@@ -210,6 +210,7 @@ namespace Rentopolis.Repositories.Implementations
             if (!roleExists) await roleManager.CreateAsync(new IdentityRole(model.Role));
 
             status.StatusCode = 1;
+            status.StatusMessage = "Registered successfully!";
             return status;
         }
         
@@ -401,6 +402,39 @@ namespace Rentopolis.Repositories.Implementations
             catch (Exception ex)
             {
                 status.StatusCode=0;
+                status.StatusMessage = ex.Message;
+            }
+
+            return status;
+        }
+
+
+        // For deleting a report
+        public async Task<Status> DeleteReport(int reportId)
+        {
+            Status status = new Status();
+
+            try
+            {
+                var report = await rentContext.ReportedUsers.FindAsync(reportId);
+
+                if (report != null)
+                {
+                    rentContext.ReportedUsers.Remove(report);
+                    await rentContext.SaveChangesAsync();
+
+                    status.StatusCode = 1;
+                    status.StatusMessage = "Report deleted successfully!";
+                }
+                else
+                {
+                    status.StatusCode = 0;
+                    status.StatusMessage = "Report not found!";
+                }
+            }
+            catch (Exception ex)
+            {
+                status.StatusCode = 0;
                 status.StatusMessage = ex.Message;
             }
 
