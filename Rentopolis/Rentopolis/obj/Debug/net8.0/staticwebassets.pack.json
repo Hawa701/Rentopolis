@@ -9,20 +9,16 @@
       "PackagePath": "staticwebassets\\Images\\Assets\\404.png"
     },
     {
-      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\create property 2.png",
-      "PackagePath": "staticwebassets\\Images\\Assets\\create property 2.png"
-    },
-    {
-      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\create property 3.png",
-      "PackagePath": "staticwebassets\\Images\\Assets\\create property 3.png"
-    },
-    {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\create property.png",
       "PackagePath": "staticwebassets\\Images\\Assets\\create property.png"
     },
     {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\denied.png",
       "PackagePath": "staticwebassets\\Images\\Assets\\denied.png"
+    },
+    {
+      "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\edit property.png",
+      "PackagePath": "staticwebassets\\Images\\Assets\\edit property.png"
     },
     {
       "Id": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\wwwroot\\Images\\Assets\\empty.png",
