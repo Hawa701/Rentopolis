@@ -265,3 +265,6 @@ C:\Users\paulo\Documents\GitHub\Rentopolis\Rentopolis\Rentopolis\bin\Debug\net8.
 C:\Users\paulo\Documents\GitHub\Rentopolis\Rentopolis\Rentopolis\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
 C:\Users\paulo\Documents\GitHub\Rentopolis\Rentopolis\Rentopolis\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\paulo\Documents\GitHub\Rentopolis\Rentopolis\Rentopolis\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
+C:\Users\paulo\Documents\GitHub\Rentopolis\Rentopolis\Rentopolis\bin\Debug\net8.0\Chapa.NET.dll
+C:\Users\paulo\Documents\GitHub\Rentopolis\Rentopolis\Rentopolis\bin\Debug\net8.0\Flurl.dll
+C:\Users\paulo\Documents\GitHub\Rentopolis\Rentopolis\Rentopolis\bin\Debug\net8.0\Flurl.Http.dll

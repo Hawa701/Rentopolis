@@ -4,6 +4,7 @@ using Rentopolis.Models.Data;
 using Rentopolis.Models.Entitiy;
 using Rentopolis.Repositories.Interfaces;
 using System.Security.Claims;
+using ChapaNET;
 
 namespace Rentopolis.Controllers
 {
@@ -256,6 +257,19 @@ namespace Rentopolis.Controllers
             if (returnedStatus.StatusCode == 1) TempData["successMessage"] = returnedStatus.StatusMessage;
 
             return RedirectToAction("UserProfile", new {id = userId});
+        }
+
+
+        // Making payment
+        [HttpPost]
+        [Authorize(Roles = "Tenant")]
+        public async Task<IActionResult> Payment(decimal price, int propertyId)
+        {
+            string checkoutUrl = await _services.MakePayment(price, propertyId);
+
+            if(!string.IsNullOrEmpty(checkoutUrl)) TempData["successMessage"] = "Payment successful!";
+
+            return Redirect(checkoutUrl);
         }
 
 

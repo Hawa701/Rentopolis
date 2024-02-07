@@ -17,5 +17,6 @@ namespace Rentopolis.Repositories.Interfaces
         Task<Status> ReportUser(string id, string message);
         Task<List<ReportedUsers>> GetReportsByUserId(string userId);
         Task<Status> DeleteReport(int reportId);
+        Task<string> MakePayment(decimal price, int propertyId);
     }
 }

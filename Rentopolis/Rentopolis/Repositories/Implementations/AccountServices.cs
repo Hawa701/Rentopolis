@@ -5,6 +5,7 @@ using Rentopolis.Models.Entitiy;
 using Rentopolis.Repositories.Interfaces;
 using System.IO;
 using System.Security.Claims;
+using ChapaNET;
 
 namespace Rentopolis.Repositories.Implementations
 {
@@ -442,16 +443,6 @@ namespace Rentopolis.Repositories.Implementations
         }
 
 
-        // For getting a users report count
-        //public async Task<int> GetReportCountByUserId(string userId)
-        //{
-        //    var reportCount = await rentContext.ReportedUsers
-        //        .CountAsync(r => r.UserId == userId);
-
-        //    return reportCount;
-        //}
-
-
         // For getting reports made on a user
         public async Task<List<ReportedUsers>> GetReportsByUserId(string userId)
         {
@@ -462,5 +453,39 @@ namespace Rentopolis.Repositories.Implementations
             return reports;
         }
 
+
+        // For making payment
+        public async Task<string> MakePayment(decimal price, int propertyId)
+        {
+            //Initialize your Chapa Instance
+            string APIKEY = "CHASECK_TEST-pvGfQWLc4Xq7YfclESfVwdc24bk9Truz";
+            Chapa chapa = new(APIKEY);
+
+            //Get a unique transaction ID
+            var ID = Chapa.GetUniqueRef();
+
+            //Get Banks
+            var banks = await chapa.GetBanksAsync();
+
+            //Make a request
+            var Request = new ChapaRequest(
+                amount: (double)price,
+                email: "testemail@gmail.com",
+                firstName: "testFN",
+                lastName: "testLN",
+                tx_ref: ID,
+                phoneNo: "0911111111",
+                currency: "ETB",
+                return_url: "https://localhost:7163/Property/Detail/" + propertyId.ToString()
+            ); 
+
+            //Process the request and get a response asynchronously
+            var Result = await chapa.RequestAsync(Request);
+
+            //Print out the checkout link
+            Console.WriteLine("Checkout Url:" + Result.CheckoutUrl);
+
+            return Result.CheckoutUrl;
+        }
     }
 }

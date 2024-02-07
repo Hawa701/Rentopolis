@@ -1,11 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "+UOf0PuTJ3+fn525ufTeo/cJg5ooJMxfQVPcwiJw73aKyPlmTcxuvCwngxMk8CR9OuYaAuYZIdu7wBZ3w8TbZA==",
+  "dgSpecHash": "saGjE4kfaJfeiJDzMZ5lr3Sf+OZDtJi9j5A1/ONz4lZeM+2iyGluMQdnuNzhOM8MLLyw9pnLp6CPzoRfrKxdEQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\paulo\\Documents\\GitHub\\Rentopolis\\Rentopolis\\Rentopolis\\Rentopolis.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\paulo\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\paulo\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
+    "C:\\Users\\paulo\\.nuget\\packages\\chapa.net\\2.1.0\\chapa.net.2.1.0.nupkg.sha512",
+    "C:\\Users\\paulo\\.nuget\\packages\\flurl\\3.0.6\\flurl.3.0.6.nupkg.sha512",
+    "C:\\Users\\paulo\\.nuget\\packages\\flurl.http\\3.2.4\\flurl.http.3.2.4.nupkg.sha512",
     "C:\\Users\\paulo\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\paulo\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\paulo\\.nuget\\packages\\humanizer.core.af\\2.14.1\\humanizer.core.af.2.14.1.nupkg.sha512",
