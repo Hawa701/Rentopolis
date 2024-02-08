@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Rentopolis.Models.Data;
 using Rentopolis.Models.Entitiy;
 using Rentopolis.Repositories.Interfaces;
@@ -9,11 +10,13 @@ namespace Rentopolis.Repositories.Implementations
     {
         private readonly UserManager<AppUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly RentContext rentContext;
 
-        public AdminServices(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
+        public AdminServices(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, RentContext rentContext)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.rentContext = rentContext;
         }
 
         // Get users by their role (list)
@@ -127,6 +130,82 @@ namespace Rentopolis.Repositories.Implementations
                 status.StatusMessage = "Failed to delete the manager profile!";
             }
             return status;
+        }
+
+
+        // Get number of all Properties
+        public async Task<int> NumberOfAllProperty()
+        {
+            List<Property> properties = new List<Property>();
+
+            try
+            {
+                properties = await rentContext.Properties.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred while retrieving properties: " + ex.Message);
+            }
+
+            return properties.Count;
+
+        }
+
+
+        // Get number of saved properties
+        public async Task<int> NumberOfSavedProperty()
+        {
+            List<SavedProperties> savedProperties = new List<SavedProperties>();
+
+            try
+            {
+                savedProperties = await rentContext.SavedProperties.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred while retrieving properties: " + ex.Message);
+            }
+
+            return savedProperties.Count;
+
+        }
+
+
+        // Get number of requested properties
+        public async Task<int> NumberOfRequestedProperty()
+        {
+            List<RentRequests> requestedProperties = new List<RentRequests>();
+
+            try
+            {
+                requestedProperties = await rentContext.RentalRequests.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred while retrieving properties: " + ex.Message);
+            }
+
+            return requestedProperties.Count;
+
+        }
+
+
+        // Get number of total reports
+        public async Task<int> NumberOfReports()
+        {
+            List<ReportedUsers> reportList = new List<ReportedUsers>();
+
+            try
+            {
+                reportList = await rentContext.ReportedUsers.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred while retrieving properties: " + ex.Message);
+            }
+
+            return reportList.Count;
+
         }
     }
 }

@@ -9,5 +9,9 @@ namespace Rentopolis.Repositories.Interfaces
         Task<List<AppUser>> GetUsersByRole(string role, string searchString);
         Task<Status> CreateNewManager(RegisterationViewModel model);
         Task<Status> DeleteManager(string id);
+        Task<int> NumberOfAllProperty();
+        Task<int> NumberOfSavedProperty();
+        Task<int> NumberOfRequestedProperty();
+        Task<int> NumberOfReports();
     }
 }

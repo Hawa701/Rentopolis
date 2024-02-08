@@ -5,6 +5,59 @@
     string selectedPage = "";
 
     var action = ViewContext.RouteData.Values["action"]?.ToString();
+
+    // if admin is signed in
+    if (User.IsInRole("Admin"))
+    {
+        if (action == "Home" && ViewContext.RouteData.Values["controller"]?.ToString() == "Admin")
+            selectedPage = "admin_dashboard";
+        else if (ViewContext.RouteData.Values["controller"]?.ToString() == "Admin" && ViewContext.RouteData.Values["action"]?.ToString().StartsWith("AllUsers") == true)
+        {
+            // selectedPage = "all_managers";
+            var role = ViewContext.RouteData.Values["role"]?.ToString();
+            if (role == "Manager")
+                selectedPage = "all_managers";
+            else if (role == "Landlord")
+                selectedPage = "all_landlords";
+            else if (role == "Tenant")
+                selectedPage = "all_tenants";
+        }
+        else if (ViewContext.RouteData.Values["controller"]?.ToString() == "Admin" && ViewContext.RouteData.Values["action"]?.ToString() == "AllProperties")
+            selectedPage = "all_properties";
+    }
+    // if manager is signed in
+    else if (User.IsInRole("Manager"))
+    {
+        if (action == "Home" && ViewContext.RouteData.Values["controller"]?.ToString() == "Manager")
+            selectedPage = "manager_dashboard";
+        else if (ViewContext.RouteData.Values["controller"]?.ToString() == "Property" && action == "PendingProperties")
+            selectedPage = "property_approval";
+        else if (ViewContext.RouteData.Values["controller"]?.ToString() == "Manager" && action == "ReportedUsers" && ViewContext.RouteData.Values["role"]?.ToString() == "Landlord")
+            selectedPage = "reported_landlords";
+        else if (ViewContext.RouteData.Values["controller"]?.ToString() == "Manager" && action == "ReportedUsers" && ViewContext.RouteData.Values["role"]?.ToString() == "Tenant")
+            selectedPage = "reported_tenants";
+    }
+    // if landlord is signed in
+    @if (User.IsInRole("Landlord"))
+    {
+        if (action == "Home" && ViewContext.RouteData.Values["controller"]?.ToString() == "Landlord")
+            selectedPage = "landlord_dashboard";
+        else if (ViewContext.RouteData.Values["controller"]?.ToString() == "Property" && action == "MyProperties")
+            selectedPage = "owned_properties";
+    }
+    // if tenant is signed in
+    @if (User.IsInRole("Tenant"))
+    {
+        if (action == "Home" && ViewContext.RouteData.Values["controller"]?.ToString() == "Tenant")
+            selectedPage = "tenant_dashboard";
+        else if (ViewContext.RouteData.Values["controller"]?.ToString() == "Property" && action == "Listings")
+            selectedPage = "property_listing";
+        else if (ViewContext.RouteData.Values["controller"]?.ToString() == "Property" && action == "Favorites")
+            selectedPage = "favorite_properties";
+        else if (ViewContext.RouteData.Values["controller"]?.ToString() == "Property" && action == "Requests")
+            selectedPage = "requested_properties";
+    }
+
 }
 
 <!DOCTYPE html>
@@ -26,7 +79,6 @@
             <!-- Logo -->
             <a class="navbar-brand fs-4" asp-controller="Home" asp-action="Index">
                 <i class="fa-solid fa-cubes fs-4 me-1"></i>
-                @* <i class="fa-solid fa-fan fs-4 me-1"></i> *@
                 Rentopolis
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">

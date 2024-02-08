@@ -95,7 +95,7 @@
 {
     <table class="table table-hover">
 
-        <tr class="table-dark" style="height:50px; font-size:14px;">
+        <tr style="height:50px; font-size:14px; color:white; background-color:@(TempData["role"].ToString()=="Manager"?"#09133A":TempData["role"].ToString()=="Landlord"?"#0D6EFD":"#198754")">
             <th class="align-middle ps-4">User Id</th>
             <th class="align-middle">User</th>
             <th class="align-middle">Full Name</th>

@@ -1,7 +1,123 @@
 ﻿@{
     string username = User.Identity.Name;
+    int managerCount = ViewBag.ManagerCount;
+    int landlordCount = ViewBag.LandlordCount;
+    int tenantCount = ViewBag.TenantCount;
+    int propertyCount = ViewBag.PropertyCount;
+    int savedCount = ViewBag.SavedCount;
+    int requestedCount = ViewBag.RequestedCount;
+    int reportCount = ViewBag.ReportCount;
 }
 
-<h1>Admin Page</h1>
 
-<p>Hello @username! You are an admin!</p>
+<div class="d-flex flex-column my-5" style="height:75vh;">
+
+    @* page title *@
+    <div>
+        <h4 class="fw-bold">Admin Dashboard</h4>
+        <p class="mb-4" style="font-size:14px;">Welcome to the Admin Dashboard of Rentopia!</p>
+    </div>
+
+    @* left + right side *@
+    <div class="d-flex gap-3" style="height:100%;">
+
+        @* boxes *@
+        <div class="container" style="height:100%;">
+            <div class="row d-flex justify-content-between">
+
+                @* managers *@
+                <a class="col-md-3 p-3" 
+                   asp-controller="Admin" 
+                   asp-action="AllUsers" 
+                   asp-route-role="Manager"
+                   style="width:170px; height:170px; text-decoration:none; color:white; background-image: linear-gradient(to bottom right, rgba(14, 24, 46, 1), rgba(99, 146, 247, 0.5)); border-radius:7px; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);" 
+                >
+                    <h6>Managers</h6>
+                    <h1 style="font-size:75px">@managerCount</h1>
+                </a>
+
+                @* landlords *@
+                <a class="col-md-3 p-3"
+                   asp-controller="Admin"
+                   asp-action="AllUsers"
+                   asp-route-role="Landlord"
+                   style="width:170px; color:white; text-decoration:none; background-image: linear-gradient(to bottom right, rgba(13, 109, 253, 1), rgba(197, 218, 250, 1)); border-radius:7px; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);"
+                >
+                    <h6>Landlords</h6>
+                    <h1 style="font-size:75px">@landlordCount</h1>
+                </a>
+
+                @* tenants *@
+                <a class="col-md-3 p-3"
+                   asp-controller="Admin"
+                   asp-action="AllUsers"
+                   asp-route-role="Tenant"
+                   style="width:170px; color:white; text-decoration:none; background-image: linear-gradient(to bottom right, rgba(25, 135, 84, 1), rgba(125, 250, 192, 1)); border-radius:7px; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);"
+                >
+                    <h6>Tenants</h6>
+                    <h1 style="font-size:75px">@tenantCount</h1>
+                </a>
+
+                @* properties *@
+                <a class="col-md-3 p-3"
+                   asp-controller="Property"
+                   asp-action="AllProperties"
+                   style="width:170px; text-decoration:none; color:white; background-image: linear-gradient(to bottom right, rgba(255, 193, 7, 1), rgba(247, 230, 181, 1)); border-radius:7px; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);"
+                >
+                    <h6>Properties</h6>
+                    <h1 style="font-size:75px">@propertyCount</h1>
+                </a>
+
+                @* other + danger *@
+                <div class="col-md-12 d-flex justify-content-start gap-3 ps-0" style="height:220px;">
+
+                    @* other activities *@
+                    <div class="col-md-8 mt-3 p-3 border border-1" style="border-radius:7px; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);">
+                        
+                        <h6>Other Activities</h6>
+
+                        <ul class="list-group mt-3">
+                            @* saved properties *@
+                            <li class="list-group-item d-flex justify-content-between align-items-center" style="font-size:14px">
+                                Total Saved Properties
+                                <span class="badge bg-primary rounded-pill">@savedCount</span>
+                            </li>
+                            @* requested properties *@
+                            <li class="list-group-item d-flex justify-content-between align-items-center" style="font-size:14px">
+                                Total Requested Properties
+                                <span class="badge bg-primary rounded-pill">@requestedCount</span>
+                            </li>
+                            @* reports *@
+                            <li class="list-group-item d-flex justify-content-between align-items-center" style="font-size:14px">
+                                Total Reports
+                                <span class="badge bg-primary rounded-pill">@reportCount</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    @* urgent matters *@
+                    <div class="col-md-4 mt-3 p-3 bg-danger" style="color:white; border-radius:7px; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23); background-image: linear-gradient(to bottom left, rgba(222, 31, 49, 1), rgba(237, 133, 143, 1));">
+                        <h6>Urgent Matters</h6>
+                        <p class="d-flex justify-content-center align-items-center" style="font-size:13px; height:145px;">None so far!</p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        
+        @* black bg *@
+        <div class="col-md-4 bg-dark px-4 py-4" style="color:white; border-radius:7px; background-image: linear-gradient(to bottom right, rgba(28, 30, 33, 1), rgba(73,73,73, 1)); box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);">
+
+            <h4>Hello @username!</h4>
+            <p style="font-size:14px;">
+                As an admin, you have the power to manage and oversee all aspects of Rentopia, ensuring a smooth and 
+                efficient rental experience for both landlords and tenants. Here, you can access a range of powerful 
+                tools and features to streamline your operations.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>

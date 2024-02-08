@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Rentopolis.Models.Entitiy;
 using Rentopolis.Repositories.Interfaces;
+using System.Data;
 
 namespace Rentopolis.Controllers
 {
@@ -17,8 +18,20 @@ namespace Rentopolis.Controllers
 
         // Home page
         [HttpGet]
-        public IActionResult Home()
+        public async Task<IActionResult> Home()
         {
+            var managerList = await _services.GetUsersByRole("Manager",null);
+            var landlordList = await _services.GetUsersByRole("Landlord",null);
+            var tenantList = await _services.GetUsersByRole("Tenant",null);
+
+            ViewBag.ManagerCount = managerList.Count;
+            ViewBag.LandlordCount = landlordList.Count;
+            ViewBag.TenantCount = tenantList.Count;
+            ViewBag.PropertyCount = await _services.NumberOfAllProperty();
+            ViewBag.SavedCount = await _services.NumberOfSavedProperty();
+            ViewBag.RequestedCount = await _services.NumberOfRequestedProperty();
+            ViewBag.ReportCount = await _services.NumberOfReports();
+
             return View();
         }
 
