@@ -30,8 +30,7 @@
                    asp-controller="Admin" 
                    asp-action="AllUsers" 
                    asp-route-role="Manager"
-                   style="width:170px; height:170px; text-decoration:none; color:white; background-image: linear-gradient(to bottom right, rgba(14, 24, 46, 1), rgba(99, 146, 247, 0.5)); border-radius:7px; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);" 
-                >
+                   style="width:170px; height:170px; text-decoration:none; color:white; background-image: linear-gradient(to bottom right, rgba(65, 14, 66, 1), rgba(235, 116, 237, 0.5)); border-radius:7px; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);">
                     <h6>Managers</h6>
                     <h1 style="font-size:75px">@managerCount</h1>
                 </a>
@@ -68,29 +67,29 @@
                     <h1 style="font-size:75px">@propertyCount</h1>
                 </a>
 
-                @* other + danger *@
+                @* other + urgent *@
                 <div class="col-md-12 d-flex justify-content-start gap-3 ps-0" style="height:220px;">
 
-                    @* other activities *@
+                    @* other reports *@
                     <div class="col-md-8 mt-3 p-3 border border-1" style="border-radius:7px; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);">
                         
-                        <h6>Other Activities</h6>
+                        <h6>Other Reports</h6>
 
                         <ul class="list-group mt-3">
                             @* saved properties *@
                             <li class="list-group-item d-flex justify-content-between align-items-center" style="font-size:14px">
-                                Total Saved Properties
-                                <span class="badge bg-primary rounded-pill">@savedCount</span>
+                                Saved Properties
+                                <span class="badge bg-dark rounded-pill">@savedCount</span>
                             </li>
                             @* requested properties *@
                             <li class="list-group-item d-flex justify-content-between align-items-center" style="font-size:14px">
-                                Total Requested Properties
-                                <span class="badge bg-primary rounded-pill">@requestedCount</span>
+                                Requested Properties
+                                <span class="badge bg-dark rounded-pill">@requestedCount</span>
                             </li>
                             @* reports *@
                             <li class="list-group-item d-flex justify-content-between align-items-center" style="font-size:14px">
                                 Total Reports
-                                <span class="badge bg-primary rounded-pill">@reportCount</span>
+                                <span class="badge bg-dark rounded-pill">@reportCount</span>
                             </li>
                         </ul>
                     </div>

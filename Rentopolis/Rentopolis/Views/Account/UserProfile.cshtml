@@ -75,7 +75,7 @@
                 }
 
                 @* report user button *@
-                @if (User.IsInRole("Tenant"))
+                @if (User.IsInRole("Landlord") || User.IsInRole("Tenant"))
                 {
                     <a class="btn btn-dark" href="#" data-bs-toggle="modal" data-bs-target="#reportModal">
                         <i class="fa-solid fa-flag me-2"></i>

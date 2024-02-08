@@ -1,7 +1,97 @@
 ﻿@{
     string username = User.Identity.Name;
+    int propertyCount = ViewBag.NonApprovedPropertyCount;
+    int landlordCount = ViewBag.LandlordCount;
+    int tenantCount = ViewBag.TenantCount;
+    int reportedUsersCount = ViewBag.ReportCount;
+    int bannedCount = ViewBag.BannedCount;
+    int unbannedCount = ViewBag.UnbannedCount;
 }
 
-<h1>Manager Page</h1>
+<div class="d-flex flex-column my-5" style="height:70vh;">
 
-<p>Hello @username! You are a manager!</p>
+    @* page title *@
+    <div>
+        <h4 class="fw-bold">Manager Dashboard</h4>
+        <p class="mb-4" style="font-size:14px;">Welcome to the Manager Dashboard of Rentopia!</p>
+    </div>
+
+    @* left + right side *@
+    <div class="d-flex gap-4" style="height:100%;">
+
+        @* boxes *@
+        <div class="container" style="height:100%;">
+            <div class="row d-flex justify-content-between">
+
+                @* unapproved properties *@
+                <a class="col-md-4 p-3"
+                   asp-controller="Property"
+                   asp-action="PendingProperties"
+                   style="width:225px; text-decoration:none; color:white; background-image: linear-gradient(to bottom right, rgba(255, 193, 7, 1), rgba(247, 230, 181, 1)); border-radius:7px; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);">
+                    <h6>Unapproved Properties</h6>
+                    <h1 style="font-size:75px">@propertyCount</h1>
+                </a>
+
+                @* reported landlords *@
+                <a class="col-md-4 p-3"
+                   asp-controller="Manager"
+                   asp-action="ReportedUsers"
+                   asp-route-role="Landlord"
+                   style="width:225px; color:white; text-decoration:none; background-image: linear-gradient(to bottom right, rgba(13, 109, 253, 1), rgba(197, 218, 250, 1)); border-radius:7px; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);">
+                    <h6>Reported Landlords</h6>
+                    <h1 style="font-size:75px">@landlordCount</h1>
+                </a>
+
+                @* reported tenants *@
+                <a class="col-md-4 p-3"
+                   asp-controller="Manager"
+                   asp-action="ReportedUsers"
+                   asp-route-role="Tenant"
+                   style="width:225px; color:white; text-decoration:none; background-image: linear-gradient(to bottom right, rgba(25, 135, 84, 1), rgba(125, 250, 192, 1)); border-radius:7px; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);">
+                    <h6>Reported Tenants</h6>
+                    <h1 style="font-size:75px">@tenantCount</h1>
+                </a>
+
+                @* other activities *@
+                <div class="p-3 border border-1 mt-4" style="witdth:500px; height:180px; border-radius:7px; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);">
+
+                    <h6>Other Reports</h6>
+
+                    <ul class="list-group mt-3">
+                        @* reported users*@
+                        <li class="list-group-item d-flex justify-content-between align-items-center" style="font-size:14px">
+                            Total Reports
+                            <span class="badge rounded-pill" style="background-color:#410e42;">@reportedUsersCount</span>
+                        </li>
+                        @* banned users *@
+                        <li class="list-group-item d-flex justify-content-between align-items-center" style="font-size:14px">
+                            Banned Users
+                            <span class="badge rounded-pill" style="background-color:#410e42;">@bannedCount</span>
+                        </li>
+                        @* unbanned users *@
+                        <li class="list-group-item d-flex justify-content-between align-items-center" style="font-size:14px">
+                            Unbanned Users
+                            <span class="badge rounded-pill" style="background-color:#410e42;">@unbannedCount</span>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </div>
+
+        @* purple bg *@
+        <div class="col-md-4 bg-dark px-4 py-4" style="color:white; border-radius:7px; background-image: linear-gradient(to bottom right, rgba(65, 14, 66, 1), rgba(235, 116, 237, 1)); box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);">
+
+            <h4>Hello @username!</h4>
+            <p style="font-size:14px;">
+                As a manager, you play a crucial role in overseeing the operations and management of properties within Rentopia. 
+                This dashboard provides you with essential tools and features to effectively handle your managerial responsibilities.
+            </p>
+
+
+        </div>
+
+    </div>
+
+</div>

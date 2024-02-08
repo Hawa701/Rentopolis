@@ -14,7 +14,7 @@
             <div class="input-group mb-3">
                 <input type="hidden" name="role" value="@TempData["role"]">
                 <input type="text" class="form-control ps-4" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="First name, Last name, User name, Email..." aria-label="Search" aria-describedby="button-addon2" autocomplete="off" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);font-size:15px;">
-                <button class="btn btn-dark" type="submit" id="button-addon2" style="padding: 8px 20px;">
+                <button class="btn" type="submit" id="button-addon2" style="padding: 8px 20px; color:white; background-color:@(TempData["role"].ToString()=="Manager"?"#5d115e":TempData["role"].ToString()=="Landlord"?"#0D6EFD":"#198754");">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </div>
@@ -25,7 +25,7 @@
     {
         @* new manager button *@
         <div class="d-flex flex-column ms-2 mb-3">
-            <a class="btn btn-dark d-flex justify-content-center align-items-center gap-2" asp-controller="Admin" asp-action="AddManager" title="Create New Manger">
+            <a class="btn btn-dark d-flex justify-content-center align-items-center gap-2" style="background-color:#5d115e;" asp-controller="Admin" asp-action="AddManager" title="Create New Manger">
                 <i class="fa-solid fa-user-plus"></i>
             </a>
         </div>
@@ -95,7 +95,12 @@
 {
     <table class="table table-hover">
 
-        <tr style="height:50px; font-size:14px; color:white; background-color:@(TempData["role"].ToString()=="Manager"?"#09133A":TempData["role"].ToString()=="Landlord"?"#0D6EFD":"#198754")">
+        <tr style="
+                height:50px; font-size:14px; 
+                color:white; 
+                background-image: linear-gradient(to bottom, @(TempData["role"].ToString()=="Manager"?"#5d115e, #ab36ad":TempData["role"].ToString()=="Landlord"?"#0d6dfd, #a5bfe6":"#198754, #49d192"));
+            "
+        >
             <th class="align-middle ps-4">User Id</th>
             <th class="align-middle">User</th>
             <th class="align-middle">Full Name</th>

@@ -14,7 +14,7 @@
             <div class="input-group mb-3">
                 <input type="hidden" name="role" value="@TempData["role"]">
                 <input type="text" class="form-control ps-4" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="First name, Last name, User name, Email..." aria-label="Search" aria-describedby="button-addon2" autocomplete="off" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);font-size:15px;">
-                <button class="btn" type="submit" id="button-addon2" style="padding: 8px 20px; background-color: #09133A; color:white;">
+                <button class="btn" type="submit" id="button-addon2" style="padding: 8px 20px; background-color: @(TempData["role"].ToString()=="Landlord"?"#0D6EFD":"#198754"); color:white;">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </div>
@@ -85,7 +85,7 @@
 {
     <table class="table table-hover">
 
-        <tr style="height:50px; font-size:14px; background-color: #09133A; color:white;">
+        <tr style="height:50px; font-size:14px; background-image: linear-gradient(to bottom, @(TempData["role"].ToString()=="Landlord"?"#0d6dfd, #a5bfe6":"#198754, #49d192")); color:white;">
             <th class="align-middle ps-4">User Id</th>
             <th class="align-middle">User</th>
             <th class="align-middle">Full Name</th>

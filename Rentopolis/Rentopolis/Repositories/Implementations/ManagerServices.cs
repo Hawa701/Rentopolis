@@ -17,6 +17,7 @@ namespace Rentopolis.Repositories.Implementations
             this.rentContext = rentContext;
         }
 
+
         // Get user list by their role
         public async Task<List<AppUser>> GetReportedUsersByRole(string role, string searchString)
         {
@@ -76,6 +77,7 @@ namespace Rentopolis.Repositories.Implementations
             return status;
         }
 
+
         // Unban user
         public async Task<Status> UnbanUser (string id)
         {
@@ -113,5 +115,67 @@ namespace Rentopolis.Repositories.Implementations
             return status;
         }
 
+
+        // Get number of non-approved properties
+        public async Task<int> GetNumberOfNonApprovedProperties()
+        {
+            List<Property> properties = new List<Property>();
+
+            try
+            {
+                properties = await rentContext.Properties.Where(p => p.IsApproved == false && p.IsDeleted == false).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred while retrieving properties: " + ex.Message);
+            }
+
+            return properties.Count;
+        }
+
+
+        // Get number of total reports
+        public async Task<int> NumberOfReports()
+        {
+            List<ReportedUsers> reportList = new List<ReportedUsers>();
+
+            try
+            {
+                reportList = await rentContext.ReportedUsers.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred while retrieving properties: " + ex.Message);
+            }
+
+            return reportList.Count;
+
+        }
+
+
+        // Get number of banned users
+        public async Task<int> GetNumberOfBannedUsers()
+        {
+            var reportedUserIds = await rentContext.ReportedUsers.Select(r => r.UserId).ToListAsync();
+
+            var userList = await userManager.Users.Where(u => reportedUserIds.Contains(u.Id)).ToListAsync();
+
+            var bannedUsers = userList.Where(u => u.LockoutEnd != null).ToList();
+
+            return bannedUsers.Count;
+        }
+
+
+        // Get number of unbanned users
+        public async Task<int> GetNumberOfUnbannedUsers()
+        {
+            var reportedUserIds = await rentContext.ReportedUsers.Select(r => r.UserId).ToListAsync();
+
+            var userList = await userManager.Users.Where(u => reportedUserIds.Contains(u.Id)).ToListAsync();
+
+            var unbannedUsers = userList.Where(u => u.LockoutEnd == null).ToList();
+
+            return unbannedUsers.Count();
+        }
     }
 }

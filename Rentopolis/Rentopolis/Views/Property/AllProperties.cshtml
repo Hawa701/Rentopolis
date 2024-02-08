@@ -13,8 +13,8 @@
         <form method="get" asp-action="AllProperties">
             <div class="input-group mb-3">
                 <input type="text" class="form-control ps-4" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Address, Sub City, Price, Area, Bedroom, Bathroom..." aria-label="Search" aria-describedby="button-addon2" autocomplete="off" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);font-size:15px;">
-                <button class="btn btn-dark" type="submit" id="button-addon2" style="padding: 8px 20px;">
-                    <i class="fa-solid fa-magnifying-glass"></i>
+                <button class="btn" type="submit" id="button-addon2" style="padding: 8px 20px; color:white; background-color:#FBC217;">
+                    <i class="fa-solid fa-magnifying-glass fs-6"></i>
                 </button>
             </div>
         </form>
@@ -70,7 +70,7 @@
 {
     <table class="table table-hover">
 
-        <tr class="" style="height:50px; font-size:14px; color:white; background-color:#FBC217;">
+        <tr class="" style="height:50px; font-size:14px; color:white; background-image: linear-gradient(to bottom, rgba(251, 194, 23,1), rgba(247, 231, 183,1));">
             <th class="align-middle ps-4">Id</th>
             <th class="align-middle">Address</th>
             <th class="align-middle">Sub-City</th>
@@ -100,7 +100,7 @@
                     }
                     @if (property.IsApproved == false && property.IsDeleted == false)
                     {
-                        <p class="mb-0">Waiting</p>
+                        <p class="mb-0 text-muted">Waiting</p>
                     }@if (property.IsApproved == false && property.IsDeleted == true)
                     {
                         <p class="mb-0 text-danger">Rejected</p>
@@ -114,7 +114,7 @@
                 <td>
                     <div class="d-flex justify-content-end gap-2 me-3">
                         <a class="btn" asp-action="Detail" asp-route-id="@property.Id">
-                            <i class="fa-solid fa-circle-info fs-5" style="color: black;" onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';"></i>
+                            <i class="fa-solid fa-circle-info fs-5" style="color: black;" onmouseover="this.style.color='#FBC217';" onmouseout="this.style.color='black';"></i>
                         </a>
                     </div>
                 </td>

@@ -40,7 +40,7 @@
 {
     <table class="table table-hover">
 
-        <tr style="height:50px; font-size:14px; background-color: #09133A; color:white;">
+        <tr style="height:50px; font-size:14px; background-image: linear-gradient(to bottom, #fbc217, #f7e7b7); color:white;">
             <th class="align-middle ps-4">Id</th>
             <th class="align-middle">Address</th>
             <th class="align-middle">Sub-City</th>
@@ -53,7 +53,7 @@
 
         @foreach (var property in Model)
         {
-            <tr style="font-size:15px">
+            <tr style="font-size:15px;">
 
                 @* id *@
                 <td class="align-middle ps-4">@property.Id</td>
@@ -86,7 +86,7 @@
                 <td class="align-middle">
                     <div class="d-flex justify-content-end gap-2 me-3">
                         <a class="btn" asp-action="Detail" asp-route-id="@property.Id">
-                            <i class="fa-solid fa-circle-info fs-5" style="color: black;" onmouseover="this.style.color='blue';" onmouseout="this.style.color='black';"></i>
+                            <i class="fa-solid fa-circle-info fs-5" style="color: black;" onmouseover="this.style.color='#fbc217';" onmouseout="this.style.color='black';"></i>
                         </a>
                     </div>
                 </td>

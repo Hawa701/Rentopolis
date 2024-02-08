@@ -57,11 +57,12 @@
         <div class="row">
         @foreach (var property in Model)
         {
+
             <div class="col-md-3 mb-3">
                 <a asp-controller="Property" asp-action="Detail" asp-route-id="@property.Id" style="text-decoration:none; color:black;">
                     
                     @* card *@
-                    <div class="card" style="width: 16rem; height:21rem;">
+                    <div class="card" style="width: 16rem; height:21rem; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);">
 
                         @* img *@
                         <img src="@property.ImageUrl" alt="@property.Address's image" class="card-img-top" style="max-width:16rem; max-height:12rem;">
@@ -81,7 +82,9 @@
                             </div>
 
                         </div>
+
                     </div>
+
                 </a>
             </div>
 
