@@ -48,9 +48,7 @@
     // if tenant is signed in
     @if (User.IsInRole("Tenant"))
     {
-        if (action == "Home" && ViewContext.RouteData.Values["controller"]?.ToString() == "Tenant")
-            selectedPage = "tenant_dashboard";
-        else if (ViewContext.RouteData.Values["controller"]?.ToString() == "Property" && action == "Listings")
+        if (ViewContext.RouteData.Values["controller"]?.ToString() == "Property" && action == "Listings")
             selectedPage = "property_listing";
         else if (ViewContext.RouteData.Values["controller"]?.ToString() == "Property" && action == "Favorites")
             selectedPage = "favorite_properties";
@@ -112,7 +110,6 @@
                     }
                     @if (User.IsInRole("Tenant"))
                     {
-                        <a class="nav-link @(selectedPage == "tenant_dashboard" ? "active" : "")" aria-current="page" asp-controller="Tenant" asp-action="Home">Home</a>
                         <a class="nav-link @(selectedPage == "property_listing" ? "active" : "")" asp-controller="Property" asp-action="Listings">Listings</a>
                         <a class="nav-link @(selectedPage == "favorite_properties" ? "active" : "")" asp-controller="Property" asp-action="Favorites" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)"> Favorites</a>
                         <a class="nav-link @(selectedPage == "requested_properties" ? "active" : "") me-5" asp-controller="Property" asp-action="Requests" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">Requests</a>

@@ -27,6 +27,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>()
 builder.Services.AddScoped<IAccountServices, AccountServices>();
 builder.Services.AddScoped<IAdminServices, AdminServices>();
 builder.Services.AddScoped<IManagerServices, ManagerServices>();
+builder.Services.AddScoped<ILandlordServices, LandlordServices>();
 builder.Services.AddScoped<IPropertyServices, PropertyServices>();
 
 // for unauthenticated user redirection

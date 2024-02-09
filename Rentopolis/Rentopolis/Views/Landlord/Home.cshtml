@@ -1,8 +1,11 @@
 ﻿@{
     string username = User.Identity.Name;
+    string userId = TempData["userId"].ToString();
+    int totalApproved = ViewBag.ApprovedCount;
+    int totalWaiting = ViewBag.WaitingCount;
+    int totalRejected = ViewBag.RejectedCount;
 }
 
-<h1>Landlord Page</h1>
 
 @if (TempData.ContainsKey("successMessage"))
 {
@@ -12,4 +15,70 @@
     TempData.Remove("successMessage");
 }
 
-<p>Hello @username! You are a landlord!</p>
+<div class="d-flex flex-column my-5" style="height:70vh;">
+
+    @* page title *@
+    <div>
+        <h4 class="fw-bold">Landlord Dashboard</h4>
+        <p class="mb-4" style="font-size:14px;">Welcome to the landlord Dashboard of Rentopia!</p>
+    </div>
+
+    @* left + right side *@
+    <div class="d-flex gap-4" style="height:100%;">
+        
+        @* boxes *@
+        <div class="container" style="height:100%;">
+            <div class="row d-flex justify-content-between">
+
+                @* properties *@
+                <a class="col-md-3 p-3"
+                   asp-controller="Property"
+                   asp-action="MyProperties"
+                   asp-route-id="@userId",
+                   style="width:720px; text-decoration:none; color:white; background-image: linear-gradient(to bottom right, rgba(255, 193, 7, 1), rgba(247, 230, 181, 1)); border-radius:7px; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);">
+                    <h6>Owned Properties</h6>
+                    <h1 style="font-size:75px">3</h1>
+                </a>
+
+                @* other reports *@
+                <div class="col-md-12 mt-4 p-3 border border-1" style="border-radius:7px; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);">
+
+                    <h6>Other Reports</h6>
+
+                    <ul class="list-group mt-3">
+                        @* saved properties *@
+                        <li class="list-group-item d-flex justify-content-between align-items-center" style="font-size:14px">
+                            Approved Properties
+                            <span class="badge bg-dark rounded-pill">@totalApproved</span>
+                        </li>
+                        @* requested properties *@
+                        <li class="list-group-item d-flex justify-content-between align-items-center" style="font-size:14px">
+                            Waiting Properties
+                            <span class="badge bg-dark rounded-pill">@totalWaiting</span>
+                        </li>
+                        @* reports *@
+                        <li class="list-group-item d-flex justify-content-between align-items-center" style="font-size:14px">
+                            Rejected Properties
+                            <span class="badge bg-dark rounded-pill">@totalRejected</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        @* blue bg *@
+        <div class="col-md-4 bg-dark px-4 py-4" style="color:white; border-radius:7px; background-image: linear-gradient(to bottom right, #013075, #97c0fc); box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.23);">
+
+            <h4>Hello @username!</h4>
+            <p style="font-size:14px;">
+                Welcome to your Landlord Dashboard! As a landlord, you play a crucial role in the Rentopia ecosystem,
+                and this dashboard empowers you with all the necessary tools and features to effectively manage your
+                rental properties and provide a seamless experience for your tenants.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>

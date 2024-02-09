@@ -43,7 +43,7 @@ namespace Rentopolis.Controllers
                 if (role == "Admin") return RedirectToAction("Home", "Admin");
                 else if (role == "Manager") return RedirectToAction("Home", "Manager");
                 else if (role == "Landlord") return RedirectToAction("Home", "Landlord");
-                else if (role == "Tenant") return RedirectToAction("Home", "Tenant");
+                else if (role == "Tenant") return RedirectToAction("Listings", "Property");
                 else return RedirectToAction("Index", "Home");
             }
             else
